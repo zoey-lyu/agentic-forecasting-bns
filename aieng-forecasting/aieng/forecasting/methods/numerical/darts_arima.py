@@ -7,7 +7,9 @@ exogenous covariates; this class does not expose any covariate parameters.
 The probabilistic forecast is produced via Monte Carlo sampling (``num_samples``
 draws from the predictive distribution).  Point forecast is the median;
 quantiles use :data:`~aieng.forecasting.evaluation.prediction.STANDARD_QUANTILES`
-levels.
+levels.  Because the quantile grid is sampled, two calls on the same origin
+return different numbers unless ``random_state`` is set — pass a seed whenever
+forecasts must be reproducible or compared across predictor variants.
 
 For multi-horizon tasks, the model is fitted once to ``n = max(task.horizons)``
 and samples are extracted at each requested horizon index from the resulting
@@ -50,6 +52,13 @@ class DartsAutoARIMAPredictor(Predictor):
         Number of Monte Carlo samples used to build the predictive distribution.
         Higher values give smoother quantile estimates at the cost of compute.
         Default: 500.
+    random_state : int or None
+        Seed for the Monte Carlo sampler.  Left as ``None`` (the default), each
+        call draws a fresh sample, so the same origin yields slightly different
+        quantiles every time.  Set an integer to make forecasts reproducible —
+        required when the same anchor must be shared across predictor variants,
+        since an unseeded anchor would differ per variant and contaminate the
+        comparison.
 
     Notes
     -----
@@ -61,8 +70,9 @@ class DartsAutoARIMAPredictor(Predictor):
       instead.
     """
 
-    def __init__(self, num_samples: int = 500) -> None:
+    def __init__(self, num_samples: int = 500, random_state: int | None = None) -> None:
         self._num_samples = num_samples
+        self._random_state = random_state
 
     @property
     def predictor_id(self) -> str:
@@ -100,7 +110,7 @@ class DartsAutoARIMAPredictor(Predictor):
             freq=task.frequency,
         )
 
-        model = AutoARIMA()
+        model = AutoARIMA(random_state=self._random_state)
         model.fit(ts)
 
         # Fit once to max horizon; extract samples at each requested step.
@@ -108,6 +118,7 @@ class DartsAutoARIMAPredictor(Predictor):
         forecast_ts: Any = model.predict(
             n=task.horizon,
             num_samples=self._num_samples,
+            random_state=self._random_state,
         )
 
         offset = pd.tseries.frequencies.to_offset(task.frequency)
