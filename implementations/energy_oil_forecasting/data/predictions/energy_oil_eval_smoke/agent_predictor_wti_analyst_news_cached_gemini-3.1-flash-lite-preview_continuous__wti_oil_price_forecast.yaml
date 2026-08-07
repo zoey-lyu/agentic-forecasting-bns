@@ -1,0 +1,163 @@
+spec:
+  task:
+    task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons:
+    - 5
+    - 10
+    - 21
+    frequency: B
+    description: 'WTI Crude Oil continuous front-month futures Close price (yfinance
+      symbol: CL=F), projected 5, 10, and 21 trading days ahead.'
+    payload_type: continuous
+    categories: null
+    resolution_fn: observed_value_at_resolution_timestamp
+  start: '2026-02-02T00:00:00'
+  end: '2026-02-09T00:00:00'
+  stride: 5
+  origin_dates: null
+  warmup: 250
+  description: Two-origin smoke evaluation for local and CI testing of the NB04 pipeline.
+    Uses the same tasks, horizons, warmup, and geopolitical period as energy_oil_eval
+    but with only 2 origins to keep cost negligible.
+predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.1-flash-lite-preview_continuous
+predictions:
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T17:59:23.601948'
+  as_of: '2026-02-02T00:00:00'
+  forecast_date: '2026-02-09T00:00:00'
+  payload:
+    point_forecast: 65.21
+    quantiles:
+      '0.05': 62.5
+      '0.1': 63.2
+      '0.2': 63.8
+      '0.3': 64.3
+      '0.4': 64.8
+      '0.5': 65.21
+      '0.6': 65.8
+      '0.7': 66.5
+      '0.8': 67.5
+      '0.9': 68.8
+      '0.95': 70.0
+  metadata:
+    rationale: The forecast incorporates the strong geopolitical risk premium currently
+      impacting WTI. OPEC+ supply management remains a supportive floor, preventing
+      a collapse to the lower bounds observed in early January. However, long-term
+      downward pressure from non-OPEC+ supply and conservative demand growth estimates
+      from the IEA limit the upside potential over the 21-day horizon. Probabilistic
+      ranges are skewed slightly upward due to the nature of geopolitical risk spikes.
+    horizon_rationale: As of Feb 2, 2026, WTI is trading at $65.21. Short-term momentum
+      is bullish due to geopolitical tensions (Iran/Middle East, Venezuela blockades)
+      and OPEC+ supply discipline. The 5-day horizon anticipates continued support
+      near $65 as the market processes current supply risks, with a slight skew toward
+      upside volatility if further geopolitical headlines emerge.
+    langfuse_trace_id: 2ff067b44d8013258fe5ca0197dca9b0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2ff067b44d8013258fe5ca0197dca9b0
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T17:59:23.601948'
+  as_of: '2026-02-02T00:00:00'
+  forecast_date: '2026-03-03T00:00:00'
+  payload:
+    point_forecast: 66.5
+    quantiles:
+      '0.05': 59.0
+      '0.1': 60.5
+      '0.2': 62.0
+      '0.3': 63.5
+      '0.4': 65.0
+      '0.5': 66.5
+      '0.6': 68.0
+      '0.7': 69.5
+      '0.8': 71.5
+      '0.9': 74.0
+      '0.95': 76.0
+  metadata:
+    rationale: The forecast incorporates the strong geopolitical risk premium currently
+      impacting WTI. OPEC+ supply management remains a supportive floor, preventing
+      a collapse to the lower bounds observed in early January. However, long-term
+      downward pressure from non-OPEC+ supply and conservative demand growth estimates
+      from the IEA limit the upside potential over the 21-day horizon. Probabilistic
+      ranges are skewed slightly upward due to the nature of geopolitical risk spikes.
+    horizon_rationale: Looking 21 business days ahead, the market enters late February,
+      where the impact of winter demand begins to fade. While geopolitical risks currently
+      keep prices supported, a potential correction is factored into the wider lower-quantile
+      bands as the market weighs the IEA's conservative demand growth forecast against
+      the reality of non-OPEC+ supply increases. The point forecast reflects a moderate
+      upward trend supported by current risk levels.
+    langfuse_trace_id: 2ff067b44d8013258fe5ca0197dca9b0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2ff067b44d8013258fe5ca0197dca9b0
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T17:59:28.117103'
+  as_of: '2026-02-09T00:00:00'
+  forecast_date: '2026-02-23T00:00:00'
+  payload:
+    point_forecast: 62.8
+    quantiles:
+      '0.05': 59.5
+      '0.1': 60.3
+      '0.2': 61.1
+      '0.3': 61.8
+      '0.4': 62.4
+      '0.5': 62.8
+      '0.6': 63.3
+      '0.7': 63.9
+      '0.8': 64.6
+      '0.9': 65.4
+      '0.95': 66.5
+  metadata:
+    rationale: The forecast reflects a tug-of-war between supportive supply-side factors
+      (OPEC+ cuts, geopolitical premiums in the Middle East, distillate tightness)
+      and a bearish demand-side narrative (EIA inventory build projections, weak global
+      GDP growth). Prices are expected to maintain a base near $60-$61, with volatility
+      skewed towards the downside as structural supply growth risks gain prominence.
+    horizon_rationale: As we extend to 10 days, the market will likely begin to price
+      in the sustainability of the current OPEC+ output freeze. While geopolitical
+      tensions persist, the absence of immediate supply disruption and the persistent
+      bearish EIA outlook may lead to a mild softening from recent highs.
+    langfuse_trace_id: 067a32cb37430dedc215e65e496c8da1
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/067a32cb37430dedc215e65e496c8da1
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T17:59:28.117103'
+  as_of: '2026-02-09T00:00:00'
+  forecast_date: '2026-03-10T00:00:00'
+  payload:
+    point_forecast: 61.5
+    quantiles:
+      '0.05': 57.5
+      '0.1': 58.6
+      '0.2': 59.7
+      '0.3': 60.4
+      '0.4': 61.0
+      '0.5': 61.5
+      '0.6': 62.2
+      '0.7': 63.0
+      '0.8': 63.9
+      '0.9': 65.1
+      '0.95': 66.8
+  metadata:
+    rationale: The forecast reflects a tug-of-war between supportive supply-side factors
+      (OPEC+ cuts, geopolitical premiums in the Middle East, distillate tightness)
+      and a bearish demand-side narrative (EIA inventory build projections, weak global
+      GDP growth). Prices are expected to maintain a base near $60-$61, with volatility
+      skewed towards the downside as structural supply growth risks gain prominence.
+    horizon_rationale: By the 21-day horizon, the impact of seasonal demand weakness
+      and the structural bearishness of the EIA forecast are expected to exert greater
+      downward pressure. OPEC+ discipline is necessary to prevent a deeper slide,
+      but the broader macro environment with sub-par global GDP growth remains a significant
+      headwind.
+    langfuse_trace_id: 067a32cb37430dedc215e65e496c8da1
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/067a32cb37430dedc215e65e496c8da1
+scores:
+- 0.7126444616396553
+- 4.94165089504778
+- 2.2982624652957147
+- 20.146691163118223
+metric: crps
+mean_score: 7.024812246275344
+ran_at: '2026-08-05T17:59:28.246400'
+skipped_origins: 0

@@ -1,0 +1,2002 @@
+spec:
+  task:
+    task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons:
+    - 5
+    - 10
+    - 21
+    frequency: B
+    description: 'WTI Crude Oil continuous front-month futures Close price (yfinance
+      symbol: CL=F), projected 5, 10, and 21 trading days ahead.'
+    payload_type: continuous
+    categories: null
+    resolution_fn: observed_value_at_resolution_timestamp
+  start: '2026-02-02T00:00:00'
+  end: '2026-06-01T00:00:00'
+  stride: 5
+  origin_dates: null
+  warmup: 250
+  description: Prospective/out-of-sample evaluation period in 2026 for daily WTI crude
+    oil. Evaluates selected contender models on 18 weekly origins from the early 2026
+    geopolitical price shock through its aftermath, to measure adaptive real-time
+    forecasting performance.
+predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+predictions:
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:22.305014'
+  as_of: '2026-02-16T00:00:00'
+  forecast_date: '2026-02-23T00:00:00'
+  payload:
+    point_forecast: 62.98264547115019
+    quantiles:
+      '0.05': 55.86032695147956
+      '0.1': 57.49138318241296
+      '0.2': 59.240398833374456
+      '0.3': 60.729198113725595
+      '0.4': 61.975155677190514
+      '0.5': 62.98264547115019
+      '0.6': 64.13765430666221
+      '0.7': 65.17625574708104
+      '0.8': 66.93417748026582
+      '0.9': 68.53324529384042
+      '0.95': 70.31747075801799
+  metadata:
+    anchor_point: 62.844958387278396
+    anchor_half_width: 6.884354193589729
+    signal_loc: 0.1
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 62.98264547115019
+    final_half_width: 7.228571903269216
+    rationale: The market is currently wrestling with tight physical conditions, evidenced
+      by backwardation, against a backdrop of macro-level demand uncertainty and supply-side
+      geopolitical risks. My signals reflect a moderate tactical preference for upside
+      risk due to the geopolitical premium and supply outages, while acknowledging
+      higher structural uncertainty for longer-dated horizons.
+    horizon_rationale: Recent price action shows momentum in the mid-$60s range. With
+      geopolitical risk premiums stemming from US-Iran tensions and potential supply
+      disruptions in Russia, the market exhibits underlying bullish pressure despite
+      IEA's cautious demand outlook.
+    key_signals:
+    - US-Iran geopolitical tensions and export disruption fears
+    - Supply outages in Russia (e.g., refinery attacks) and Kazakhstan
+    - Divergent 2026 demand growth forecasts between IEA (850k bpd) and OPEC (1.38M
+      bpd)
+    - Backwardated forward curves indicating immediate market tightness
+    langfuse_trace_id: e597c83b984b1b3c1dda8f91ca95804b
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/e597c83b984b1b3c1dda8f91ca95804b
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:22.305014'
+  as_of: '2026-02-16T00:00:00'
+  forecast_date: '2026-03-02T00:00:00'
+  payload:
+    point_forecast: 62.884053883830084
+    quantiles:
+      '0.05': 52.61074392727118
+      '0.1': 55.24232881472282
+      '0.2': 57.36731634130671
+      '0.3': 59.577051789221876
+      '0.4': 60.944643414275724
+      '0.5': 62.884053883830084
+      '0.6': 64.8682099296362
+      '0.7': 66.97147313133962
+      '0.8': 69.12410052696391
+      '0.9': 71.42498956313425
+      '0.95': 73.72621028200828
+  metadata:
+    anchor_point: 62.69209509878702
+    anchor_half_width: 9.597939252153232
+    signal_loc: 0.1
+    signal_width: 0.2
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 62.884053883830084
+    final_half_width: 10.557733177368556
+    rationale: The market is currently wrestling with tight physical conditions, evidenced
+      by backwardation, against a backdrop of macro-level demand uncertainty and supply-side
+      geopolitical risks. My signals reflect a moderate tactical preference for upside
+      risk due to the geopolitical premium and supply outages, while acknowledging
+      higher structural uncertainty for longer-dated horizons.
+    horizon_rationale: Over a two-week horizon, the tension between OPEC+'s production
+      increases and the persistent risks to non-OPEC+ supply, combined with the structural
+      backwardation of the curve, justifies a slight upward bias compared to the purely
+      mechanical ARIMA anchor.
+    key_signals:
+    - US-Iran geopolitical tensions and export disruption fears
+    - Supply outages in Russia (e.g., refinery attacks) and Kazakhstan
+    - Divergent 2026 demand growth forecasts between IEA (850k bpd) and OPEC (1.38M
+      bpd)
+    - Backwardated forward curves indicating immediate market tightness
+    langfuse_trace_id: e597c83b984b1b3c1dda8f91ca95804b
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/e597c83b984b1b3c1dda8f91ca95804b
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:22.305014'
+  as_of: '2026-02-16T00:00:00'
+  forecast_date: '2026-03-17T00:00:00'
+  payload:
+    point_forecast: 62.91466895043095
+    quantiles:
+      '0.05': 44.86870589548648
+      '0.1': 50.335342256905115
+      '0.2': 54.723216326414935
+      '0.3': 57.482833352551296
+      '0.4': 60.48283168280205
+      '0.5': 62.91466895043095
+      '0.6': 65.58129284137775
+      '0.7': 68.34459573599369
+      '0.8': 71.96688995813591
+      '0.9': 75.64270093390948
+      '0.95': 78.6151685183519
+  metadata:
+    anchor_point: 62.91466895043095
+    anchor_half_width: 14.67237505341975
+    signal_loc: 0.0
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 62.91466895043095
+    final_half_width: 16.87323131143271
+    rationale: The market is currently wrestling with tight physical conditions, evidenced
+      by backwardation, against a backdrop of macro-level demand uncertainty and supply-side
+      geopolitical risks. My signals reflect a moderate tactical preference for upside
+      risk due to the geopolitical premium and supply outages, while acknowledging
+      higher structural uncertainty for longer-dated horizons.
+    horizon_rationale: The longer horizon is heavily clouded by the divergence between
+      IEA and OPEC demand forecasts, alongside the unknown duration of winter supply
+      disruptions in North America. Increased uncertainty is warranted given these
+      macro demand-side variables.
+    key_signals:
+    - US-Iran geopolitical tensions and export disruption fears
+    - Supply outages in Russia (e.g., refinery attacks) and Kazakhstan
+    - Divergent 2026 demand growth forecasts between IEA (850k bpd) and OPEC (1.38M
+      bpd)
+    - Backwardated forward curves indicating immediate market tightness
+    langfuse_trace_id: e597c83b984b1b3c1dda8f91ca95804b
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/e597c83b984b1b3c1dda8f91ca95804b
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:25.138174'
+  as_of: '2026-02-23T00:00:00'
+  forecast_date: '2026-03-02T00:00:00'
+  payload:
+    point_forecast: 66.48263562196702
+    quantiles:
+      '0.05': 59.361074274306134
+      '0.1': 60.99195710803454
+      '0.2': 62.740786821552796
+      '0.3': 64.22942782800195
+      '0.4': 65.4752529340108
+      '0.5': 66.48263562196702
+      '0.6': 67.63752166876088
+      '0.7': 68.67601269570442
+      '0.8': 70.43374754464242
+      '0.9': 72.03264536169316
+      '0.95': 73.81668114528051
+  metadata:
+    anchor_point: 66.3449631755768
+    anchor_half_width: 6.8836223195116055
+    signal_loc: 0.1
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 66.48263562196702
+    final_half_width: 7.2278034354871865
+    rationale: The forecast is balanced between the structural support provided by
+      the OPEC+ decision to extend production cuts through March 2026 and the fundamental
+      expectation of seasonal demand weakness. Recent price action shows resilience
+      near $66, prompting a slight upward tilt in the near-term signals, while the
+      medium-term forecast relies on the statistical baseline as the market transitions
+      toward a more supplied state.
+    horizon_rationale: Prices have momentum from late February, closing at $66.39.
+      OPEC+'s commitment to maintain production cuts through March provides a solid
+      floor, while seasonal demand weakness prevents runaway bullishness. A slight
+      upward bias (0.1) relative to the anchor is justified by the current momentum,
+      with marginally increased uncertainty (0.1) due to volatile winter-related weather
+      reports.
+    key_signals:
+    - OPEC+ extension of voluntary production cuts through March 2026.
+    - Seasonal demand weakness limiting upward price trajectory.
+    - Market transition from winter-tightness to potentially better-supplied conditions.
+    langfuse_trace_id: 2d3ef9ccf3e215d32af2530514966e8f
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2d3ef9ccf3e215d32af2530514966e8f
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:25.138174'
+  as_of: '2026-02-23T00:00:00'
+  forecast_date: '2026-03-09T00:00:00'
+  payload:
+    point_forecast: 66.28808532692058
+    quantiles:
+      '0.05': 56.716246010126085
+      '0.1': 59.168143966841576
+      '0.2': 61.1480354760691
+      '0.3': 63.20688824401904
+      '0.4': 64.48109951004356
+      '0.5': 66.28808532692058
+      '0.6': 68.13676145274673
+      '0.7': 70.09641199310433
+      '0.8': 72.10205609680342
+      '0.9': 74.24583840582795
+      '0.95': 76.38992974996945
+  metadata:
+    anchor_point: 66.19211613794573
+    anchor_half_width: 9.59691889748457
+    signal_loc: 0.05
+    signal_width: 0.05
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 66.28808532692058
+    final_half_width: 9.836841869921685
+    rationale: The forecast is balanced between the structural support provided by
+      the OPEC+ decision to extend production cuts through March 2026 and the fundamental
+      expectation of seasonal demand weakness. Recent price action shows resilience
+      near $66, prompting a slight upward tilt in the near-term signals, while the
+      medium-term forecast relies on the statistical baseline as the market transitions
+      toward a more supplied state.
+    horizon_rationale: Over a two-week horizon, the market will likely consolidate
+      as the immediate winter supply shock fades. The OPEC+ supply discipline remains
+      the primary structural support. Trusting the anchor's statistical decay, but
+      maintaining a very slight positive bias for potential lingering geopolitical
+      risk premiums.
+    key_signals:
+    - OPEC+ extension of voluntary production cuts through March 2026.
+    - Seasonal demand weakness limiting upward price trajectory.
+    - Market transition from winter-tightness to potentially better-supplied conditions.
+    langfuse_trace_id: 2d3ef9ccf3e215d32af2530514966e8f
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2d3ef9ccf3e215d32af2530514966e8f
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:25.138174'
+  as_of: '2026-02-23T00:00:00'
+  forecast_date: '2026-03-24T00:00:00'
+  payload:
+    point_forecast: 66.41466632781574
+    quantiles:
+      '0.05': 50.72419276881693
+      '0.1': 55.47728425106948
+      '0.2': 59.29242129076303
+      '0.3': 61.69183316197883
+      '0.4': 64.30025003252888
+      '0.5': 66.41466632781574
+      '0.6': 68.73322319980441
+      '0.7': 71.1358398333122
+      '0.8': 74.28532603930684
+      '0.9': 77.48134360554309
+      '0.95': 80.06582324216161
+  metadata:
+    anchor_point: 66.41466632781574
+    anchor_half_width: 14.670815236672343
+    signal_loc: 0.0
+    signal_width: 0.0
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 66.41466632781574
+    final_half_width: 14.670815236672343
+    rationale: The forecast is balanced between the structural support provided by
+      the OPEC+ decision to extend production cuts through March 2026 and the fundamental
+      expectation of seasonal demand weakness. Recent price action shows resilience
+      near $66, prompting a slight upward tilt in the near-term signals, while the
+      medium-term forecast relies on the statistical baseline as the market transitions
+      toward a more supplied state.
+    horizon_rationale: At the 21-day horizon, seasonal demand dynamics are expected
+      to dominate, likely offsetting the supply-side support from OPEC+. There is
+      insufficient evidence to deviate from the statistical anchor, which likely captures
+      the expected mean reversion as the market moves away from current volatility.
+    key_signals:
+    - OPEC+ extension of voluntary production cuts through March 2026.
+    - Seasonal demand weakness limiting upward price trajectory.
+    - Market transition from winter-tightness to potentially better-supplied conditions.
+    langfuse_trace_id: 2d3ef9ccf3e215d32af2530514966e8f
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2d3ef9ccf3e215d32af2530514966e8f
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:28.223902'
+  as_of: '2026-03-02T00:00:00'
+  forecast_date: '2026-03-09T00:00:00'
+  payload:
+    point_forecast: 67.96587012774283
+    quantiles:
+      '0.05': 60.168800901855654
+      '0.1': 61.95437933516763
+      '0.2': 63.86909236998112
+      '0.3': 65.49893678374734
+      '0.4': 66.86293326158288
+      '0.5': 67.96587012774283
+      '0.6': 69.23030162180285
+      '0.7': 70.36729757427064
+      '0.8': 72.29176043134137
+      '0.9': 74.04231994435591
+      '0.95': 75.99557848233921
+  metadata:
+    anchor_point: 66.97497622705168
+    anchor_half_width: 6.881207643688505
+    signal_loc: 0.72
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 67.96587012774283
+    final_half_width: 7.91338879024178
+    rationale: The recent weekend price surge (~8%) triggered by unfolding geopolitical
+      events represents a structural break from the statistical baseline. The anchor
+      was calculated prior to this event, necessitating a shift in the forecast distribution
+      toward higher levels and higher volatility across all horizons.
+    horizon_rationale: The market has experienced a significant geopolitical-driven
+      shock over the weekend of March 1st, pushing prices up over 8% from the anchor's
+      reference point of $67.02. Given the short-term nature of this news (likely
+      a sudden risk-premium adjustment), the price is expected to hold above the pre-shock
+      anchor, though with high volatility as the market digests the magnitude of the
+      supply disruption.
+    key_signals:
+    - Unexpected weekend surge in WTI prices (+8% to $72/bbl) following geopolitical
+      news
+    - Shift in market sentiment from supply-buffer focus to risk-premium pricing
+    langfuse_trace_id: da6a0bc79e4e8ed9a77b92036ec169d9
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/da6a0bc79e4e8ed9a77b92036ec169d9
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:28.223902'
+  as_of: '2026-03-02T00:00:00'
+  forecast_date: '2026-03-16T00:00:00'
+  payload:
+    point_forecast: 67.97340909830967
+    quantiles:
+      '0.05': 56.771284236183284
+      '0.1': 59.640791981902304
+      '0.2': 61.95790065514507
+      '0.3': 64.36741935014061
+      '0.4': 65.85865559328253
+      '0.5': 67.97340909830967
+      '0.6': 70.13695364870775
+      '0.7': 72.43037389038506
+      '0.8': 74.77762136655237
+      '0.9': 77.28653488965908
+      '0.95': 79.7958100830627
+  metadata:
+    anchor_point: 66.8221828059657
+    anchor_half_width: 9.593552436199758
+    signal_loc: 0.6
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 67.97340909830967
+    final_half_width: 11.512262923439708
+    rationale: The recent weekend price surge (~8%) triggered by unfolding geopolitical
+      events represents a structural break from the statistical baseline. The anchor
+      was calculated prior to this event, necessitating a shift in the forecast distribution
+      toward higher levels and higher volatility across all horizons.
+    horizon_rationale: As we move further into the 10-day window, uncertainty remains
+      elevated regarding the persistence of the geopolitical premium. While the initial
+      surge is likely to be partially priced in, the risk of escalation or further
+      supply developments necessitates a positive signal relative to the mechanical
+      ARIMA anchor.
+    key_signals:
+    - Unexpected weekend surge in WTI prices (+8% to $72/bbl) following geopolitical
+      news
+    - Shift in market sentiment from supply-buffer focus to risk-premium pricing
+    langfuse_trace_id: da6a0bc79e4e8ed9a77b92036ec169d9
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/da6a0bc79e4e8ed9a77b92036ec169d9
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:28.223902'
+  as_of: '2026-03-02T00:00:00'
+  forecast_date: '2026-03-31T00:00:00'
+  payload:
+    point_forecast: 68.36456513171582
+    quantiles:
+      '0.05': 48.7583531738713
+      '0.1': 54.69763338142262
+      '0.2': 59.46488181195553
+      '0.3': 62.46309455195564
+      '0.4': 65.72247189618444
+      '0.5': 68.36456513171582
+      '0.6': 71.2617445761473
+      '0.7': 74.26396186378167
+      '0.8': 78.19943862812853
+      '0.9': 82.19305918961146
+      '0.95': 85.42252548747314
+  metadata:
+    anchor_point: 67.04465492842616
+    anchor_half_width: 14.665668925440738
+    signal_loc: 0.45
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 68.36456513171582
+    final_half_width: 18.332086156800923
+    rationale: The recent weekend price surge (~8%) triggered by unfolding geopolitical
+      events represents a structural break from the statistical baseline. The anchor
+      was calculated prior to this event, necessitating a shift in the forecast distribution
+      toward higher levels and higher volatility across all horizons.
+    horizon_rationale: Over a 21-day horizon, the market expectation should begin
+      to normalize. However, given the suddenness of the surge and the lack of clarity
+      on the underlying event, the anchor is likely underestimating the new floor,
+      leading to a moderately positive location signal and significantly increased
+      uncertainty width.
+    key_signals:
+    - Unexpected weekend surge in WTI prices (+8% to $72/bbl) following geopolitical
+      news
+    - Shift in market sentiment from supply-buffer focus to risk-premium pricing
+    langfuse_trace_id: da6a0bc79e4e8ed9a77b92036ec169d9
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/da6a0bc79e4e8ed9a77b92036ec169d9
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:31.171285'
+  as_of: '2026-03-09T00:00:00'
+  forecast_date: '2026-03-16T00:00:00'
+  payload:
+    point_forecast: 91.13110892915144
+    quantiles:
+      '0.05': 83.30425344252012
+      '0.1': 85.09665311894959
+      '0.2': 87.0186807151775
+      '0.3': 88.65475143901924
+      '0.4': 90.0239586381612
+      '0.5': 91.13110892915144
+      '0.6': 92.40037078768353
+      '0.7': 93.54171027705269
+      '0.8': 95.47352494167988
+      '0.9': 97.23077191899574
+      '0.95': 99.1914922694149
+  metadata:
+    anchor_point: 90.85480912346631
+    anchor_half_width: 6.9074951421281625
+    signal_loc: 0.2
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 91.13110892915144
+    final_half_width: 7.9436194134473865
+    rationale: The recent rapid ascent to $90.90 is driven almost entirely by the
+      immediate and acute geopolitical risk at the Strait of Hormuz. The market is
+      currently pricing in a worst-case scenario. My forecast balances the immediate
+      fear (keeping prices elevated) against the statistical tendency for mean reversion
+      and the availability of strategic inventory cushions that may cap the upside
+      if the physical flow of oil is not interrupted for an extended period.
+    horizon_rationale: Prices have surged recently, testing $91 as the market incorporates
+      a significant geopolitical risk premium following the escalation at the Strait
+      of Hormuz. The current price is near the top of the 52-week range. I anticipate
+      the market will hold these gains as traders remain sensitive to further disruptions,
+      justifying a shift above the statistical anchor and increased uncertainty due
+      to potential headline-driven volatility.
+    key_signals:
+    - Geopolitical escalation at the Strait of Hormuz creating a significant supply
+      risk premium
+    - Analyst warnings of $100+ price potential if disruption persists
+    - 'Mitigating factors: high global inventories and existence of alternative pipelines'
+    langfuse_trace_id: 3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:31.171285'
+  as_of: '2026-03-09T00:00:00'
+  forecast_date: '2026-03-23T00:00:00'
+  payload:
+    point_forecast: 90.89403603494063
+    quantiles:
+      '0.05': 79.64911696355882
+      '0.1': 82.52958676482012
+      '0.2': 84.85554722597374
+      '0.3': 87.27427073242313
+      '0.4': 88.7712037765402
+      '0.5': 90.89403603494063
+      '0.6': 93.06584572961825
+      '0.7': 95.3680272649734
+      '0.8': 97.72424166490791
+      '0.9': 100.24273970627642
+      '0.95': 102.76160079958984
+  metadata:
+    anchor_point: 90.7014320029737
+    anchor_half_width: 9.630201598346261
+    signal_loc: 0.1
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 90.89403603494063
+    final_half_width: 11.556241918015512
+    rationale: The recent rapid ascent to $90.90 is driven almost entirely by the
+      immediate and acute geopolitical risk at the Strait of Hormuz. The market is
+      currently pricing in a worst-case scenario. My forecast balances the immediate
+      fear (keeping prices elevated) against the statistical tendency for mean reversion
+      and the availability of strategic inventory cushions that may cap the upside
+      if the physical flow of oil is not interrupted for an extended period.
+    horizon_rationale: Over a two-week horizon, the risk of a sustained supply disruption
+      continues to support prices. While the statistical anchor suggests a slight
+      mean reversion, the ongoing geopolitical tension likely prevents a sharp decline.
+      Uncertainty remains high as the market awaits further developments on alternative
+      export routes and storage buffers.
+    key_signals:
+    - Geopolitical escalation at the Strait of Hormuz creating a significant supply
+      risk premium
+    - Analyst warnings of $100+ price potential if disruption persists
+    - 'Mitigating factors: high global inventories and existence of alternative pipelines'
+    langfuse_trace_id: 3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:31.171285'
+  as_of: '2026-03-09T00:00:00'
+  forecast_date: '2026-04-07T00:00:00'
+  payload:
+    point_forecast: 90.63032012009582
+    quantiles:
+      '0.05': 70.94920877061296
+      '0.1': 76.91117813786893
+      '0.2': 81.69663834781156
+      '0.3': 84.70630482047106
+      '0.4': 87.97813359492653
+      '0.5': 90.63032012009582
+      '0.6': 93.53856733112708
+      '0.7': 96.55225364954075
+      '0.8': 100.50276467017791
+      '0.9': 104.51164160811607
+      '0.95': 107.75344507042063
+  metadata:
+    anchor_point: 90.92475401049428
+    anchor_half_width: 14.72169451992307
+    signal_loc: -0.1
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 90.63032012009582
+    final_half_width: 18.402118149903835
+    rationale: The recent rapid ascent to $90.90 is driven almost entirely by the
+      immediate and acute geopolitical risk at the Strait of Hormuz. The market is
+      currently pricing in a worst-case scenario. My forecast balances the immediate
+      fear (keeping prices elevated) against the statistical tendency for mean reversion
+      and the availability of strategic inventory cushions that may cap the upside
+      if the physical flow of oil is not interrupted for an extended period.
+    horizon_rationale: In the longer 21-day horizon, the impact of potential demand
+      destruction or a dampening of the geopolitical risk premium becomes more probable.
+      If physical supply routes remain intact or international diplomatic pressure
+      stabilizes the situation, the initial price spike may partially retrace. The
+      widening of the uncertainty signal reflects the binary nature of current geopolitical
+      outcomes.
+    key_signals:
+    - Geopolitical escalation at the Strait of Hormuz creating a significant supply
+      risk premium
+    - Analyst warnings of $100+ price potential if disruption persists
+    - 'Mitigating factors: high global inventories and existence of alternative pipelines'
+    langfuse_trace_id: 3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a0dfdcf4a2b7dbfb0cc5c4e592a60e0
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:34.776502'
+  as_of: '2026-03-16T00:00:00'
+  forecast_date: '2026-03-23T00:00:00'
+  payload:
+    point_forecast: 99.35916416112767
+    quantiles:
+      '0.05': 89.77756522130161
+      '0.1': 91.9718123067059
+      '0.2': 94.32474926967771
+      '0.3': 96.32761920126369
+      '0.4': 98.00379608610704
+      '0.5': 99.35916416112767
+      '0.6': 100.91298843945314
+      '0.7': 102.31021076711718
+      '0.8': 104.67512901227303
+      '0.9': 106.82634233205653
+      '0.95': 109.22664677909285
+  metadata:
+    anchor_point: 98.66455410549227
+    anchor_half_width: 6.946100556354011
+    signal_loc: 0.5
+    signal_width: 0.8
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 99.35916416112767
+    final_half_width: 9.724540778895616
+    rationale: The forecasts are driven by the unprecedented supply disruption at
+      the Strait of Hormuz. While the statistical anchor models historical mean reversion,
+      the current situation represents a fundamental structural break in the supply
+      side, justifying a positive signal_loc. Uncertainty is elevated significantly
+      above historical norms due to the unpredictable nature of regional military
+      conflict.
+    horizon_rationale: The market is in an extreme state of shock due to the blockade
+      of the Strait of Hormuz. With 20% of global oil trade disrupted and Gulf production
+      curtailed by 10 million bpd, the upward risk to prices is immense. While the
+      IEA is releasing 400 million barrels of reserves, the physical reality of the
+      supply loss far outweighs this near-term buffer. I anticipate prices will test
+      levels above the statistical anchor as market participants price in the risk
+      of a prolonged conflict.
+    key_signals:
+    - Strait of Hormuz blockade (largest supply disruption in history)
+    - OPEC+ production increase of only 206,000 bpd (insufficient to offset 10 million
+      bpd loss)
+    - IEA release of 400 million barrels of emergency reserves
+    - Estimated 1 million bpd demand destruction due to flight cancellations and supply
+      chain issues
+    langfuse_trace_id: 0be1dd0a47bfcfbbb7af0855d15963e1
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/0be1dd0a47bfcfbbb7af0855d15963e1
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:34.776502'
+  as_of: '2026-03-16T00:00:00'
+  forecast_date: '2026-03-30T00:00:00'
+  payload:
+    point_forecast: 99.09136121257775
+    quantiles:
+      '0.05': 86.84128139421287
+      '0.1': 89.97923060984066
+      '0.2': 92.51310400836138
+      '0.3': 95.14803235461933
+      '0.4': 96.77877323917144
+      '0.5': 99.09136121257775
+      '0.6': 101.45730461699128
+      '0.7': 103.96527353926126
+      '0.8': 106.53210521543016
+      '0.9': 109.27572674203387
+      '0.95': 112.01974377306722
+  metadata:
+    anchor_point: 98.51031977306573
+    anchor_half_width: 9.684023991867058
+    signal_loc: 0.3
+    signal_width: 0.6
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 99.09136121257775
+    final_half_width: 12.589231189427176
+    rationale: The forecasts are driven by the unprecedented supply disruption at
+      the Strait of Hormuz. While the statistical anchor models historical mean reversion,
+      the current situation represents a fundamental structural break in the supply
+      side, justifying a positive signal_loc. Uncertainty is elevated significantly
+      above historical norms due to the unpredictable nature of regional military
+      conflict.
+    horizon_rationale: Over a 10-day horizon, the extreme initial volatility may see
+      some consolidation if diplomatic efforts emerge, but the core supply disruption
+      persists. The positive signal_loc remains to account for the risk premium, but
+      I have moderated the width slightly compared to the 5-day horizon to account
+      for the potential that initial emergency reserve impacts will be better understood.
+    key_signals:
+    - Strait of Hormuz blockade (largest supply disruption in history)
+    - OPEC+ production increase of only 206,000 bpd (insufficient to offset 10 million
+      bpd loss)
+    - IEA release of 400 million barrels of emergency reserves
+    - Estimated 1 million bpd demand destruction due to flight cancellations and supply
+      chain issues
+    langfuse_trace_id: 0be1dd0a47bfcfbbb7af0855d15963e1
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/0be1dd0a47bfcfbbb7af0855d15963e1
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:34.776502'
+  as_of: '2026-03-16T00:00:00'
+  forecast_date: '2026-04-14T00:00:00'
+  payload:
+    point_forecast: 99.03096936551452
+    quantiles:
+      '0.05': 80.0315062237856
+      '0.1': 85.78698492790221
+      '0.2': 90.40670244590734
+      '0.3': 93.31213020355753
+      '0.4': 96.47064036604122
+      '0.5': 99.03096936551452
+      '0.6': 101.83849048115906
+      '0.7': 104.74779885865257
+      '0.8': 108.56148535200002
+      '0.9': 112.43151628011043
+      '0.95': 115.56104104632253
+  metadata:
+    anchor_point: 98.73488990866005
+    anchor_half_width: 14.803972842723724
+    signal_loc: 0.1
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 99.03096936551452
+    final_half_width: 17.76476741126847
+    rationale: The forecasts are driven by the unprecedented supply disruption at
+      the Strait of Hormuz. While the statistical anchor models historical mean reversion,
+      the current situation represents a fundamental structural break in the supply
+      side, justifying a positive signal_loc. Uncertainty is elevated significantly
+      above historical norms due to the unpredictable nature of regional military
+      conflict.
+    horizon_rationale: By 21 days, the market may begin to stabilize or find a new
+      equilibrium, either through progress in the conflict or clearer evidence of
+      the scale of demand destruction (currently estimated at 1 million bpd). I remain
+      slightly bullish relative to the anchor due to the persistent supply threat,
+      but the uncertainty regarding the duration of the blockade makes extreme deviations
+      from the statistical mean less certain over this longer window.
+    key_signals:
+    - Strait of Hormuz blockade (largest supply disruption in history)
+    - OPEC+ production increase of only 206,000 bpd (insufficient to offset 10 million
+      bpd loss)
+    - IEA release of 400 million barrels of emergency reserves
+    - Estimated 1 million bpd demand destruction due to flight cancellations and supply
+      chain issues
+    langfuse_trace_id: 0be1dd0a47bfcfbbb7af0855d15963e1
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/0be1dd0a47bfcfbbb7af0855d15963e1
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:38.303124'
+  as_of: '2026-03-23T00:00:00'
+  forecast_date: '2026-03-30T00:00:00'
+  payload:
+    point_forecast: 98.96951389790125
+    quantiles:
+      '0.05': 90.75229789439923
+      '0.1': 92.63409261144558
+      '0.2': 94.65198037619004
+      '0.3': 96.36964931204513
+      '0.4': 97.80714503789785
+      '0.5': 98.96951389790125
+      '0.6': 100.30207955908911
+      '0.7': 101.50034278670235
+      '0.8': 103.52850574500513
+      '0.9': 105.37339453958798
+      '0.95': 107.43190484035638
+  metadata:
+    anchor_point: 98.27453027515304
+    anchor_half_width: 6.949836227482145
+    signal_loc: 0.5
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 98.96951389790125
+    final_half_width: 8.339803472978573
+    rationale: The global oil market is currently facing a supply crisis unprecedented
+      in scale due to the closure of the Strait of Hormuz. The statistical anchors,
+      which derive from historical price time-series, are significantly under-prepared
+      for the structural disruption of ~8 mb/d of global supply. My signals reflect
+      a consistent, albeit moderating, bullish bias relative to the anchor, and significantly
+      expanded uncertainty (width) given the potential for volatile policy responses,
+      conflict escalation, or unexpected supply relief.
+    horizon_rationale: The Strait of Hormuz closure is a historic supply shock of
+      8 mb/d. While SPR releases (400m barrels) provide some cushion, the immediate
+      physical scarcity and extreme backwardation warrant a upward bias relative to
+      the statistical baseline, with heightened uncertainty regarding the effectiveness
+      of the SPR release and the duration of the maritime disruption.
+    key_signals:
+    - Closure of the Strait of Hormuz causing ~8 mb/d supply disruption.
+    - IEA-coordinated release of 400 million barrels of emergency reserves.
+    - Deep backwardation and extreme physical premiums in the prompt market.
+    langfuse_trace_id: 4f4b0e1a9ad0f1ea19d80d32fce9d148
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/4f4b0e1a9ad0f1ea19d80d32fce9d148
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:38.303124'
+  as_of: '2026-03-23T00:00:00'
+  forecast_date: '2026-04-06T00:00:00'
+  payload:
+    point_forecast: 98.89535156550345
+    quantiles:
+      '0.05': 87.11009385971641
+      '0.1': 90.12897542801481
+      '0.2': 92.5667024827101
+      '0.3': 95.10165001426651
+      '0.4': 96.67051338991554
+      '0.5': 98.89535156550345
+      '0.6': 101.17152063148117
+      '0.7': 103.5843261401233
+      '0.8': 106.05376088990157
+      '0.9': 108.69327730265957
+      '0.95': 111.33317421266298
+  metadata:
+    anchor_point: 98.12021299420915
+    anchor_half_width: 9.689232141178628
+    signal_loc: 0.4
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 98.89535156550345
+    final_half_width: 12.111540176473286
+    rationale: The global oil market is currently facing a supply crisis unprecedented
+      in scale due to the closure of the Strait of Hormuz. The statistical anchors,
+      which derive from historical price time-series, are significantly under-prepared
+      for the structural disruption of ~8 mb/d of global supply. My signals reflect
+      a consistent, albeit moderating, bullish bias relative to the anchor, and significantly
+      expanded uncertainty (width) given the potential for volatile policy responses,
+      conflict escalation, or unexpected supply relief.
+    horizon_rationale: Over 10 business days, the market will grapple with the logistical
+      reality of the chokepoint closure. While the statistical anchor models mean-reversion,
+      the geopolitical risk remains elevated. I expect prices to remain supported
+      above the baseline as the physical supply deficit impacts global inventories.
+    key_signals:
+    - Closure of the Strait of Hormuz causing ~8 mb/d supply disruption.
+    - IEA-coordinated release of 400 million barrels of emergency reserves.
+    - Deep backwardation and extreme physical premiums in the prompt market.
+    langfuse_trace_id: 4f4b0e1a9ad0f1ea19d80d32fce9d148
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/4f4b0e1a9ad0f1ea19d80d32fce9d148
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:38.303124'
+  as_of: '2026-03-23T00:00:00'
+  forecast_date: '2026-04-21T00:00:00'
+  payload:
+    point_forecast: 98.93738128724408
+    quantiles:
+      '0.05': 78.34355997388315
+      '0.1': 84.58201519344715
+      '0.2': 89.58940073767587
+      '0.3': 92.73864025216051
+      '0.4': 96.16219982420769
+      '0.5': 98.93738128724408
+      '0.6': 101.98049822995839
+      '0.7': 105.13394401022235
+      '0.8': 109.26765966330727
+      '0.9': 113.46244794843739
+      '0.95': 116.85458978688541
+  metadata:
+    anchor_point: 98.34490390550559
+    anchor_half_width: 14.811934543462407
+    signal_loc: 0.2
+    signal_width: 0.6
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 98.93738128724408
+    final_half_width: 19.25551490650113
+    rationale: The global oil market is currently facing a supply crisis unprecedented
+      in scale due to the closure of the Strait of Hormuz. The statistical anchors,
+      which derive from historical price time-series, are significantly under-prepared
+      for the structural disruption of ~8 mb/d of global supply. My signals reflect
+      a consistent, albeit moderating, bullish bias relative to the anchor, and significantly
+      expanded uncertainty (width) given the potential for volatile policy responses,
+      conflict escalation, or unexpected supply relief.
+    horizon_rationale: By 21 business days, the impact of the 400m barrel SPR release
+      may be more fully absorbed into the market, and potential demand destruction
+      (noted by the IEA) could begin to counteract supply constraints. Uncertainty
+      is at its maximum as the evolution of the conflict, potential military re-opening
+      of the Strait, and further economic feedback loops become critical variables.
+    key_signals:
+    - Closure of the Strait of Hormuz causing ~8 mb/d supply disruption.
+    - IEA-coordinated release of 400 million barrels of emergency reserves.
+    - Deep backwardation and extreme physical premiums in the prompt market.
+    langfuse_trace_id: 4f4b0e1a9ad0f1ea19d80d32fce9d148
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/4f4b0e1a9ad0f1ea19d80d32fce9d148
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:41.461765'
+  as_of: '2026-03-30T00:00:00'
+  forecast_date: '2026-04-06T00:00:00'
+  payload:
+    point_forecast: 100.01292998742946
+    quantiles:
+      '0.05': 91.42084808635202
+      '0.1': 93.38848947766832
+      '0.2': 95.49843242360978
+      '0.3': 97.29446068543395
+      '0.4': 98.79753435463185
+      '0.5': 100.01292998742946
+      '0.6': 101.40628672706123
+      '0.7': 102.65921421324566
+      '0.8': 104.77990110270338
+      '0.9': 106.7089529390772
+      '0.95': 108.86137160385076
+  metadata:
+    anchor_point: 99.59435742300948
+    anchor_half_width: 6.976209406999494
+    signal_loc: 0.3
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 100.01292998742946
+    final_half_width: 8.720261758749368
+    rationale: The forecast is driven by the unprecedented supply disruption (8 million
+      bpd loss) resulting from the conflict in the Strait of Hormuz. The current price
+      is heavily influenced by a geopolitical risk premium. Near-term signals reflect
+      upside risk as the market reacts to ongoing instability; longer-term signals
+      account for potential moderation as reserve releases take effect and price-driven
+      demand destruction becomes more pronounced.
+    horizon_rationale: Market is currently dominated by a massive geopolitical risk
+      premium due to the de facto closure of the Strait of Hormuz. With an 8 million
+      bpd supply disruption reported, the immediate risk remains skewed to the upside
+      if further escalation occurs or if the IEA's 400 million barrel reserve release
+      proves insufficient to ease physical supply fears in the near term. The anchor,
+      while statistically sound, likely underestimates the volatility of an active
+      conflict scenario.
+    key_signals:
+    - De facto closure of the Strait of Hormuz (approx. 20% of global oil supply)
+    - IEA-reported 8 million bpd global supply disruption in March
+    - IEA coordinated release of 400 million barrels of emergency reserves
+    - Downward revision of global oil demand growth to 640,000 bpd
+    langfuse_trace_id: cacbc603146d4e0a2f75eaf4328670dc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/cacbc603146d4e0a2f75eaf4328670dc
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:41.461765'
+  as_of: '2026-03-30T00:00:00'
+  forecast_date: '2026-04-13T00:00:00'
+  payload:
+    point_forecast: 99.82849457044006
+    quantiles:
+      '0.05': 88.47171348082607
+      '0.1': 91.38083757149403
+      '0.2': 93.72993618329696
+      '0.3': 96.17272062706921
+      '0.4': 97.68454483673497
+      '0.5': 99.82849457044006
+      '0.6': 102.0219089573454
+      '0.7': 104.34699209574875
+      '0.8': 106.72664560595979
+      '0.9': 109.2701971201041
+      '0.95': 111.81411529775545
+  metadata:
+    anchor_point: 99.4394545401579
+    anchor_half_width: 9.72600075705391
+    signal_loc: 0.2
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 99.82849457044006
+    final_half_width: 11.671200908464693
+    rationale: The forecast is driven by the unprecedented supply disruption (8 million
+      bpd loss) resulting from the conflict in the Strait of Hormuz. The current price
+      is heavily influenced by a geopolitical risk premium. Near-term signals reflect
+      upside risk as the market reacts to ongoing instability; longer-term signals
+      account for potential moderation as reserve releases take effect and price-driven
+      demand destruction becomes more pronounced.
+    horizon_rationale: Over a two-week horizon, the market will likely continue to
+      trade on news regarding the Strait of Hormuz and the impact of the reserve releases.
+      While the IEA move provides some relief, it is a band-aid on a structural supply
+      crisis. The risk of supply scarcity persists, keeping prices supported above
+      the mechanical trend, though potential demand destruction from current price
+      levels acts as a dampener.
+    key_signals:
+    - De facto closure of the Strait of Hormuz (approx. 20% of global oil supply)
+    - IEA-reported 8 million bpd global supply disruption in March
+    - IEA coordinated release of 400 million barrels of emergency reserves
+    - Downward revision of global oil demand growth to 640,000 bpd
+    langfuse_trace_id: cacbc603146d4e0a2f75eaf4328670dc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/cacbc603146d4e0a2f75eaf4328670dc
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:41.461765'
+  as_of: '2026-03-30T00:00:00'
+  forecast_date: '2026-04-28T00:00:00'
+  payload:
+    point_forecast: 99.36763525167856
+    quantiles:
+      '0.05': 78.69566468002324
+      '0.1': 84.95779353649479
+      '0.2': 89.98418106487794
+      '0.3': 93.14537128673753
+      '0.4': 96.58192255358537
+      '0.5': 99.36763525167856
+      '0.6': 102.42230018873337
+      '0.7': 105.58771263827397
+      '0.8': 109.7371148804272
+      '0.9': 113.94782151253122
+      '0.95': 117.35283582203114
+  metadata:
+    anchor_point: 99.66499810661709
+    anchor_half_width: 14.868142746926111
+    signal_loc: -0.1
+    signal_width: 0.6
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 99.36763525167856
+    final_half_width: 19.328585571003945
+    rationale: The forecast is driven by the unprecedented supply disruption (8 million
+      bpd loss) resulting from the conflict in the Strait of Hormuz. The current price
+      is heavily influenced by a geopolitical risk premium. Near-term signals reflect
+      upside risk as the market reacts to ongoing instability; longer-term signals
+      account for potential moderation as reserve releases take effect and price-driven
+      demand destruction becomes more pronounced.
+    horizon_rationale: By the three-week horizon, the immediate shock of the supply
+      disruption may be partially digested by the market. If the situation does not
+      escalate into a broader conflict, the combination of demand destruction (weakened
+      consumption growth reported by the IEA) and the impact of the strategic reserve
+      releases may start to exert downward pressure on prices, potentially bringing
+      them closer to or slightly below the trend-following anchor.
+    key_signals:
+    - De facto closure of the Strait of Hormuz (approx. 20% of global oil supply)
+    - IEA-reported 8 million bpd global supply disruption in March
+    - IEA coordinated release of 400 million barrels of emergency reserves
+    - Downward revision of global oil demand growth to 640,000 bpd
+    langfuse_trace_id: cacbc603146d4e0a2f75eaf4328670dc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/cacbc603146d4e0a2f75eaf4328670dc
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:44.726504'
+  as_of: '2026-04-06T00:00:00'
+  forecast_date: '2026-04-13T00:00:00'
+  payload:
+    point_forecast: 111.7741616760715
+    quantiles:
+      '0.05': 103.49910488444368
+      '0.1': 105.39414550977317
+      '0.2': 107.42623713852856
+      '0.3': 109.15599670519421
+      '0.4': 110.60361092929202
+      '0.5': 111.7741616760715
+      '0.6': 113.11610723527345
+      '0.7': 114.32280500926316
+      '0.8': 116.3652441584201
+      '0.9': 118.22311908137509
+      '0.95': 120.29611918721993
+  metadata:
+    anchor_point: 111.4942114376919
+    anchor_half_width: 6.998755959490104
+    signal_loc: 0.2
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 111.7741616760715
+    final_half_width: 8.398507151388126
+    rationale: The WTI price is currently driven by an acute geopolitical risk premium
+      due to the conflict between the US and Iran and the closure of the Strait of
+      Hormuz. The forecast is skewed by the expectation that the immediate panic may
+      sustain prices near these elevated levels in the short term, but fundamental
+      demand concerns and the exhaustion of initial supply-side shock momentum increase
+      the probability of a correction over the next 21 days.
+    horizon_rationale: The market is currently reacting to an extreme geopolitical
+      shock involving the closure of the Strait of Hormuz. While the IEA has released
+      reserves to stabilize prices, the situation remains highly fluid and dependent
+      on daily news cycles. The positive signal_loc reflects the potential for further
+      risk-premium spikes if conflict intensifies, while the increased signal_width
+      accounts for heightened volatility above the statistical baseline.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global seaborne oil)
+    - IEA release of 400 million barrels of emergency reserves
+    - 'Polarized demand forecasts: IEA (bearish growth) vs OPEC (bullish growth)'
+    - OPEC+ unwinding of voluntary production cuts
+    langfuse_trace_id: 2ef0185e6b490fe4df3121d2aad28378
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2ef0185e6b490fe4df3121d2aad28378
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:44.726504'
+  as_of: '2026-04-06T00:00:00'
+  forecast_date: '2026-04-20T00:00:00'
+  payload:
+    point_forecast: 111.53395660939371
+    quantiles:
+      '0.05': 99.66574275475072
+      '0.1': 102.70587415864966
+      '0.2': 105.16076031613831
+      '0.3': 107.71355128311374
+      '0.4': 109.29345785077214
+      '0.5': 111.53395660939371
+      '0.6': 113.82614757532244
+      '0.7': 116.25593676458763
+      '0.8': 118.74275380687122
+      '0.9': 121.40084971291742
+      '0.95': 124.05932879452013
+  metadata:
+    anchor_point: 111.33880792107556
+    anchor_half_width: 9.75743441590776
+    signal_loc: 0.1
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 111.53395660939371
+    final_half_width: 12.1967930198847
+    rationale: The WTI price is currently driven by an acute geopolitical risk premium
+      due to the conflict between the US and Iran and the closure of the Strait of
+      Hormuz. The forecast is skewed by the expectation that the immediate panic may
+      sustain prices near these elevated levels in the short term, but fundamental
+      demand concerns and the exhaustion of initial supply-side shock momentum increase
+      the probability of a correction over the next 21 days.
+    horizon_rationale: By the 10-day horizon, the impact of the reserve release should
+      be more established, potentially cooling the rapid upward momentum. However,
+      the ongoing blockade remains a dominant factor. The signal_loc remains modestly
+      positive due to supply-side uncertainty, and the wider uncertainty reflects
+      the ongoing disagreement between IEA and OPEC regarding demand destruction vs.
+      support.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global seaborne oil)
+    - IEA release of 400 million barrels of emergency reserves
+    - 'Polarized demand forecasts: IEA (bearish growth) vs OPEC (bullish growth)'
+    - OPEC+ unwinding of voluntary production cuts
+    langfuse_trace_id: 2ef0185e6b490fe4df3121d2aad28378
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2ef0185e6b490fe4df3121d2aad28378
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:44.726504'
+  as_of: '2026-04-06T00:00:00'
+  forecast_date: '2026-05-05T00:00:00'
+  payload:
+    point_forecast: 110.96843261041035
+    quantiles:
+      '0.05': 90.22965187833888
+      '0.1': 96.51201943590557
+      '0.2': 101.5546518479548
+      '0.3': 104.7260587845246
+      '0.4': 108.17371671102157
+      '0.5': 110.96843261041035
+      '0.6': 114.03296998094964
+      '0.7': 117.20861279110362
+      '0.8': 121.37142557041237
+      '0.9': 125.59574087057159
+      '0.95': 129.0117599147894
+  metadata:
+    anchor_point: 111.56508042635573
+    anchor_half_width: 14.916195398634805
+    signal_loc: -0.2
+    signal_width: 0.6
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 110.96843261041035
+    final_half_width: 19.391054018225248
+    rationale: The WTI price is currently driven by an acute geopolitical risk premium
+      due to the conflict between the US and Iran and the closure of the Strait of
+      Hormuz. The forecast is skewed by the expectation that the immediate panic may
+      sustain prices near these elevated levels in the short term, but fundamental
+      demand concerns and the exhaustion of initial supply-side shock momentum increase
+      the probability of a correction over the next 21 days.
+    horizon_rationale: Over a one-month horizon, the market may begin to price in
+      the fundamental 'demand destruction' noted by the IEA, as record-high energy
+      prices weigh on economic activity. If the conflict enters a stalemate or the
+      global economic impact deepens, a price correction below the current inflated
+      levels is increasingly possible. The wide signal_width highlights the extreme
+      unpredictability of both the geopolitical resolution and the corresponding demand
+      response.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global seaborne oil)
+    - IEA release of 400 million barrels of emergency reserves
+    - 'Polarized demand forecasts: IEA (bearish growth) vs OPEC (bullish growth)'
+    - OPEC+ unwinding of voluntary production cuts
+    langfuse_trace_id: 2ef0185e6b490fe4df3121d2aad28378
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/2ef0185e6b490fe4df3121d2aad28378
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:47.737029'
+  as_of: '2026-04-13T00:00:00'
+  forecast_date: '2026-04-20T00:00:00'
+  payload:
+    point_forecast: 96.80611465978218
+    quantiles:
+      '0.05': 88.11432628897904
+      '0.1': 90.10480109588343
+      '0.2': 92.23922879009481
+      '0.3': 94.05609898983064
+      '0.4': 95.57661501712275
+      '0.5': 96.80611465978218
+      '0.6': 98.21564055180059
+      '0.7': 99.48310758473376
+      '0.8': 101.62840390012292
+      '0.9': 103.57984134114263
+      '0.95': 105.75723766196127
+  metadata:
+    anchor_point: 96.52382807781447
+    anchor_half_width: 7.0571645491928905
+    signal_loc: 0.2
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.80611465978218
+    final_half_width: 8.821455686491113
+    rationale: The market is currently driven primarily by a volatile geopolitical
+      risk premium following the breakdown of recent ceasefire talks. My signals reflect
+      a front-loaded bullish bias that decays as the market attempts to find a new
+      equilibrium beyond the immediate shock. I have increased the signal width for
+      the shorter horizons to account for the extreme volatility observed in early
+      April.
+    horizon_rationale: Following the collapse of ceasefire negotiations over the weekend,
+      the geopolitical risk premium is expected to persist and likely tighten in the
+      very short term. The anchor, while statistically sound, likely underestimates
+      the immediate supply-side fears.
+    key_signals:
+    - Collapse of weekend ceasefire negotiations
+    - Extreme price volatility (observed $85-$112 range in April)
+    - Persistence of geopolitical risk premium
+    langfuse_trace_id: 60a012986125cd75c35db27dd0c56571
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/60a012986125cd75c35db27dd0c56571
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:47.737029'
+  as_of: '2026-04-13T00:00:00'
+  forecast_date: '2026-04-27T00:00:00'
+  payload:
+    point_forecast: 96.56390494552626
+    quantiles:
+      '0.05': 85.55402497870678
+      '0.1': 88.37428776215768
+      '0.2': 90.65163145154384
+      '0.3': 93.01979927115093
+      '0.4': 94.48544371282938
+      '0.5': 96.56390494552626
+      '0.6': 98.6903198976827
+      '0.7': 100.9443816837382
+      '0.8': 103.25134694997935
+      '0.9': 105.71720383664254
+      '0.95': 108.18341618680975
+  metadata:
+    anchor_point: 96.3671276306732
+    anchor_half_width: 9.838865742653468
+    signal_loc: 0.1
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.56390494552626
+    final_half_width: 11.314695604051487
+    rationale: The market is currently driven primarily by a volatile geopolitical
+      risk premium following the breakdown of recent ceasefire talks. My signals reflect
+      a front-loaded bullish bias that decays as the market attempts to find a new
+      equilibrium beyond the immediate shock. I have increased the signal width for
+      the shorter horizons to account for the extreme volatility observed in early
+      April.
+    horizon_rationale: Over a two-week window, the market may begin to consolidate
+      as traders await clarity on whether diplomatic channels will reopen. A slight
+      bullish bias relative to the anchor persists due to continued geopolitical uncertainty,
+      but the expectation for immediate price spikes moderates.
+    key_signals:
+    - Collapse of weekend ceasefire negotiations
+    - Extreme price volatility (observed $85-$112 range in April)
+    - Persistence of geopolitical risk premium
+    langfuse_trace_id: 60a012986125cd75c35db27dd0c56571
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/60a012986125cd75c35db27dd0c56571
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:47.737029'
+  as_of: '2026-04-13T00:00:00'
+  forecast_date: '2026-05-12T00:00:00'
+  payload:
+    point_forecast: 96.59528850840104
+    quantiles:
+      '0.05': 79.70494196526084
+      '0.1': 84.82150916029303
+      '0.2': 88.92839519325392
+      '0.3': 91.51129352657517
+      '0.4': 94.31917977085592
+      '0.5': 96.59528850840104
+      '0.6': 99.09114874490794
+      '0.7': 101.67749691328335
+      '0.8': 105.06782883998166
+      '0.9': 108.50825044667906
+      '0.95': 111.2903689424679
+  metadata:
+    anchor_point: 96.59528850840104
+    anchor_half_width: 15.040679512955741
+    signal_loc: 0.0
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.59528850840104
+    final_half_width: 15.792713488603528
+    rationale: The market is currently driven primarily by a volatile geopolitical
+      risk premium following the breakdown of recent ceasefire talks. My signals reflect
+      a front-loaded bullish bias that decays as the market attempts to find a new
+      equilibrium beyond the immediate shock. I have increased the signal width for
+      the shorter horizons to account for the extreme volatility observed in early
+      April.
+    horizon_rationale: At a three-week horizon, the baseline statistical model is
+      better suited to capture the mean-reverting nature of WTI once the initial shock
+      of the failed negotiations is priced in, provided no new escalations occur.
+    key_signals:
+    - Collapse of weekend ceasefire negotiations
+    - Extreme price volatility (observed $85-$112 range in April)
+    - Persistence of geopolitical risk premium
+    langfuse_trace_id: 60a012986125cd75c35db27dd0c56571
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/60a012986125cd75c35db27dd0c56571
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:50.647450'
+  as_of: '2026-04-20T00:00:00'
+  forecast_date: '2026-04-27T00:00:00'
+  payload:
+    point_forecast: 84.22887798715439
+    quantiles:
+      '0.05': 75.49973689229046
+      '0.1': 77.49876571052606
+      '0.2': 79.64236604968556
+      '0.3': 81.46704419967624
+      '0.4': 82.99409460322954
+      '0.5': 84.22887798715439
+      '0.6': 85.6444612783472
+      '0.7': 86.91737521637256
+      '0.8': 89.07189088431369
+      '0.9': 91.03171457464671
+      '0.95': 93.21846819691737
+  metadata:
+    anchor_point: 83.80362843584335
+    anchor_half_width: 7.087492521850763
+    signal_loc: 0.3
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 84.22887798715439
+    final_half_width: 8.859365652313453
+    rationale: The forecast is driven by the unprecedented structural supply deficit
+      caused by the closure of the Strait of Hormuz and the damage to the Saudi bypass
+      pipeline. Although IEA and EIA reports signal significant demand destruction,
+      the physical reality of the supply shock outweighs these factors in the near
+      term. The baseline statistical anchor fails to capture the 'new normal' of current
+      geopolitical risk, leading to positive loc signals in the short term, which
+      then moderate as the horizon extends and demand destruction begins to exert
+      downward pressure.
+    horizon_rationale: The market is in an acute supply-side crisis following the
+      closure of the Strait of Hormuz and damage to key bypass infrastructure. While
+      the statistical anchor reflects recent price mean-reversion, the physical reality
+      of a 7-10 mb/d supply deficit and the geopolitical deadlock suggest significant
+      upside pressure remains in the short term. The signal width is increased due
+      to extreme sensitivity to potential escalation or diplomatic breakthroughs.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global oil supply).
+    - Damage to the critical Saudi bypass pipeline on April 8.
+    - IEA's massive downward revision of 2026 global oil demand growth.
+    - Largest coordinated SPR release in history (426 million barrels).
+    langfuse_trace_id: 62f78a5116eb2549d2a760de46a7c2cf
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/62f78a5116eb2549d2a760de46a7c2cf
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:50.647450'
+  as_of: '2026-04-20T00:00:00'
+  forecast_date: '2026-05-04T00:00:00'
+  payload:
+    point_forecast: 84.0415004928141
+    quantiles:
+      '0.05': 72.50355827390997
+      '0.1': 75.45908813760042
+      '0.2': 77.84565910657655
+      '0.3': 80.32741036541323
+      '0.4': 81.86335089632794
+      '0.5': 84.0415004928141
+      '0.6': 86.26990379288044
+      '0.7': 88.63207619836774
+      '0.8': 91.04968947145763
+      '0.9': 93.63381521707421
+      '0.95': 96.21831347514173
+  metadata:
+    anchor_point: 83.64625457279357
+    anchor_half_width: 9.881148000513228
+    signal_loc: 0.2
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 84.0415004928141
+    final_half_width: 11.857377600615873
+    rationale: The forecast is driven by the unprecedented structural supply deficit
+      caused by the closure of the Strait of Hormuz and the damage to the Saudi bypass
+      pipeline. Although IEA and EIA reports signal significant demand destruction,
+      the physical reality of the supply shock outweighs these factors in the near
+      term. The baseline statistical anchor fails to capture the 'new normal' of current
+      geopolitical risk, leading to positive loc signals in the short term, which
+      then moderate as the horizon extends and demand destruction begins to exert
+      downward pressure.
+    horizon_rationale: Supply constraints persist, but the impact of SPR releases
+      and mounting demand destruction (confirmed by IEA/EIA downgrades) will likely
+      start to temper the most extreme price spikes. I remain moderately bullish relative
+      to the anchor, as the physical shortage remains the dominant market theme despite
+      demand-side cooling.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global oil supply).
+    - Damage to the critical Saudi bypass pipeline on April 8.
+    - IEA's massive downward revision of 2026 global oil demand growth.
+    - Largest coordinated SPR release in history (426 million barrels).
+    langfuse_trace_id: 62f78a5116eb2549d2a760de46a7c2cf
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/62f78a5116eb2549d2a760de46a7c2cf
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:50.647450'
+  as_of: '2026-04-20T00:00:00'
+  forecast_date: '2026-05-19T00:00:00'
+  payload:
+    point_forecast: 83.57328963720674
+    quantiles:
+      '0.05': 64.99483992283744
+      '0.1': 70.62278166460733
+      '0.2': 75.14012981084755
+      '0.3': 77.98117553364393
+      '0.4': 81.06969555067259
+      '0.5': 83.57328963720674
+      '0.6': 86.31859825355777
+      '0.7': 89.16343860465929
+      '0.8': 92.89261675114125
+      '0.9': 96.67689078323424
+      '0.95': 99.73706769798332
+  metadata:
+    anchor_point: 83.87539596568627
+    anchor_half_width: 15.105316423976468
+    signal_loc: -0.1
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 83.57328963720674
+    final_half_width: 17.37111388757294
+    rationale: The forecast is driven by the unprecedented structural supply deficit
+      caused by the closure of the Strait of Hormuz and the damage to the Saudi bypass
+      pipeline. Although IEA and EIA reports signal significant demand destruction,
+      the physical reality of the supply shock outweighs these factors in the near
+      term. The baseline statistical anchor fails to capture the 'new normal' of current
+      geopolitical risk, leading to positive loc signals in the short term, which
+      then moderate as the horizon extends and demand destruction begins to exert
+      downward pressure.
+    horizon_rationale: Over a one-month horizon, the market's internal pressure to
+      balance through demand destruction and potential alternative supply arrangements
+      may begin to dominate. While the risk of a prolonged, high-price environment
+      remains, the probability of price moderation increases as the market adjusts
+      to the new structural supply floor.
+    key_signals:
+    - Closure of the Strait of Hormuz (approx. 20% of global oil supply).
+    - Damage to the critical Saudi bypass pipeline on April 8.
+    - IEA's massive downward revision of 2026 global oil demand growth.
+    - Largest coordinated SPR release in history (426 million barrels).
+    langfuse_trace_id: 62f78a5116eb2549d2a760de46a7c2cf
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/62f78a5116eb2549d2a760de46a7c2cf
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:53.142401'
+  as_of: '2026-04-27T00:00:00'
+  forecast_date: '2026-05-04T00:00:00'
+  payload:
+    point_forecast: 94.35359579139893
+    quantiles:
+      '0.05': 87.36490707891363
+      '0.1': 88.96536123426645
+      '0.2': 90.68156164064759
+      '0.3': 92.14242788764426
+      '0.4': 93.36500864361214
+      '0.5': 94.35359579139893
+      '0.6': 95.48693421052047
+      '0.7': 96.5060492842678
+      '0.8': 98.23098867587326
+      '0.9': 99.80005458444822
+      '0.95': 101.55080419324321
+  metadata:
+    anchor_point: 94.35359579139893
+    anchor_half_width: 7.092948557164789
+    signal_loc: 0.0
+    signal_width: 0.0
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 94.35359579139893
+    final_half_width: 7.092948557164789
+    rationale: The market is currently navigating a period of high sensitivity to
+      potential geopolitical shifts. However, the provided news briefing was extremely
+      sparse, lacking actionable intelligence or updates on inventory levels, OPEC+
+      production quotas, or confirmed changes to risk premiums. Consequently, the
+      signals remain at 0, reflecting reliance on the statistical anchor which already
+      captures current price levels and historical volatility patterns.
+    horizon_rationale: The current market environment reflects significant geopolitical
+      uncertainty, which is already incorporated into the elevated price level near
+      $94/bbl. The provided news briefing lacks specific catalysts or new information
+      regarding supply/demand or geopolitical developments to justify deviating from
+      the statistical anchor's baseline.
+    key_signals:
+    - Absence of actionable geopolitical or fundamental news updates to differentiate
+      from the statistical baseline.
+    - Current WTI price near $94/bbl remains highly sensitive to geopolitical risk
+      premiums.
+    langfuse_trace_id: c09d7ea635729e2418d79a9403cdbe44
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/c09d7ea635729e2418d79a9403cdbe44
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:53.142401'
+  as_of: '2026-04-27T00:00:00'
+  forecast_date: '2026-05-11T00:00:00'
+  payload:
+    point_forecast: 94.19610078009374
+    quantiles:
+      '0.05': 84.57374722770084
+      '0.1': 87.03858478222503
+      '0.2': 89.0289249317657
+      '0.3': 91.09864304861469
+      '0.4': 92.37957881198646
+      '0.5': 94.19610078009374
+      '0.6': 96.05453307276248
+      '0.7': 98.02452543414422
+      '0.8': 100.04075408438946
+      '0.9': 102.19584994779427
+      '0.95': 104.35125647721188
+  metadata:
+    anchor_point: 94.19610078009374
+    anchor_half_width: 9.88875462475552
+    signal_loc: 0.0
+    signal_width: 0.0
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 94.19610078009374
+    final_half_width: 9.88875462475552
+    rationale: The market is currently navigating a period of high sensitivity to
+      potential geopolitical shifts. However, the provided news briefing was extremely
+      sparse, lacking actionable intelligence or updates on inventory levels, OPEC+
+      production quotas, or confirmed changes to risk premiums. Consequently, the
+      signals remain at 0, reflecting reliance on the statistical anchor which already
+      captures current price levels and historical volatility patterns.
+    horizon_rationale: Similar to the short-term horizon, there is insufficient evidence
+      in the provided intelligence to warrant a shift in price trajectory away from
+      the statistical baseline. The market appears to be in a holding pattern, pricing
+      in current risks without clear direction.
+    key_signals:
+    - Absence of actionable geopolitical or fundamental news updates to differentiate
+      from the statistical baseline.
+    - Current WTI price near $94/bbl remains highly sensitive to geopolitical risk
+      premiums.
+    langfuse_trace_id: c09d7ea635729e2418d79a9403cdbe44
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/c09d7ea635729e2418d79a9403cdbe44
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:53.142401'
+  as_of: '2026-04-27T00:00:00'
+  forecast_date: '2026-05-26T00:00:00'
+  payload:
+    point_forecast: 94.42541856873257
+    quantiles:
+      '0.05': 78.25780846088618
+      '0.1': 83.15543819800217
+      '0.2': 87.08659094070528
+      '0.3': 89.55896728269953
+      '0.4': 92.24670432283466
+      '0.5': 94.42541856873257
+      '0.6': 96.81448116638005
+      '0.7': 99.2901597252915
+      '0.8': 102.53541964858796
+      '0.9': 105.82862591890482
+      '0.95': 108.49169781022785
+  metadata:
+    anchor_point: 94.42541856873257
+    anchor_half_width: 15.116944674670833
+    signal_loc: 0.0
+    signal_width: 0.0
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 94.42541856873257
+    final_half_width: 15.116944674670833
+    rationale: The market is currently navigating a period of high sensitivity to
+      potential geopolitical shifts. However, the provided news briefing was extremely
+      sparse, lacking actionable intelligence or updates on inventory levels, OPEC+
+      production quotas, or confirmed changes to risk premiums. Consequently, the
+      signals remain at 0, reflecting reliance on the statistical anchor which already
+      captures current price levels and historical volatility patterns.
+    horizon_rationale: At the 21-day horizon, the statistical anchor accounts for
+      historical volatility. Without specific fundamental triggers or updated outlooks
+      in the provided briefing, I am maintaining the model's baseline as the most
+      objective representation of the expected outcome.
+    key_signals:
+    - Absence of actionable geopolitical or fundamental news updates to differentiate
+      from the statistical baseline.
+    - Current WTI price near $94/bbl remains highly sensitive to geopolitical risk
+      premiums.
+    langfuse_trace_id: c09d7ea635729e2418d79a9403cdbe44
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/c09d7ea635729e2418d79a9403cdbe44
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:56.270775'
+  as_of: '2026-05-04T00:00:00'
+  forecast_date: '2026-05-11T00:00:00'
+  payload:
+    point_forecast: 102.31971168140855
+    quantiles:
+      '0.05': 93.92138450797877
+      '0.1': 95.8446548346018
+      '0.2': 97.90701776145713
+      '0.3': 99.66254490018635
+      '0.4': 101.13172368421405
+      '0.5': 102.31971168140855
+      '0.6': 103.68164769452586
+      '0.7': 104.90632118748223
+      '0.8': 106.97918577782508
+      '0.9': 108.86473675870448
+      '0.95': 110.96861756071344
+  metadata:
+    anchor_point: 101.89353085509018
+    anchor_half_width: 7.103013771972776
+    signal_loc: 0.3
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 102.31971168140855
+    final_half_width: 8.52361652636733
+    rationale: The WTI forecast is driven by an unprecedented geopolitical supply
+      shock in the Middle East. With the Strait of Hormuz effectively blocked and
+      major production shut-ins in place, the physical market is experiencing severe
+      tightness that exceeds historical volatility models. The 'symbolic' OPEC+ production
+      increase does little to mitigate this. Consequently, I have assigned a positive
+      signal_loc across all horizons to reflect this persistent risk premium, and
+      increased signal_width to account for the highly binary and unpredictable nature
+      of the ongoing conflict.
+    horizon_rationale: The market is experiencing an extreme supply-side shock with
+      the Strait of Hormuz blocked and significant Saudi/OPEC production shut-ins.
+      While the statistical anchor reflects recent trend-following, it likely underestimates
+      the risk premium given that the blockade persists and reports suggest physical
+      tightness is worsening, outweighing the 'symbolic' OPEC+ production increases.
+    key_signals:
+    - Strait of Hormuz blockade/Persian Gulf production shut-ins of 9.1 million bpd
+    - Saudi backup pipeline strike on April 8
+    - U.S. naval blockade of Iranian ports initiated April 13
+    - Reuters poll projecting a 1.5 million bpd global oil deficit
+    langfuse_trace_id: 11532282439b03072d162fd6eedee713
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/11532282439b03072d162fd6eedee713
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:56.270775'
+  as_of: '2026-05-04T00:00:00'
+  forecast_date: '2026-05-18T00:00:00'
+  payload:
+    point_forecast: 102.52803532842658
+    quantiles:
+      '0.05': 90.4830251943128
+      '0.1': 93.56844428243238
+      '0.2': 96.05989994772426
+      '0.3': 98.65071887330879
+      '0.4': 100.25416070975272
+      '0.5': 102.52803532842658
+      '0.6': 104.8543721936099
+      '0.7': 107.32035703066349
+      '0.8': 109.84421924302785
+      '0.9': 112.541911795412
+      '0.95': 115.23999323137357
+  metadata:
+    anchor_point: 101.73581235124064
+    anchor_half_width: 9.902787214824308
+    signal_loc: 0.4
+    signal_width: 0.5
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 102.52803532842658
+    final_half_width: 12.378484018530385
+    rationale: The WTI forecast is driven by an unprecedented geopolitical supply
+      shock in the Middle East. With the Strait of Hormuz effectively blocked and
+      major production shut-ins in place, the physical market is experiencing severe
+      tightness that exceeds historical volatility models. The 'symbolic' OPEC+ production
+      increase does little to mitigate this. Consequently, I have assigned a positive
+      signal_loc across all horizons to reflect this persistent risk premium, and
+      increased signal_width to account for the highly binary and unpredictable nature
+      of the ongoing conflict.
+    horizon_rationale: Over a two-week horizon, the risk of escalation or prolonged
+      pipeline outages remains acute. Given that the Strait of Hormuz closure is a
+      binary threat to global supply, the upside skew on price relative to the statistical
+      baseline is significant. The 'symbolic' production increases are insufficient
+      to offset the 9.1 million bpd of projected supply loss.
+    key_signals:
+    - Strait of Hormuz blockade/Persian Gulf production shut-ins of 9.1 million bpd
+    - Saudi backup pipeline strike on April 8
+    - U.S. naval blockade of Iranian ports initiated April 13
+    - Reuters poll projecting a 1.5 million bpd global oil deficit
+    langfuse_trace_id: 11532282439b03072d162fd6eedee713
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/11532282439b03072d162fd6eedee713
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:17:56.270775'
+  as_of: '2026-05-04T00:00:00'
+  forecast_date: '2026-06-02T00:00:00'
+  payload:
+    point_forecast: 103.4792951824818
+    quantiles:
+      '0.05': 82.43157670130202
+      '0.1': 88.80753030509678
+      '0.2': 93.92528089921687
+      '0.3': 97.14393108181679
+      '0.4': 100.64294746054237
+      '0.5': 103.4792951824818
+      '0.6': 106.5894838036681
+      '0.7': 109.81243296005408
+      '0.8': 114.03725758213285
+      '0.9': 118.3245009047836
+      '0.95': 121.7914070888032
+  metadata:
+    anchor_point: 101.9654555521933
+    anchor_half_width: 15.13839630288507
+    signal_loc: 0.5
+    signal_width: 0.6
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 103.4792951824818
+    final_half_width: 19.679915193750592
+    rationale: The WTI forecast is driven by an unprecedented geopolitical supply
+      shock in the Middle East. With the Strait of Hormuz effectively blocked and
+      major production shut-ins in place, the physical market is experiencing severe
+      tightness that exceeds historical volatility models. The 'symbolic' OPEC+ production
+      increase does little to mitigate this. Consequently, I have assigned a positive
+      signal_loc across all horizons to reflect this persistent risk premium, and
+      increased signal_width to account for the highly binary and unpredictable nature
+      of the ongoing conflict.
+    horizon_rationale: Looking 21 trading days out, the gap between market reality
+      (severe supply deficit estimated by analysts at 1.5 million bpd) and the statistical
+      model widens. As the conflict potentially enters a more protracted phase without
+      immediate resolution, the market will likely continue to bake in a high risk
+      premium. The uncertainty is significantly higher than the historical baseline
+      due to the unprecedented geopolitical situation.
+    key_signals:
+    - Strait of Hormuz blockade/Persian Gulf production shut-ins of 9.1 million bpd
+    - Saudi backup pipeline strike on April 8
+    - U.S. naval blockade of Iranian ports initiated April 13
+    - Reuters poll projecting a 1.5 million bpd global oil deficit
+    langfuse_trace_id: 11532282439b03072d162fd6eedee713
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/11532282439b03072d162fd6eedee713
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:07.555674'
+  as_of: '2026-05-25T00:00:00'
+  forecast_date: '2026-06-01T00:00:00'
+  payload:
+    point_forecast: 96.62466334143052
+    quantiles:
+      '0.05': 89.24431467161155
+      '0.1': 90.93446144771023
+      '0.2': 92.74684112399339
+      '0.3': 94.2895772088821
+      '0.4': 95.58067381187345
+      '0.5': 96.62466334143052
+      '0.6': 97.82151629026417
+      '0.7': 98.8977445912166
+      '0.8': 100.7193530027646
+      '0.9': 102.37635247256807
+      '0.95': 104.22521755699692
+  metadata:
+    anchor_point: 96.55332570864297
+    anchor_half_width: 7.133763278754941
+    signal_loc: 0.05
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.62466334143052
+    final_half_width: 7.490451442692688
+    rationale: The WTI market is currently defined by a persistent geopolitical risk
+      premium following the spring surge. The provided news briefing confirms prices
+      are consolidating around $98-$104, reflecting this heightened state of awareness.
+      The statistical anchor provides a solid baseline for mean reversion, but it
+      does not fully incorporate the structural risk premium currently influencing
+      oil markets. Consequently, my signals reflect a mild bullish bias relative to
+      the anchor, with increased uncertainty to account for potential rapid shifts
+      in the geopolitical landscape.
+    horizon_rationale: WTI is showing significant sensitivity to an elevated geopolitical
+      risk premium. With the price having consolidated just below $100 after a sharp
+      spring rally, market participants remain on edge regarding supply continuity.
+      I trust the anchor's statistical point forecast generally but have adjusted
+      slightly upward (signal_loc 0.05) to reflect the persistence of this risk premium.
+      The uncertainty width is marginally increased (signal_width 0.1) due to the
+      potential for headline-driven volatility.
+    key_signals:
+    - Persistent geopolitical risk premium supporting a floor above $95/bbl.
+    - Recent consolidation range of $98-$104 USD/bbl.
+    langfuse_trace_id: 57cf0b21f89179d7b1364c3b629edf7c
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/57cf0b21f89179d7b1364c3b629edf7c
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:07.555674'
+  as_of: '2026-05-25T00:00:00'
+  forecast_date: '2026-06-08T00:00:00'
+  payload:
+    point_forecast: 96.55405494353836
+    quantiles:
+      '0.05': 86.15050256125544
+      '0.1': 88.81545001643741
+      '0.2': 90.96737759751842
+      '0.3': 93.20512751264638
+      '0.4': 94.59005711848734
+      '0.5': 96.55405494353836
+      '0.6': 98.56336561794166
+      '0.7': 100.69329345864497
+      '0.8': 102.87321132003656
+      '0.9': 105.20327044556075
+      '0.95': 107.5336654587781
+  metadata:
+    anchor_point: 96.39492442895215
+    anchor_half_width: 9.94565716163845
+    signal_loc: 0.08
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.55405494353836
+    final_half_width: 10.691581448761335
+    rationale: The WTI market is currently defined by a persistent geopolitical risk
+      premium following the spring surge. The provided news briefing confirms prices
+      are consolidating around $98-$104, reflecting this heightened state of awareness.
+      The statistical anchor provides a solid baseline for mean reversion, but it
+      does not fully incorporate the structural risk premium currently influencing
+      oil markets. Consequently, my signals reflect a mild bullish bias relative to
+      the anchor, with increased uncertainty to account for potential rapid shifts
+      in the geopolitical landscape.
+    horizon_rationale: Over a two-week horizon, the geopolitical risk premium is likely
+      to remain embedded unless a clear de-escalation path emerges. The statistical
+      anchor may underestimate the floor provided by these supply-side uncertainties.
+      A slightly higher signal_loc (0.08) and increased signal_width (0.15) reflect
+      the risk of further headlines exacerbating volatility and supporting higher
+      price levels.
+    key_signals:
+    - Persistent geopolitical risk premium supporting a floor above $95/bbl.
+    - Recent consolidation range of $98-$104 USD/bbl.
+    langfuse_trace_id: 57cf0b21f89179d7b1364c3b629edf7c
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/57cf0b21f89179d7b1364c3b629edf7c
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:07.555674'
+  as_of: '2026-05-25T00:00:00'
+  forecast_date: '2026-06-23T00:00:00'
+  payload:
+    point_forecast: 96.92964040571876
+    quantiles:
+      '0.05': 79.04293326279361
+      '0.1': 84.46132647106133
+      '0.2': 88.81047748186607
+      '0.3': 91.5457408436963
+      '0.4': 94.51926414079497
+      '0.5': 96.92964040571876
+      '0.6': 99.57273129826186
+      '0.7': 102.31164800072348
+      '0.8': 105.90197541853428
+      '0.9': 109.54534730377136
+      '0.95': 112.49158281433292
+  metadata:
+    anchor_point: 96.62556177343204
+    anchor_half_width: 15.203931614336042
+    signal_loc: 0.1
+    signal_width: 0.2
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 96.92964040571876
+    final_half_width: 16.72432477576965
+    rationale: The WTI market is currently defined by a persistent geopolitical risk
+      premium following the spring surge. The provided news briefing confirms prices
+      are consolidating around $98-$104, reflecting this heightened state of awareness.
+      The statistical anchor provides a solid baseline for mean reversion, but it
+      does not fully incorporate the structural risk premium currently influencing
+      oil markets. Consequently, my signals reflect a mild bullish bias relative to
+      the anchor, with increased uncertainty to account for potential rapid shifts
+      in the geopolitical landscape.
+    horizon_rationale: At the 21-day horizon, the market's inability to decisively
+      break below $96 suggests strong support fueled by geopolitical concerns. While
+      the anchor model expects some mean reversion or stabilization, the structural
+      risk premium creates a bias toward keeping prices higher. Therefore, I have
+      maintained a positive signal_loc (0.1) and expanded the signal_width (0.2) to
+      account for a wider range of possible geopolitical outcomes over the month.
+    key_signals:
+    - Persistent geopolitical risk premium supporting a floor above $95/bbl.
+    - Recent consolidation range of $98-$104 USD/bbl.
+    langfuse_trace_id: 57cf0b21f89179d7b1364c3b629edf7c
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/57cf0b21f89179d7b1364c3b629edf7c
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:10.060985'
+  as_of: '2026-06-01T00:00:00'
+  forecast_date: '2026-06-08T00:00:00'
+  payload:
+    point_forecast: 87.598780686036
+    quantiles:
+      '0.05': 79.86367258250252
+      '0.1': 81.63506152479252
+      '0.2': 83.53455887212326
+      '0.3': 85.15145136944328
+      '0.4': 86.50460854981914
+      '0.5': 87.598780686036
+      '0.6': 88.85316409763816
+      '0.7': 89.98112466215623
+      '0.8': 91.89029435264122
+      '0.9': 93.62694266017189
+      '0.95': 95.56467920036933
+  metadata:
+    anchor_point: 87.31330783843842
+    anchor_half_width: 7.136821189939454
+    signal_loc: 0.2
+    signal_width: 0.2
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 87.598780686036
+    final_half_width: 7.8505033089333995
+    rationale: The forecasts are driven primarily by the ongoing U.S.-Iran conflict
+      identified in the news briefing. This introduces a persistent upward price pressure
+      and heightened volatility compared to the statistical baseline, which is derived
+      from historical price action and lacks awareness of current geopolitical risks.
+    horizon_rationale: The persistent U.S.-Iran conflict in the Middle East provides
+      a sustained geopolitical risk premium. As-of June 1, 2026, markets are cautious,
+      warranting a modest upward bias and slightly increased uncertainty compared
+      to the purely mechanical ARIMA baseline.
+    key_signals:
+    - Ongoing U.S.-Iran conflict in the Middle East
+    - Persistent geopolitical supply risk premium
+    langfuse_trace_id: d0a25f562da9e34f7f9ee3911b830117
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/d0a25f562da9e34f7f9ee3911b830117
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:10.060985'
+  as_of: '2026-06-01T00:00:00'
+  forecast_date: '2026-06-15T00:00:00'
+  payload:
+    point_forecast: 87.75183388354127
+    quantiles:
+      '0.05': 76.61768161910616
+      '0.1': 79.46977767749154
+      '0.2': 81.77282652747829
+      '0.3': 84.16772467084631
+      '0.4': 85.64991234485824
+      '0.5': 87.75183388354127
+      '0.6': 89.90225041178984
+      '0.7': 92.18175456760456
+      '0.8': 94.51475934336074
+      '0.9': 97.00844920384567
+      '0.95': 99.5024985400733
+  metadata:
+    anchor_point: 87.15483865951603
+    anchor_half_width: 9.949920400420496
+    signal_loc: 0.3
+    signal_width: 0.3
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 87.75183388354127
+    final_half_width: 11.44240846048357
+    rationale: The forecasts are driven primarily by the ongoing U.S.-Iran conflict
+      identified in the news briefing. This introduces a persistent upward price pressure
+      and heightened volatility compared to the statistical baseline, which is derived
+      from historical price action and lacks awareness of current geopolitical risks.
+    horizon_rationale: As we move to a two-week horizon, the potential for escalation
+      in the Middle East geopolitical situation suggests a compounding risk premium.
+      The market is increasingly sensitive to supply disruptions, justifying a stronger
+      upward shift and higher volatility expectation.
+    key_signals:
+    - Ongoing U.S.-Iran conflict in the Middle East
+    - Persistent geopolitical supply risk premium
+    langfuse_trace_id: d0a25f562da9e34f7f9ee3911b830117
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/d0a25f562da9e34f7f9ee3911b830117
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.1-flash-lite-preview_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T19:18:10.060985'
+  as_of: '2026-06-01T00:00:00'
+  forecast_date: '2026-06-30T00:00:00'
+  payload:
+    point_forecast: 88.14609730894641
+    quantiles:
+      '0.05': 68.6249616663984
+      '0.1': 74.53846983411567
+      '0.2': 79.28503196729321
+      '0.3': 82.27023470347704
+      '0.4': 85.51546878458066
+      '0.5': 88.14609730894641
+      '0.6': 91.0307051585989
+      '0.7': 94.01989506567142
+      '0.8': 97.93829480041329
+      '0.9': 101.91458603164142
+      '0.95': 105.13003885797745
+  metadata:
+    anchor_point: 87.38557486745518
+    anchor_half_width: 15.210448829824607
+    signal_loc: 0.25
+    signal_width: 0.4
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 88.14609730894641
+    final_half_width: 18.252538595789527
+    rationale: The forecasts are driven primarily by the ongoing U.S.-Iran conflict
+      identified in the news briefing. This introduces a persistent upward price pressure
+      and heightened volatility compared to the statistical baseline, which is derived
+      from historical price action and lacks awareness of current geopolitical risks.
+    horizon_rationale: Over a one-month horizon, the geopolitical risk remains elevated.
+      While the signal location remains positive, the uncertainty (signal_width) is
+      significantly higher due to the unpredictability of conflict outcomes and their
+      potential impact on global oil supply chains.
+    key_signals:
+    - Ongoing U.S.-Iran conflict in the Middle East
+    - Persistent geopolitical supply risk premium
+    langfuse_trace_id: d0a25f562da9e34f7f9ee3911b830117
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/d0a25f562da9e34f7f9ee3911b830117
+scores:
+- 2.0328781721625093
+- 4.853742515606675
+- 27.6350385864405
+- 2.823058285751622
+- 24.77225784906915
+- 21.01386275210048
+- 24.022596080214356
+- 21.185105429770623
+- 26.865753354901287
+- 1.6562800167088991
+- 2.317474861703003
+- 16.1465051398472
+- 7.950152946016283
+- 2.726980677308095
+- 4.783132708445081
+- 2.3779447028218526
+- 8.947168182416481
+- 4.459960839389388
+- 9.331930014104211
+- 2.0370547526906067
+- 3.059815933168759
+- 9.862270624443143
+- 17.957928387550748
+- 5.329142997322473
+- 4.4935517695257685
+- 1.9264925922637384
+- 3.618971919466756
+- 9.027086532459874
+- 17.90686313038729
+- 18.369395846815387
+- 9.573254017295639
+- 2.3951884548543956
+- 2.4017813695160384
+- 2.564172092130006
+- 3.581290143620031
+- 5.843707074951739
+- 2.6919085230864734
+- 3.22596057298964
+- 17.910506114841223
+- 2.247597256122015
+- 4.26520758783562
+- 12.465240302627741
+metric: crps
+mean_score: 9.015624074065306
+ran_at: '2026-08-05T19:18:10.160843'
+skipped_origins: 4

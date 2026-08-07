@@ -1,0 +1,173 @@
+spec:
+  task:
+    task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons:
+    - 5
+    - 10
+    - 21
+    frequency: B
+    description: 'WTI Crude Oil continuous front-month futures Close price (yfinance
+      symbol: CL=F), projected 5, 10, and 21 trading days ahead.'
+    payload_type: continuous
+    categories: null
+    resolution_fn: observed_value_at_resolution_timestamp
+  start: '2026-02-02T00:00:00'
+  end: '2026-02-09T00:00:00'
+  stride: 5
+  origin_dates: null
+  warmup: 250
+  description: Two-origin smoke evaluation for local and CI testing of the NB04 pipeline.
+    Uses the same tasks, horizons, warmup, and geopolitical period as energy_oil_eval
+    but with only 2 origins to keep cost negligible.
+predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+predictions:
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T18:00:03.905989'
+  as_of: '2026-02-02T00:00:00'
+  forecast_date: '2026-02-09T00:00:00'
+  payload:
+    point_forecast: 65.3
+    quantiles:
+      '0.05': 60.2
+      '0.1': 61.5
+      '0.2': 62.8
+      '0.3': 63.8
+      '0.4': 64.6
+      '0.5': 65.3
+      '0.6': 66.1
+      '0.7': 67.0
+      '0.8': 68.1
+      '0.9': 69.5
+      '0.95': 70.8
+  metadata:
+    rationale: WTI prices experienced a robust run-up in late January 2026, breaking
+      past $62-$63 resistance to end the month at $65.21. This was supported by OPEC+
+      extending production freezes through February/March, combined with high-impact
+      geopolitical premiums stemming from the Venezuela blockade and U.S.-Iran friction.
+      Over the multi-week forecast horizons, we assume near-term price resilience,
+      followed by a gradual moderating trend towards longer-term structural fundamentals,
+      where non-OPEC+ supply builds present a persistent bearish draft.
+    horizon_rationale: Over a 5-day horizon (approx. Feb 9, 2026), immediate WTI price
+      action is expected to consolidate or slightly extend its late January breakout
+      above the previous $62-$63 resistance level. Near-term support remains solid
+      because of the OPEC+ decision to extend voluntary production pauses through
+      February and March. Additionally, ongoing geopolitical factors, such as the
+      U.S. naval blockade of Venezuela and heightened tensions with Iran, sustain
+      a supportive risk premium. Quantile estimates reflect a relatively tight distribution
+      centered near the recent close, with upside tails showing susceptibility to
+      sudden geopolitical escalation.
+    langfuse_trace_id: 4799fb1ad48250f7754205ccc83deb03
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/4799fb1ad48250f7754205ccc83deb03
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T18:00:03.905989'
+  as_of: '2026-02-02T00:00:00'
+  forecast_date: '2026-03-03T00:00:00'
+  payload:
+    point_forecast: 64.2
+    quantiles:
+      '0.05': 53.5
+      '0.1': 55.8
+      '0.2': 58.5
+      '0.3': 60.8
+      '0.4': 62.6
+      '0.5': 64.2
+      '0.6': 65.8
+      '0.7': 67.5
+      '0.8': 69.6
+      '0.9': 72.5
+      '0.95': 74.8
+  metadata:
+    rationale: WTI prices experienced a robust run-up in late January 2026, breaking
+      past $62-$63 resistance to end the month at $65.21. This was supported by OPEC+
+      extending production freezes through February/March, combined with high-impact
+      geopolitical premiums stemming from the Venezuela blockade and U.S.-Iran friction.
+      Over the multi-week forecast horizons, we assume near-term price resilience,
+      followed by a gradual moderating trend towards longer-term structural fundamentals,
+      where non-OPEC+ supply builds present a persistent bearish draft.
+    horizon_rationale: Over a 21-day horizon (approx. Mar 4, 2026), WTI is projected
+      to drift slowly downward to a point forecast of $64.20. This reflects a gradual
+      alignment with the underlying medium-term bearish trend forecast by the EIA
+      (which expects a 2026 average of $51.42 due to a structural supply surplus).
+      However, because OPEC+ extensions keep near-term supply flat and geopolitical
+      stressors (particularly in Venezuela and the Middle East) remain unresolved,
+      prices should remain significantly elevated above long-term averages. The wider
+      quantile dispersion spans from $53.50 (on potential OPEC+ taper expectations)
+      up to $74.80 (representing severe supply-disruption spikes).
+    langfuse_trace_id: 4799fb1ad48250f7754205ccc83deb03
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/4799fb1ad48250f7754205ccc83deb03
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T18:00:34.575474'
+  as_of: '2026-02-09T00:00:00'
+  forecast_date: '2026-02-23T00:00:00'
+  payload:
+    point_forecast: 62.8
+    quantiles:
+      '0.05': 57.0
+      '0.1': 58.5
+      '0.2': 60.2
+      '0.3': 61.2
+      '0.4': 62.0
+      '0.5': 62.8
+      '0.6': 63.5
+      '0.7': 64.3
+      '0.8': 65.3
+      '0.9': 66.8
+      '0.95': 68.2
+  metadata:
+    rationale: This probabilistic forecast balances short-term tightness from winter
+      weather and OPEC+ defensive policy with medium-term structural headwinds from
+      the EIA's bearish outlook. Prices are expected to drift slowly lower toward
+      the $62 mark over the 21-day period as seasonal demand pressures ease.
+    horizon_rationale: By the 10-day horizon, the immediate boost from severe winter
+      weather may begin to fade, exposing the market to broader structurally bearish
+      expectations. The EIA's January 2026 forecast pointing to significant global
+      inventory builds will limit upward momentum. However, the OPEC+ commitment to
+      pause production increases through March keeps the median expectation comfortably
+      above $62.
+    langfuse_trace_id: f0046e1c86de33156f4a0ab7c33d8269
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/f0046e1c86de33156f4a0ab7c33d8269
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-05T18:00:34.575474'
+  as_of: '2026-02-09T00:00:00'
+  forecast_date: '2026-03-10T00:00:00'
+  payload:
+    point_forecast: 62.2
+    quantiles:
+      '0.05': 54.5
+      '0.1': 56.5
+      '0.2': 58.8
+      '0.3': 60.1
+      '0.4': 61.2
+      '0.5': 62.2
+      '0.6': 63.2
+      '0.7': 64.3
+      '0.8': 65.6
+      '0.9': 67.8
+      '0.95': 69.5
+  metadata:
+    rationale: This probabilistic forecast balances short-term tightness from winter
+      weather and OPEC+ defensive policy with medium-term structural headwinds from
+      the EIA's bearish outlook. Prices are expected to drift slowly lower toward
+      the $62 mark over the 21-day period as seasonal demand pressures ease.
+    horizon_rationale: At the 21-day horizon, the price distribution widens to reflect
+      growing uncertainty. While OPEC+ production pauses are secured through March,
+      the bearish outlook for 2026 global supply growth outstripping consumption is
+      likely to exert gradual downward pressure on the market. Technical support at
+      $55 remains a strong floor, while the upside is capped around $69 unless major
+      geopolitical disruptions to Persian Gulf or Red Sea shipping lanes materialize.
+    langfuse_trace_id: f0046e1c86de33156f4a0ab7c33d8269
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/f0046e1c86de33156f4a0ab7c33d8269
+scores:
+- 0.930743635193374
+- 6.768923622320509
+- 2.1790893554687516
+- 18.799583725101694
+metric: crps
+mean_score: 7.169585084521082
+ran_at: '2026-08-05T18:00:34.886786'
+skipped_origins: 0
