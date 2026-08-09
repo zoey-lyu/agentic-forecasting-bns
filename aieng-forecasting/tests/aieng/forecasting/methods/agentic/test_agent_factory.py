@@ -13,7 +13,9 @@ from aieng.forecasting.methods.agentic.agent_factory import (
     AgentConfig,
     CodeExecutionConfig,
     ContextRetrievalConfig,
+    _apply_removals,
     _build_search_tool,
+    _Removal,
     build_adk_agent,
 )
 from aieng.forecasting.methods.agentic.outputs import ContinuousAgentForecastOutput
@@ -362,6 +364,70 @@ class TestBuildSearchTool:
         assert "https://example.com/opec" in result
 
 
+class TestApplyRemovals:
+    """Span deletion plus the whitespace/punctuation tidy-up that follows it."""
+
+    @staticmethod
+    def _removal(quote: str) -> _Removal:
+        return _Removal(quote=quote, reason="x", basis="world_knowledge")
+
+    def test_mid_sentence_removal_leaves_no_dangling_punctuation(self) -> None:
+        """Deleting mid-sentence spans (not whole sentences) still yields clean output.
+
+        Reproduces the exact debris shape seen when a real verifier run against
+        a heavily-contaminated date returned mid-sentence quotes instead of
+        whole sentences: "2026, the price spiked. Meanwhile, tensions rose
+        here." -> naive replace() leaves "2026, . Meanwhile, ." behind.
+        """
+        content = "As of late April 2026, the price spiked. Meanwhile, tensions rose here. This part stays stable."
+        removals = [self._removal("the price spiked"), self._removal("tensions rose here")]
+
+        filtered, confabulated = _apply_removals(content, removals)
+
+        assert confabulated is None
+        assert filtered == "As of late April 2026. Meanwhile. This part stays stable."
+        assert " ." not in filtered
+        assert ", ." not in filtered
+        assert "  " not in filtered
+
+    def test_removing_a_whole_paragraph_leaves_no_blank_line_debris(self) -> None:
+        """A fully-removed sentence sitting between paragraph breaks doesn't leave a stray blank line."""
+        content = "OPEC+ output rose. \n\nA violation sentence sits alone here. \n\nDemand held flat."
+        filtered, confabulated = _apply_removals(
+            content, [self._removal("A violation sentence sits alone here. ")]
+        )
+
+        assert confabulated is None
+        assert filtered == "OPEC+ output rose.\n\nDemand held flat."
+        assert "\n\n\n" not in filtered
+
+    def test_whole_sentence_removal_is_unaffected(self) -> None:
+        """A whole-sentence quote (the instructed shape) needs no tidying."""
+        content = "Prices held steady. This part is a violation of the cutoff. Demand stayed flat."
+        filtered, confabulated = _apply_removals(
+            content, [self._removal("This part is a violation of the cutoff. ")]
+        )
+
+        assert confabulated is None
+        assert filtered == "Prices held steady. Demand stayed flat."
+
+    def test_no_removals_returns_original_text_unchanged(self) -> None:
+        """When nothing is removed, the text is untouched by construction."""
+        content = "Prices held steady with no notable developments."
+        filtered, confabulated = _apply_removals(content, [])
+
+        assert confabulated is None
+        assert filtered == content
+
+    def test_confabulated_quote_is_detected_before_any_edit(self) -> None:
+        """A quote absent from the input returns the original text, unfiltered."""
+        content = "Prices held steady."
+        filtered, confabulated = _apply_removals(content, [self._removal("a sentence never in the text")])
+
+        assert confabulated == "a sentence never in the text"
+        assert filtered == content
+
+
 class TestSearchToolLeakageVerification:
     """search_web wraps grounded results in an independent leakage verifier."""
 
@@ -377,12 +443,10 @@ class TestSearchToolLeakageVerification:
         *,
         clean: bool,
         confidence: int,
-        filtered_text: str = "clean summary",
-        flagged_claims: list[str] | None = None,
+        removals: list[dict] | None = None,
     ) -> MagicMock:
         payload = {
-            "flagged_claims": flagged_claims or [],
-            "filtered_text": filtered_text,
+            "removals": removals or [],
             "confidence": confidence,
             "clean": clean,
         }
@@ -401,14 +465,73 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean summary.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw summary with a source.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
             result = await tool(query="WTI price", cutoff_date="2024-01-15")
 
         assert len(calls) == 2
-        assert result == "Clean summary."
+        assert result == "Raw summary with a source."
+
+    @pytest.mark.asyncio
+    async def test_removals_applied_in_code(self) -> None:
+        """A clean verdict's removals are deleted from the content in code, not re-emitted by the model."""
+        config = ContextRetrievalConfig(enabled=True, instruction="Search assistant.")
+        tool = _build_search_tool(config, openai_base_url="https://proxy.example.com/v1", openai_api_key="test-key")
+
+        async def _fake_acompletion(**kwargs):  # type: ignore[override]
+            if kwargs["model"] == f"openai/{config.verifier_model}":
+                return self._verify_response(
+                    clean=True,
+                    confidence=9,
+                    removals=[
+                        {
+                            "quote": "and it will hit $120 next week",
+                            "reason": "future price prediction stated as fact",
+                            "basis": "world_knowledge",
+                        }
+                    ],
+                )
+            return self._search_response("WTI is at $80 and it will hit $120 next week, sources say.")
+
+        with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
+            result = await tool(query="WTI price", cutoff_date="2024-01-15")
+
+        assert result == "WTI is at $80 , sources say."
+        assert "$120" not in result
+
+    @pytest.mark.asyncio
+    async def test_confabulated_span_rejects_and_retries(self) -> None:
+        """A verifier quote absent from its own input is untrustworthy, even when clean=True."""
+        config = ContextRetrievalConfig(enabled=True, instruction="Search assistant.")
+        tool = _build_search_tool(config, openai_base_url="https://proxy.example.com/v1", openai_api_key="test-key")
+        verify_call_count = 0
+
+        async def _fake_acompletion(**kwargs):  # type: ignore[override]
+            nonlocal verify_call_count
+            if kwargs["model"] == f"openai/{config.verifier_model}":
+                verify_call_count += 1
+                if verify_call_count == 1:
+                    return self._verify_response(
+                        clean=True,
+                        confidence=9,
+                        removals=[
+                            {
+                                "quote": "a sentence that was never in the source text",
+                                "reason": "x",
+                                "basis": "world_knowledge",
+                            }
+                        ],
+                    )
+                return self._verify_response(clean=True, confidence=9)
+            return self._search_response("Raw summary with a source.")
+
+        with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
+            result = await tool(query="WTI price", cutoff_date="2024-01-15")
+
+        assert verify_call_count == 2
+        assert result == "Raw summary with a source."
 
     @pytest.mark.asyncio
     async def test_retry_then_accept(self) -> None:
@@ -425,16 +548,24 @@ class TestSearchToolLeakageVerification:
                 verify_call_count += 1
                 if verify_call_count == 1:
                     return self._verify_response(
-                        clean=False, confidence=3, flagged_claims=["OPEC+ raised output in March 2025"]
+                        clean=False,
+                        confidence=3,
+                        removals=[
+                            {
+                                "quote": "Raw summary",
+                                "reason": "OPEC+ raised output in March 2025",
+                                "basis": "world_knowledge",
+                            }
+                        ],
                     )
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean summary.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw summary with a source.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
             result = await tool(query="WTI price", cutoff_date="2024-01-15")
 
         assert len(calls) == 4
-        assert result == "Clean summary."
+        assert result == "Raw summary with a source."
         second_search_user_msg = next(m for m in calls[2]["messages"] if m["role"] == "user")
         assert "OPEC+ raised output in March 2025" in second_search_user_msg["content"]
 
@@ -448,7 +579,11 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=False, confidence=2, flagged_claims=["still leaking"])
+                return self._verify_response(
+                    clean=False,
+                    confidence=2,
+                    removals=[{"quote": "Raw summary", "reason": "still leaking", "basis": "world_knowledge"}],
+                )
             return self._search_response("Raw summary with a source.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
@@ -502,7 +637,7 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
@@ -528,7 +663,7 @@ class TestSearchToolLeakageVerification:
             async def _fake_acompletion(**kwargs):  # type: ignore[override]
                 calls.append(kwargs)
                 if kwargs["model"] == f"openai/{config.verifier_model}":
-                    return self._verify_response(clean=True, confidence=6, filtered_text="Borderline.")
+                    return self._verify_response(clean=True, confidence=6)
                 return self._search_response("Raw.")
 
             with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
@@ -540,7 +675,7 @@ class TestSearchToolLeakageVerification:
 
         assert rejected_result.startswith("[SEARCH_VERIFICATION_FAILED]")
         assert rejected_calls == 6  # exhausted the default 3 attempts
-        assert accepted_result == "Borderline."
+        assert accepted_result == "Raw."
         assert accepted_calls == 2  # accepted on the first attempt
 
     @pytest.mark.asyncio
@@ -580,14 +715,14 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean summary.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw summary with a source.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
             result = await tool(query="WTI price", cutoff_date=None, tool_context=fake_tool_context)
 
         assert len(calls) == 2
-        assert result == "Clean summary."
+        assert result == "Raw summary with a source."
         search_user_msg = next(m for m in calls[0]["messages"] if m["role"] == "user")
         assert "2024-01-15" in search_user_msg["content"]
 
@@ -602,7 +737,7 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean summary.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw summary with a source.")
 
         with (
@@ -626,11 +761,11 @@ class TestSearchToolLeakageVerification:
         async def _fake_acompletion(**kwargs):  # type: ignore[override]
             calls.append(kwargs)
             if kwargs["model"] == f"openai/{config.verifier_model}":
-                return self._verify_response(clean=True, confidence=9, filtered_text="Clean summary.")
+                return self._verify_response(clean=True, confidence=9)
             return self._search_response("Raw summary with a source.")
 
         with patch("litellm.acompletion", new=AsyncMock(side_effect=_fake_acompletion)):
             result = await tool(query="WTI price", cutoff_date="2024-01-15")
 
         assert len(calls) == 2
-        assert result == "Clean summary."
+        assert result == "Raw summary with a source."

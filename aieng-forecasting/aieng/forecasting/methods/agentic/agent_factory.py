@@ -15,9 +15,10 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import warnings
 from pathlib import Path
-from typing import Any, Callable, Sequence
+from typing import Any, Callable, Literal, Sequence
 
 from aieng.forecasting.methods.agentic.outputs import AgentForecastOutput
 from aieng.forecasting.models import ADVANCED_MODEL, LITE_MODEL
@@ -242,11 +243,24 @@ def _build_automatic_function_calling_config(
     return AutomaticFunctionCallingConfig(disable=True)
 
 
+class _Removal(BaseModel):
+    """One verifier-identified span to delete, with its basis for the judgment.
+
+    ``quote`` must be a verbatim substring of the text under review — the
+    verifier can only point at spans of its input, never emit its own prose.
+    A ``quote`` absent from the input is proof of confabulation, not just a
+    disagreement to log; see :func:`_apply_removals`.
+    """
+
+    quote: str
+    reason: str
+    basis: Literal["stated_date", "world_knowledge"]
+
+
 class _LeakageVerification(BaseModel):
     """Structured verdict from the independent temporal-leakage verifier."""
 
-    flagged_claims: list[str] = Field(default_factory=list)
-    filtered_text: str = ""
+    removals: list[_Removal] = Field(default_factory=list)
     confidence: int = Field(ge=1, le=10)
     clean: bool
 
@@ -254,19 +268,33 @@ class _LeakageVerification(BaseModel):
 def _build_leakage_verification_schema() -> dict[str, Any]:
     """Strict JSON schema for the verifier's structured output.
 
-    Field order matters: the model must extract/flag claims and produce
-    ``filtered_text`` before declaring ``confidence``/``clean``, so the
-    verdict follows the claim-level reasoning instead of preceding it.
+    Field order matters: ``removals`` must precede ``confidence``/``clean`` so
+    the verdict follows the claim-level reasoning instead of preceding it.
+
+    The verifier emits only spans to delete, never a rewritten document: it has
+    no channel through which to inject its own words into what lands on disk,
+    and its token budget shrinks from "echo the whole document" to a few
+    hundred tokens of quotes.
     """
     return {
         "type": "object",
         "properties": {
-            "flagged_claims": {"type": "array", "items": {"type": "string"}},
-            "filtered_text": {"type": "string"},
-            "confidence": {"type": "integer", "minimum": 1, "maximum": 10},
+            "removals": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "quote": {"type": "string"},
+                        "reason": {"type": "string"},
+                        "basis": {"type": "string", "enum": ["stated_date", "world_knowledge"]},
+                    },
+                    "required": ["quote", "reason", "basis"],
+                },
+            },
+            "confidence": {"type": "integer"},
             "clean": {"type": "boolean"},
         },
-        "required": ["flagged_claims", "filtered_text", "confidence", "clean"],
+        "required": ["removals", "confidence", "clean"],
     }
 
 
@@ -282,11 +310,89 @@ page metadata and timestamps are frequently updated after original \
 publication and are not reliable evidence of when the underlying facts \
 became known. Reason from the substance of the claim itself.
 
-Remove every claim that fails this test and produce `filtered_text`: the \
-original text with only the surviving, pre-cutoff claims. Report the removed \
-claims in `flagged_claims`. Set `confidence` (1-10) to how confident you are \
-that `filtered_text` now contains zero post-cutoff leakage. Set `clean` to \
-true only if you removed all identifiable violations."""
+For every claim that fails this test, report it as a removal. `quote` must be \
+copied verbatim, character-for-character, from the text you were given — do \
+not paraphrase, summarize, or reconstruct it; a span that does not appear in \
+the original text will be treated as an error and discard your entire verdict. \
+`reason` is a short explanation of the violation. `basis` records how you know \
+the claim is post-cutoff: `stated_date` if the text itself dates the claim on \
+or after the cutoff, or `world_knowledge` if you are relying on your own \
+knowledge that the event happened on or after the cutoff even though the text \
+does not date it.
+
+Do not rewrite, summarize, or reproduce any other part of the text. Your only \
+output is the list of spans to remove. `quote` must span the complete \
+sentence(s) containing the violation -- never a sub-sentence fragment -- so \
+that deleting it does not leave a grammatically broken remainder behind (e.g. \
+do not quote just "on April 29" from "prices rose on April 29, analysts said"; \
+quote the whole sentence). Set `confidence` (1-10) to how confident you are \
+that removing every listed span leaves zero post-cutoff leakage. Set `clean` \
+to true only if you identified every violation."""
+
+
+_DOUBLE_SPACE_RE = re.compile(r"[ \t]{2,}")
+#: A comma/semicolon/colon immediately followed by terminal punctuation, e.g.
+#: "the region, ." -- the debris left when a mid-sentence quote is deleted.
+_DANGLING_LEAD_PUNCT_RE = re.compile(r"\s*[,;:]\s*(?=[.!?])")
+#: Two terminal-punctuation marks separated only by whitespace, e.g. ". .".
+_REPEATED_TERMINAL_RE = re.compile(r"([.!?])\s+(?=[.!?])")
+#: Trailing whitespace before a newline, e.g. a now-empty sentence's ``" \n"``.
+_TRAILING_SPACE_RE = re.compile(r"[ \t]+\n")
+#: A whole sentence removed from a paragraph can leave a blank line where its
+#: surrounding newlines land next to the paragraph breaks either side of it.
+_MULTI_NEWLINE_RE = re.compile(r"\n{3,}")
+
+
+def _tidy_removal_debris(text: str) -> str:
+    """Clean up whitespace/punctuation artifacts left by deleting a span in code.
+
+    The verifier is instructed to quote whole sentences (see
+    :data:`_LEAKAGE_VERIFIER_INSTRUCTION`), but that is a prompt-level
+    preference, not a guarantee. When a shorter, mid-sentence span is quoted
+    instead, ``str.replace(quote, "")`` leaves the surrounding punctuation
+    behind -- "the region, <removed>." becomes "the region, ." -- which reads
+    as broken, not merely terse. This collapses the common shapes of that
+    debris without touching any text the verifier didn't already choose to
+    delete.
+    """
+    prev = None
+    while prev != text:
+        prev = text
+        text = _DOUBLE_SPACE_RE.sub(" ", text)
+        text = _DANGLING_LEAD_PUNCT_RE.sub("", text)
+        text = _REPEATED_TERMINAL_RE.sub("", text)
+        text = _TRAILING_SPACE_RE.sub("\n", text)
+        text = _MULTI_NEWLINE_RE.sub("\n\n", text)
+    return text.strip()
+
+
+def _apply_removals(content: str, removals: list[_Removal]) -> tuple[str, str | None]:
+    """Delete each verifier-identified span from ``content``, in code.
+
+    Parameters
+    ----------
+    content : str
+        The text the verifier was asked to check.
+    removals : list of _Removal
+        The verifier's verdict.
+
+    Returns
+    -------
+    tuple of (str, str or None)
+        The filtered text (tidied per :func:`_tidy_removal_debris`), and —
+        when a ``quote`` is not a verbatim substring of ``content`` — that
+        quote as proof the verifier confabulated a span rather than pointing
+        at real text. When a quote is confabulated the returned text is the
+        *original*, unfiltered ``content``: a verifier that invents one span
+        cannot be trusted on the rest of its verdict either, so the caller
+        should reject and retry rather than accept a partially-applied filter.
+    """
+    filtered = content
+    for r in removals:
+        if r.quote not in content:
+            return content, r.quote
+        filtered = filtered.replace(r.quote, "")
+    return _tidy_removal_debris(filtered), None
 
 
 async def _verify_no_leakage(
@@ -334,12 +440,56 @@ async def _verify_no_leakage(
         return _LeakageVerification.model_validate(json.loads(strip_markdown_fence(raw)))
     except (json.JSONDecodeError, ValidationError):
         logger.warning("Leakage verifier returned unparseable output; treating as non-clean: %r", raw[:200])
-        return _LeakageVerification(
-            flagged_claims=["verifier response could not be parsed"],
-            filtered_text=text,
-            confidence=1,
-            clean=False,
-        )
+        return _LeakageVerification(removals=[], confidence=1, clean=False)
+
+
+def _format_search_result(content: str, sources: list[str]) -> str:
+    """Append a ``Sources:`` footer to a search result, when there are any."""
+    if sources:
+        content += "\n\nSources:\n" + "\n".join(sources[:5])
+    return content
+
+
+async def _search_once(
+    config: ContextRetrievalConfig,
+    user_content: str,
+    *,
+    openai_base_url: str,
+    openai_api_key: str | None,
+) -> tuple[str, list[str]]:
+    """One grounded search call against the proxy's googleSearch extension.
+
+    Module-level (not nested in :func:`_build_search_tool`) so callers that
+    need a single search+verify round without the full ``search_web``
+    accept/retry contract -- e.g. a caller willing to accept a verifier's
+    partial-confidence removals rather than only a fully-``clean`` result --
+    can reuse it instead of duplicating the proxy call.
+    """
+    import litellm  # noqa: PLC0415
+
+    search_model = config.search_model
+    if not search_model.startswith("openai/"):
+        search_model = f"openai/{search_model}"
+    resp = await litellm.acompletion(
+        model=search_model,
+        api_base=openai_base_url,
+        api_key=openai_api_key,
+        messages=[
+            {"role": "system", "content": config.instruction},
+            {"role": "user", "content": user_content},
+        ],
+        tools=[{"googleSearch": {}}],
+        max_tokens=config.max_output_tokens or 4096,
+        temperature=config.temperature or 0.0,
+        timeout=60.0,
+    )
+    content = resp.choices[0].message.content or ""
+    psf = getattr(resp.choices[0], "provider_specific_fields", {}) or {}
+    gm = psf.get("grounding_metadata") or {}
+    sources: list[str] = [
+        uri for c in gm.get("groundingChunks", []) if (uri := (c.get("web") or {}).get("uri")) is not None
+    ]
+    return content, sources
 
 
 def _build_search_tool(
@@ -365,37 +515,10 @@ def _build_search_tool(
     potentially-leaky content.
     """
 
-    def _format_result(content: str, sources: list[str]) -> str:
-        if sources:
-            content += "\n\nSources:\n" + "\n".join(sources[:5])
-        return content
+    _format_result = _format_search_result
 
     async def _do_search(user_content: str) -> tuple[str, list[str]]:
-        import litellm  # noqa: PLC0415
-
-        search_model = config.search_model
-        if not search_model.startswith("openai/"):
-            search_model = f"openai/{search_model}"
-        resp = await litellm.acompletion(
-            model=search_model,
-            api_base=openai_base_url,
-            api_key=openai_api_key,
-            messages=[
-                {"role": "system", "content": config.instruction},
-                {"role": "user", "content": user_content},
-            ],
-            tools=[{"googleSearch": {}}],
-            max_tokens=config.max_output_tokens or 4096,
-            temperature=config.temperature or 0.0,
-            timeout=60.0,
-        )
-        content = resp.choices[0].message.content or ""
-        psf = getattr(resp.choices[0], "provider_specific_fields", {}) or {}
-        gm = psf.get("grounding_metadata") or {}
-        sources: list[str] = [
-            uri for c in gm.get("groundingChunks", []) if (uri := (c.get("web") or {}).get("uri")) is not None
-        ]
-        return content, sources
+        return await _search_once(config, user_content, openai_base_url=openai_base_url, openai_api_key=openai_api_key)
 
     async def search_web(query: str, cutoff_date: str | None = None, tool_context: ToolContext | None = None) -> str:
         """Search the web and return a grounded summary with source URLs.
@@ -455,20 +578,28 @@ def _build_search_tool(
                 openai_api_key=openai_api_key,
             )
             logger.info(
-                "search_web verification attempt %d/%d: clean=%s confidence=%d flagged=%d",
+                "search_web verification attempt %d/%d: clean=%s confidence=%d removals=%d",
                 attempt,
                 config.verifier_max_attempts,
                 verdict.clean,
                 verdict.confidence,
-                len(verdict.flagged_claims),
+                len(verdict.removals),
             )
-            if verdict.clean and verdict.confidence >= config.verifier_confidence_threshold:
-                return _format_result(verdict.filtered_text, sources)
-            logger.warning("search_web attempt %d flagged %d claim(s); retrying.", attempt, len(verdict.flagged_claims))
+            filtered, confabulated = _apply_removals(content, verdict.removals)
+            if confabulated is not None:
+                logger.warning(
+                    "search_web attempt %d: verifier quoted a span absent from its input (%r); "
+                    "discarding its verdict and retrying.",
+                    attempt,
+                    confabulated[:120],
+                )
+            elif verdict.clean and verdict.confidence >= config.verifier_confidence_threshold:
+                return _format_result(filtered, sources)
+            logger.warning("search_web attempt %d flagged %d claim(s); retrying.", attempt, len(verdict.removals))
+            reasons = [r.reason for r in verdict.removals] or ["(unspecified — be more conservative)"]
             negative_guidance = (
                 f"Your previous search result may have included information published on or after "
-                f"{effective_cutoff}. Do not repeat or rely on these claims:\n- "
-                + "\n- ".join(verdict.flagged_claims or ["(unspecified — be more conservative)"])
+                f"{effective_cutoff}. Do not repeat or rely on these claims:\n- " + "\n- ".join(reasons)
             )
 
         logger.error("search_web exhausted %d attempts without a verified clean result.", config.verifier_max_attempts)
