@@ -29,6 +29,7 @@ predictor stack.
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 from typing import Any, ClassVar, Literal
 
@@ -55,6 +56,9 @@ from energy_oil_forecasting.analyst_agent.anchor_lookup import AnchorSource
 from energy_oil_forecasting.analyst_agent.news_cache import NewsCacheSource
 from energy_oil_forecasting.data import WTI_SERIES_ID, build_wti_service
 from pydantic import BaseModel, Field, model_validator
+
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -950,11 +954,27 @@ class AnchoredWtiPromptBuilder(BaseModel):
             JSON-serialised payload identical to
             :class:`WtiPriceForecastPromptBuilder`'s, plus an ``anchor`` key
             keyed by horizon, plus a ``news_briefing`` key when
-            ``news_source`` is set.
+            ``news_source`` is set. ``horizons`` is narrowed to whichever
+            task horizons actually have a precomputed anchor for this origin
+            (see :meth:`AnchorSource.available_horizons`) — a horizon whose
+            ``forecast_date`` lands on a market holiday has no anchor, and
+            asking the agent for a signal it has no anchor to apply would be
+            meaningless.
         """
         payload = _build_wti_payload(task=task, context=context)
+        available = set(self.anchor_source.available_horizons(as_of=context.as_of))
+        usable_horizons = [h for h in task.horizons if h in available]
+        missing_horizons = [h for h in task.horizons if h not in available]
+        if missing_horizons:
+            logger.warning(
+                "No precomputed anchor for as_of=%s horizons=%s (likely a market-holiday "
+                "forecast_date) — requesting signals for %s only.",
+                str(context.as_of)[:10],
+                missing_horizons,
+                usable_horizons,
+            )
         anchor_by_horizon: dict[str, Any] = {}
-        for horizon in task.horizons:
+        for horizon in usable_horizons:
             entry = self.anchor_source.get(as_of=context.as_of, horizon=horizon)
             anchor_by_horizon[str(horizon)] = {
                 "point_forecast": entry.point_forecast,
@@ -962,6 +982,7 @@ class AnchoredWtiPromptBuilder(BaseModel):
                 "quantiles": {str(q): v for q, v in entry.quantiles.items()},
             }
         payload["anchor"] = anchor_by_horizon
+        payload["horizons"] = usable_horizons
         if self.news_source is not None:
             payload["news_briefing"] = self.news_source.get(as_of=context.as_of)
         return json.dumps(payload, indent=2)

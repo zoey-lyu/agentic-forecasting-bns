@@ -171,23 +171,26 @@ class AnchoredAgentPredictor(AgentPredictor):
         Raises
         ------
         ValueError
-            If the signal horizons don't exactly match ``task.horizons``.
+            If the signal horizons don't exactly match the horizons that had
+            a precomputed anchor for this origin (not necessarily all of
+            ``task.horizons`` — see :meth:`AnchorSource.available_horizons`).
         """
         by_horizon = {signal.horizon: signal for signal in output.signals}
-        expected = set(task.horizons)
+        expected = set(self.anchor_source.available_horizons(as_of=context.as_of)) & set(task.horizons)
         actual = set(by_horizon)
         missing = sorted(expected - actual)
         extra = sorted(actual - expected)
         if missing or extra:
             raise ValueError(
-                f"Anchored agent output must contain exactly the task horizons. Missing: {missing}; extra: {extra}"
+                f"Anchored agent output must contain exactly the horizons with a precomputed "
+                f"anchor for this origin. Missing: {missing}; extra: {extra}"
             )
 
         issued_at = datetime.utcnow()  # naive UTC; Prediction.issued_at expects timezone-naive
         offset = pd.tseries.frequencies.to_offset(task.frequency)
 
         predictions: list[Prediction] = []
-        for horizon in task.horizons:
+        for horizon in sorted(expected):
             signal = by_horizon[horizon]
             anchor = self.anchor_source.get(as_of=context.as_of, horizon=horizon)
 

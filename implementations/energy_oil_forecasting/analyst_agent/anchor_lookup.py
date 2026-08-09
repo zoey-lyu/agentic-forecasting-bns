@@ -124,3 +124,42 @@ class AnchorSource:
             point_forecast=entry["point_forecast"],
             quantiles={float(q): v for q, v in entry["quantiles"].items()},
         )
+
+    def available_horizons(self, *, as_of: Any) -> list[int]:
+        """Return the horizons with a precomputed anchor for this origin.
+
+        A horizon can be legitimately absent even for a valid origin: the
+        table is built by scoring an AutoARIMA backtest against realized
+        closes (see ``build_anchor_table.py``), and a horizon whose
+        ``forecast_date`` lands on a market holiday has no realized close to
+        score against, so it's silently dropped when the table is built.
+        Callers that need to forecast several horizons per origin (e.g.
+        ``AnchoredWtiPromptBuilder``) should request signals only for the
+        horizons this returns, rather than assuming every task horizon has
+        an anchor.
+
+        Parameters
+        ----------
+        as_of : Any
+            Forecast origin date; stringified and truncated to ``YYYY-MM-DD``.
+
+        Returns
+        -------
+        list[int]
+            Sorted horizons available for this origin.
+
+        Raises
+        ------
+        KeyError
+            If the origin itself was not precomputed at all — unlike a
+            single missing horizon, this is not the market-holiday case and
+            should still fail loudly.
+        """
+        origin_key = str(as_of)[:10]
+        origin = self._origins.get(origin_key)
+        if origin is None:
+            raise KeyError(
+                f"No precomputed anchor for spec={self._spec_id!r} task={self._task_id!r} "
+                f"as_of={origin_key!r}. Available origins: {sorted(self._origins)}"
+            )
+        return sorted(int(h) for h in origin)
