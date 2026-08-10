@@ -1,0 +1,49 @@
+# Energy Oil 2026 Drawdown Spec — the falling shock window
+#
+# Purpose: `energy_oil_eval` (2026-02-02 .. 2026-06-01) covers a high-volatility
+# window in which WTI *rose* (67 -> 101 across March). Nothing in that window can
+# separate "the agent helps during shocks" from "a positively-leaning signal is
+# flattered by a rising market" -- the largest gap in the evidence base, per
+# planning-docs/anchored-agent-cross-regime-findings.md section 11.
+#
+# This spec is the matched pair: the same target, horizons, stride, and prompt
+# grid, on a window with the same extreme volatility and the OPPOSITE direction.
+# WTI fell 92.16 -> 69.50 over 2026-06 (-25%) and spiked back in 2026-07.
+#
+# Deliberately a SEPARATE spec rather than an extension of energy_oil_eval's end
+# date: extending would (a) invalidate the cached runs keyed by that spec_id and
+# (b) merge the rising and falling shocks into one window, destroying exactly the
+# contrast this is built to create.
+#
+# Origin range: the last origin is bounded by the 21-business-day horizon needing
+# a realised close. With WTI data through 2026-08-09, 2026-07-06 + 21B = 2026-08-04
+# resolves and 2026-07-13 + 21B = 2026-08-11 does not. That caps this window at
+# 5 origins today; it grows by one per week as prices accrue, so re-check `end`
+# before re-running rather than assuming this value is final.
+#
+# Target is WTI Crude Oil price (yfinance ticker: CL=F).
+# Horizons: 5, 10, 21 business days -- identical to energy_oil_eval so the two
+# windows are directly comparable cell for cell.
+
+spec_id: energy_oil_2026_drawdown
+
+description: >-
+  Falling-shock counterpart to energy_oil_eval. Five weekly origins from
+  2026-06-08 to 2026-07-06 spanning the -25% June drawdown and the July rebound,
+  at the same extreme trailing volatility as the March-May rise. Exists so that
+  "direction" and "volatility" can be varied independently instead of moving
+  together as they do between the 2025 and 2026 windows.
+
+tasks:
+  - task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons: [5, 10, 21]
+    frequency: B
+    description: >-
+      WTI Crude Oil continuous front-month futures Close price (yfinance symbol: CL=F),
+      projected 5, 10, and 21 trading days ahead.
+
+start: "2026-06-08"
+end: "2026-07-06"
+stride: 5
+warmup: 250

@@ -23,7 +23,7 @@ from typing import Any
 from aieng.forecasting.methods.agentic.curriculum import load_context_documents
 
 
-_DEFAULT_CONTEXT_DIR = Path(__file__).parent.parent / "adaptive_agent" / "curriculum" / "context"
+_DEFAULT_CONTEXT_DIR = Path(__file__).parent.parent / "adaptive_agent" / "curriculum" / "new_context"
 
 
 class NewsCacheSource:
@@ -33,8 +33,13 @@ class NewsCacheSource:
     ----------
     context_dir : Path
         Directory of ``wti_news_<YYYY-MM-DD>.md`` files. Defaults to the
-        cache built by ``scripts/cache_wti_curriculum_news.py``
-        (``adaptive_agent/curriculum/context/``) — the same files back
+        rebuilt cache (``adaptive_agent/curriculum/new_context/``) — see
+        ``planning-docs/news-cache-rebuild-plan.md`` and
+        ``planning-docs/news-cache-rebuild-interview-notes.md``. The old
+        ``adaptive_agent/curriculum/context/`` cache is kept on disk,
+        unpointed-to, for direct comparison until ``new_context`` is
+        confirmed better across the 8-arm x 2-window grid and formally
+        promoted (old one deprecated/removed). These same files back
         adaptive_agent's curriculum delivery and the anchored analyst
         variant's news briefing, since both just need "what was known as of
         this date," not anything agent-specific.

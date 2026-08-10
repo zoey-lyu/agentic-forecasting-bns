@@ -1,0 +1,605 @@
+spec:
+  task:
+    task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons:
+    - 5
+    - 10
+    - 21
+    frequency: B
+    description: 'WTI Crude Oil continuous front-month futures Close price (yfinance
+      symbol: CL=F), projected 5, 10, and 21 trading days ahead.'
+    payload_type: continuous
+    categories: null
+    resolution_fn: observed_value_at_resolution_timestamp
+  start: '2026-06-08T00:00:00'
+  end: '2026-07-06T00:00:00'
+  stride: 5
+  origin_dates: null
+  warmup: 250
+  description: Falling-shock counterpart to energy_oil_eval. Five weekly origins from
+    2026-06-08 to 2026-07-06 spanning the -25% June drawdown and the July rebound,
+    at the same extreme trailing volatility as the March-May rise. Exists so that
+    "direction" and "volatility" can be varied independently instead of moving together
+    as they do between the 2025 and 2026 windows.
+predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+predictions:
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:30.841594'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-06-15T00:00:00'
+  payload:
+    point_forecast: 89.5
+    quantiles:
+      '0.05': 81.0
+      '0.1': 83.0
+      '0.2': 85.5
+      '0.3': 87.0
+      '0.4': 88.2
+      '0.5': 89.5
+      '0.6': 90.8
+      '0.7': 92.0
+      '0.8': 93.5
+      '0.9': 96.0
+      '0.95': 98.0
+  metadata:
+    rationale: 'Note: The provided news briefing details events from June 2024 (WTI
+      at $73-$74, OPEC+ meeting details), while our forecast origin is June 8, 2026,
+      where WTI is trading at $90.54. Because of this temporal mismatch, we have prioritized
+      the provided 2026 price history, which shows a volatile down-trend from an April
+      2026 peak of $112.95. Our forecasts incorporate a bearish drift and elevated
+      volatility modeled from recent daily standard deviations of approximately $2.20.'
+    horizon_rationale: WTI crude has entered a highly volatile down-trend from its
+      April 2026 peak of $112.95, closing at $90.54 on June 5, 2026. Over the 5-day
+      horizon, we project consolidation with a slight downward drift, centered around
+      $89.50. Given the high daily volatility (standard deviation of ~$2.20), we expect
+      a broad 5-day trading range with support at $81.00 and resistance near $98.00.
+    langfuse_trace_id: dc5b4d0eeca43ba0193009f1242ca2d0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dc5b4d0eeca43ba0193009f1242ca2d0
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:30.841594'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-06-22T00:00:00'
+  payload:
+    point_forecast: 88.5
+    quantiles:
+      '0.05': 76.0
+      '0.1': 79.0
+      '0.2': 82.0
+      '0.3': 84.5
+      '0.4': 86.5
+      '0.5': 88.5
+      '0.6': 90.5
+      '0.7': 92.5
+      '0.8': 95.0
+      '0.9': 98.0
+      '0.95': 101.0
+  metadata:
+    rationale: 'Note: The provided news briefing details events from June 2024 (WTI
+      at $73-$74, OPEC+ meeting details), while our forecast origin is June 8, 2026,
+      where WTI is trading at $90.54. Because of this temporal mismatch, we have prioritized
+      the provided 2026 price history, which shows a volatile down-trend from an April
+      2026 peak of $112.95. Our forecasts incorporate a bearish drift and elevated
+      volatility modeled from recent daily standard deviations of approximately $2.20.'
+    horizon_rationale: Over a 10-day horizon, the bearish trend is expected to continue
+      slightly, pulling the median price down to $88.50. Uncertainty widens as the
+      market processes macroeconomic slowdown signals. A standard deviation of ~$7.50
+      is assumed, yielding a 90% confidence interval of $76.00 to $101.00.
+    langfuse_trace_id: dc5b4d0eeca43ba0193009f1242ca2d0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dc5b4d0eeca43ba0193009f1242ca2d0
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:30.841594'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-07-07T00:00:00'
+  payload:
+    point_forecast: 87.0
+    quantiles:
+      '0.05': 68.5
+      '0.1': 72.5
+      '0.2': 77.5
+      '0.3': 81.0
+      '0.4': 84.0
+      '0.5': 87.0
+      '0.6': 90.0
+      '0.7': 93.0
+      '0.8': 96.5
+      '0.9': 101.5
+      '0.95': 105.5
+  metadata:
+    rationale: 'Note: The provided news briefing details events from June 2024 (WTI
+      at $73-$74, OPEC+ meeting details), while our forecast origin is June 8, 2026,
+      where WTI is trading at $90.54. Because of this temporal mismatch, we have prioritized
+      the provided 2026 price history, which shows a volatile down-trend from an April
+      2026 peak of $112.95. Our forecasts incorporate a bearish drift and elevated
+      volatility modeled from recent daily standard deviations of approximately $2.20.'
+    horizon_rationale: Over the 21-day horizon, WTI is expected to drift down to $87.00.
+      The wide uncertainty band (implied volatility of ~$11.00 over 21 days) reflects
+      potential OPEC+ interventions or supply shocks, setting the 5th percentile at
+      $68.50 and the 95th percentile at $105.50.
+    langfuse_trace_id: dc5b4d0eeca43ba0193009f1242ca2d0
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dc5b4d0eeca43ba0193009f1242ca2d0
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:00.672980'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-06-22T00:00:00'
+  payload:
+    point_forecast: 83.5
+    quantiles:
+      '0.05': 72.0
+      '0.1': 75.5
+      '0.2': 79.0
+      '0.3': 81.0
+      '0.4': 82.5
+      '0.5': 83.5
+      '0.6': 85.5
+      '0.7': 88.0
+      '0.8': 91.0
+      '0.9': 95.0
+      '0.95': 98.0
+  metadata:
+    rationale: "WTI oil markets are currently caught in a transition phase. While\
+      \ the physical market is extraordinarily tight due to the ongoing closure of\
+      \ the Strait of Hormuz\u2014causing OECD inventories to fall to their lowest\
+      \ levels since 2003 and Middle Eastern producers to run 8.5 million bpd below\
+      \ quota targets\u2014recent diplomatic rumors of a U.S.-Iran deal have sparked\
+      \ a sharp correction. OPEC's decision to increase July quotas by 188,000 bpd\
+      \ and the UAE's official exit from the group add supply-side complexity, while\
+      \ demand forecasts remain sharply divided (EIA projecting a contraction vs.\
+      \ OPEC projecting 970,000 bpd growth). This combination of physical deficit\
+      \ and diplomatic speculation justifies a high-volatility, wide-quantile forecast."
+    horizon_rationale: In the immediate 5-day horizon, WTI oil prices are expected
+      to continue facing near-term pressure following the sharp drop from $96.02 to
+      $84.88 in early June. This decline is largely driven by sentiment and rumors
+      regarding a potential U.S.-Iran agreement to resolve the Strait of Hormuz closure.
+      While a concrete deal is still speculative, market participants are pricing
+      in a reduction in geopolitical risk. The point forecast of $83.50 reflects a
+      continuation of this downward momentum, though severe underlying physical shortages
+      (such as OECD inventories at 2003 lows) limit the immediate downside.
+    langfuse_trace_id: a0683ed72c64596c7fc9a0541a34b3a3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a0683ed72c64596c7fc9a0541a34b3a3
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:00.672980'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-06-29T00:00:00'
+  payload:
+    point_forecast: 81.5
+    quantiles:
+      '0.05': 65.0
+      '0.1': 69.0
+      '0.2': 74.0
+      '0.3': 77.0
+      '0.4': 79.5
+      '0.5': 81.5
+      '0.6': 84.5
+      '0.7': 89.0
+      '0.8': 94.0
+      '0.9': 100.0
+      '0.95': 105.0
+  metadata:
+    rationale: "WTI oil markets are currently caught in a transition phase. While\
+      \ the physical market is extraordinarily tight due to the ongoing closure of\
+      \ the Strait of Hormuz\u2014causing OECD inventories to fall to their lowest\
+      \ levels since 2003 and Middle Eastern producers to run 8.5 million bpd below\
+      \ quota targets\u2014recent diplomatic rumors of a U.S.-Iran deal have sparked\
+      \ a sharp correction. OPEC's decision to increase July quotas by 188,000 bpd\
+      \ and the UAE's official exit from the group add supply-side complexity, while\
+      \ demand forecasts remain sharply divided (EIA projecting a contraction vs.\
+      \ OPEC projecting 970,000 bpd growth). This combination of physical deficit\
+      \ and diplomatic speculation justifies a high-volatility, wide-quantile forecast."
+    horizon_rationale: By late June (10 business days ahead), the market faces a key
+      'tipping point' regarding global crude inventories, which have been drawing
+      down at a rapid 6.3 million bpd pace in Q2. If rumors of a U.S.-Iran deal gain
+      traction or lead to a partial reopening of shipping lanes, prices could drop
+      sharply toward the pre-crisis $60-$70 range. Conversely, if negotiations stall,
+      the physical squeeze will intensify. The point forecast of $81.50 balances the
+      downward diplomatic trend against structural tightness, with a widened distribution
+      reflecting high policy and geopolitical uncertainty.
+    langfuse_trace_id: a0683ed72c64596c7fc9a0541a34b3a3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a0683ed72c64596c7fc9a0541a34b3a3
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:00.672980'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-07-14T00:00:00'
+  payload:
+    point_forecast: 84.0
+    quantiles:
+      '0.05': 58.0
+      '0.1': 63.0
+      '0.2': 70.0
+      '0.3': 76.0
+      '0.4': 80.0
+      '0.5': 84.0
+      '0.6': 89.0
+      '0.7': 95.0
+      '0.8': 103.0
+      '0.9': 112.0
+      '0.95': 120.0
+  metadata:
+    rationale: "WTI oil markets are currently caught in a transition phase. While\
+      \ the physical market is extraordinarily tight due to the ongoing closure of\
+      \ the Strait of Hormuz\u2014causing OECD inventories to fall to their lowest\
+      \ levels since 2003 and Middle Eastern producers to run 8.5 million bpd below\
+      \ quota targets\u2014recent diplomatic rumors of a U.S.-Iran deal have sparked\
+      \ a sharp correction. OPEC's decision to increase July quotas by 188,000 bpd\
+      \ and the UAE's official exit from the group add supply-side complexity, while\
+      \ demand forecasts remain sharply divided (EIA projecting a contraction vs.\
+      \ OPEC projecting 970,000 bpd growth). This combination of physical deficit\
+      \ and diplomatic speculation justifies a high-volatility, wide-quantile forecast."
+    horizon_rationale: At the 21-day horizon (mid-July), the market is expected to
+      exhibit a highly bifurcated, bimodal profile. In Scenario A, a breakthrough
+      in U.S.-Iran negotiations leads to the reopening of the Strait of Hormuz, normalizing
+      flows from Saudi Arabia, Iraq, and Kuwait, and sending WTI tumbling toward the
+      lower quantiles ($58-$70). In Scenario B, negotiations collapse, and the projected
+      Q3 inventory draws of 7.6 million bpd trigger a critical supply crisis, causing
+      prices to spike toward the $110-$120 range. The median forecast of $84.00 represents
+      a compromise between these two powerful, opposing forces, with highly stretched
+      tails.
+    langfuse_trace_id: a0683ed72c64596c7fc9a0541a34b3a3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a0683ed72c64596c7fc9a0541a34b3a3
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:34.480099'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-06-29T00:00:00'
+  payload:
+    point_forecast: 75.5
+    quantiles:
+      '0.05': 71.5
+      '0.1': 72.5
+      '0.2': 73.8
+      '0.3': 74.5
+      '0.4': 75.0
+      '0.5': 75.5
+      '0.6': 76.3
+      '0.7': 77.2
+      '0.8': 78.5
+      '0.9': 80.5
+      '0.95': 82.0
+  metadata:
+    rationale: The WTI crude oil market is experiencing a profound regime shift from
+      a high-premium, geopolitically constrained environment to a demand-driven, surplus-facing
+      environment. The signing of the US-Iran interim agreement reopening the Strait
+      of Hormuz has triggered a rapid unwinding of long positions. Combined with substantial
+      demand downgrades for 2026 from the IEA and EIA, prices are expected to drift
+      towards pre-crisis levels near the lower $70s, balanced only by historically
+      tight inventories in the short term.
+    horizon_rationale: Following the historic interim agreement signed between the
+      US and Iran, the reopening of the Strait of Hormuz has swiftly removed the geopolitical
+      risk premium that kept WTI elevated. WTI has broken below key support levels
+      and is testing its 200-day moving average. Over a 5-day horizon, we expect some
+      consolidation after the dramatic sell-off, but bearish sentiment remains dominant.
+      Potential shipping frictions, such as demining operations, present some upside
+      risk (captured in the upper quantiles), while continued panic selling represents
+      the lower tail.
+    langfuse_trace_id: aa8da969e6728cbc96d48a7fa7c4fa11
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/aa8da969e6728cbc96d48a7fa7c4fa11
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:34.480099'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-07-06T00:00:00'
+  payload:
+    point_forecast: 73.8
+    quantiles:
+      '0.05': 68.5
+      '0.1': 70.0
+      '0.2': 71.5
+      '0.3': 72.5
+      '0.4': 73.2
+      '0.5': 73.8
+      '0.6': 74.6
+      '0.7': 75.8
+      '0.8': 77.2
+      '0.9': 79.5
+      '0.95': 81.5
+  metadata:
+    rationale: The WTI crude oil market is experiencing a profound regime shift from
+      a high-premium, geopolitically constrained environment to a demand-driven, surplus-facing
+      environment. The signing of the US-Iran interim agreement reopening the Strait
+      of Hormuz has triggered a rapid unwinding of long positions. Combined with substantial
+      demand downgrades for 2026 from the IEA and EIA, prices are expected to drift
+      towards pre-crisis levels near the lower $70s, balanced only by historically
+      tight inventories in the short term.
+    horizon_rationale: Over a 10-day horizon, physical oil flows through the Strait
+      of Hormuz will normalize further, leading to a continued compression of the
+      risk premium. This trend is compounded by a highly pessimistic macro demand
+      outlook, with both the IEA and EIA downgrading their 2026 forecasts to a demand
+      contraction of 1.1 million bpd. OPEC's downward revision of 200,000 bpd to its
+      demand outlook also signals weaker physical market fundamentals, pushing the
+      projected median to $73.80.
+    langfuse_trace_id: aa8da969e6728cbc96d48a7fa7c4fa11
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/aa8da969e6728cbc96d48a7fa7c4fa11
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:34.480099'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-07-21T00:00:00'
+  payload:
+    point_forecast: 71.8
+    quantiles:
+      '0.05': 65.0
+      '0.1': 67.0
+      '0.2': 69.2
+      '0.3': 70.5
+      '0.4': 71.2
+      '0.5': 71.8
+      '0.6': 72.8
+      '0.7': 74.2
+      '0.8': 76.0
+      '0.9': 78.5
+      '0.95': 81.0
+  metadata:
+    rationale: The WTI crude oil market is experiencing a profound regime shift from
+      a high-premium, geopolitically constrained environment to a demand-driven, surplus-facing
+      environment. The signing of the US-Iran interim agreement reopening the Strait
+      of Hormuz has triggered a rapid unwinding of long positions. Combined with substantial
+      demand downgrades for 2026 from the IEA and EIA, prices are expected to drift
+      towards pre-crisis levels near the lower $70s, balanced only by historically
+      tight inventories in the short term.
+    horizon_rationale: At the 21-day horizon (approximately late July 2026), the geopolitical
+      premium is expected to be fully liquidated, in line with Citi's Brent crude
+      price forecast adjustment to $75 for Q3 2026 (translating to WTI in the low
+      $70s). Although supply normalization represents a major headwind, extremely
+      low observed global inventories (which fell by 143 million barrels in May) should
+      provide some physical market support, preventing WTI from collapsing back to
+      its 52-week low of $55.27. Therefore, the median is forecast at $71.80, with
+      a wider distribution reflecting uncertainty around the exact pace of supply
+      recovery.
+    langfuse_trace_id: aa8da969e6728cbc96d48a7fa7c4fa11
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/aa8da969e6728cbc96d48a7fa7c4fa11
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:06.710517'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-06T00:00:00'
+  payload:
+    point_forecast: 68.0
+    quantiles:
+      '0.05': 61.0
+      '0.1': 63.0
+      '0.2': 65.0
+      '0.3': 66.2
+      '0.4': 67.1
+      '0.5': 68.0
+      '0.6': 68.9
+      '0.7': 70.0
+      '0.8': 71.5
+      '0.9': 73.5
+      '0.95': 75.0
+  metadata:
+    rationale: This forecast is constructed in the context of a massive structural
+      shift in WTI dynamics. The rapid resolution of the Strait of Hormuz closure
+      via a 60-day U.S.-Iran truce has removed the geopolitical risk premium, driving
+      prices from over $118 down to $69.23. The short-to-medium-term forecast reflects
+      a continuing but decelerating downward path toward a $66.00-$68.00 range, pressured
+      by OPEC+ supply normalization and highly bearish 2026 demand estimates from
+      the IEA/EIA. The probability distribution is widened at longer horizons to account
+      for the potential volatility surrounding the eventual expiration or renewal
+      of the 60-day truce.
+    horizon_rationale: Over a 5-day horizon, WTI is expected to consolidate near $68.00.
+      The massive 38% slide from the April peak of over $118 has been driven by the
+      rapid unwinding of geopolitical risk premiums following the preliminary U.S.-Iran
+      60-day truce and the reopening of the Strait of Hormuz. In the immediate short
+      term, the pace of the sell-off is likely to moderate as speculative liquidation
+      slows. However, ongoing OPEC+ output hikes (+188,000 bpd for July) and weak
+      demand trends keep the bias to the downside, with a 5% tail reaching $61.00
+      and upside capped near $75.00.
+    langfuse_trace_id: 46f33d4fc44fb25852019192d95abd98
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/46f33d4fc44fb25852019192d95abd98
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:06.710517'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-13T00:00:00'
+  payload:
+    point_forecast: 67.0
+    quantiles:
+      '0.05': 58.0
+      '0.1': 60.5
+      '0.2': 62.5
+      '0.3': 64.2
+      '0.4': 65.7
+      '0.5': 67.0
+      '0.6': 68.3
+      '0.7': 69.8
+      '0.8': 71.8
+      '0.9': 74.5
+      '0.95': 76.5
+  metadata:
+    rationale: This forecast is constructed in the context of a massive structural
+      shift in WTI dynamics. The rapid resolution of the Strait of Hormuz closure
+      via a 60-day U.S.-Iran truce has removed the geopolitical risk premium, driving
+      prices from over $118 down to $69.23. The short-to-medium-term forecast reflects
+      a continuing but decelerating downward path toward a $66.00-$68.00 range, pressured
+      by OPEC+ supply normalization and highly bearish 2026 demand estimates from
+      the IEA/EIA. The probability distribution is widened at longer horizons to account
+      for the potential volatility surrounding the eventual expiration or renewal
+      of the 60-day truce.
+    horizon_rationale: At the 10-day horizon, WTI is projected to drift slightly lower
+      to a median of $67.00. Physical Iranian crude volumes will begin increasingly
+      hitting the market under the 60-day sanctions waiver, while the OPEC+ quota
+      hikes continue to add supply. Extremely bearish macro demand projections from
+      the IEA and EIA (both forecasting 2026 declines of 1.1M to 1.2M bpd) are starting
+      to overshadow positive inventory draws, anchoring the median forecast down.
+      Geopolitical friction (such as delayed diplomatic meetings and elevated shipping
+      insurance rates) maintains a modest upside tail risk of $76.50.
+    langfuse_trace_id: 46f33d4fc44fb25852019192d95abd98
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/46f33d4fc44fb25852019192d95abd98
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:06.710517'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-28T00:00:00'
+  payload:
+    point_forecast: 66.0
+    quantiles:
+      '0.05': 54.0
+      '0.1': 57.0
+      '0.2': 60.0
+      '0.3': 62.5
+      '0.4': 64.3
+      '0.5': 66.0
+      '0.6': 68.0
+      '0.7': 70.5
+      '0.8': 74.0
+      '0.9': 78.5
+      '0.95': 82.0
+  metadata:
+    rationale: This forecast is constructed in the context of a massive structural
+      shift in WTI dynamics. The rapid resolution of the Strait of Hormuz closure
+      via a 60-day U.S.-Iran truce has removed the geopolitical risk premium, driving
+      prices from over $118 down to $69.23. The short-to-medium-term forecast reflects
+      a continuing but decelerating downward path toward a $66.00-$68.00 range, pressured
+      by OPEC+ supply normalization and highly bearish 2026 demand estimates from
+      the IEA/EIA. The probability distribution is widened at longer horizons to account
+      for the potential volatility surrounding the eventual expiration or renewal
+      of the 60-day truce.
+    horizon_rationale: For the 21-day horizon, the median WTI forecast is $66.00,
+      but the distribution widens significantly to reflect major binary risks. As
+      the market approaches the later stages of the 60-day U.S.-Iran truce, prices
+      could either plunge toward the 52-week low (~$54.00) if the truce holds, inspections
+      succeed, and global demand contraction dominates, or they could spike back toward
+      $82.00 if negotiations stall, shipping lane threats resume, or Trump's warnings
+      of military action materialize. On balance, structural oversupply and major
+      bank forecast downgrades (e.g., Goldman Sachs lowering WTI expectations) drag
+      the median lower.
+    langfuse_trace_id: 46f33d4fc44fb25852019192d95abd98
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/46f33d4fc44fb25852019192d95abd98
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:41.545300'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-07-13T00:00:00'
+  payload:
+    point_forecast: 67.5
+    quantiles:
+      '0.05': 62.5
+      '0.1': 64.0
+      '0.2': 65.2
+      '0.3': 66.1
+      '0.4': 66.85
+      '0.5': 67.5
+      '0.6': 68.2
+      '0.7': 69.0
+      '0.8': 70.0
+      '0.9': 71.3
+      '0.95': 72.5
+  metadata:
+    rationale: This forecast models the transition of the WTI crude oil market from
+      a geopolitically tight regime to a fundamentals-driven oversupply following
+      the US-Iran ceasefire and the gradual reopening of the Strait of Hormuz. Bearish
+      pressures include weak global demand growth (downgraded by the IEA) and OPEC+
+      supply quota hikes. The model incorporates a wider distribution at Horizon 21
+      to reflect technical support-zone dynamics, where a successful defense could
+      trigger a short-covering bounce, while a failure would likely push prices down
+      to the $55 level.
+    horizon_rationale: Over a 5-day horizon, WTI is expected to consolidate near the
+      upper boundary of its long-term support zone ($65-$68) as the market continues
+      to price in the US-Iran ceasefire and the reopening of the Strait of Hormuz.
+      OPEC+ quota increases of 188,000 bpd for July add to the bearish fundamental
+      outlook, though high marine insurance rates and ongoing demining of the strait
+      limit immediate physical oversupply. We expect the median price to drift slightly
+      lower to $67.50, with a tight distribution ranging from $62.50 to $72.50.
+    langfuse_trace_id: ab505a32d649960f94f2f66f6ea57544
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/ab505a32d649960f94f2f66f6ea57544
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:41.545300'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-07-20T00:00:00'
+  payload:
+    point_forecast: 66.5
+    quantiles:
+      '0.05': 59.5
+      '0.1': 61.5
+      '0.2': 63.2
+      '0.3': 64.5
+      '0.4': 65.6
+      '0.5': 66.5
+      '0.6': 67.6
+      '0.7': 68.8
+      '0.8': 70.2
+      '0.9': 72.2
+      '0.95': 74.0
+  metadata:
+    rationale: This forecast models the transition of the WTI crude oil market from
+      a geopolitically tight regime to a fundamentals-driven oversupply following
+      the US-Iran ceasefire and the gradual reopening of the Strait of Hormuz. Bearish
+      pressures include weak global demand growth (downgraded by the IEA) and OPEC+
+      supply quota hikes. The model incorporates a wider distribution at Horizon 21
+      to reflect technical support-zone dynamics, where a successful defense could
+      trigger a short-covering bounce, while a failure would likely push prices down
+      to the $55 level.
+    horizon_rationale: Over a 10-day horizon, the unwinding of the geopolitical war
+      premium is expected to persist, although downward momentum may encounter friction
+      as prices enter the key $57-$65 multi-year support zone. Weak macroeconomic
+      indicators, such as near-contractionary US manufacturing and downgraded IEA
+      global oil demand growth, cap any major upside potential. The point forecast
+      is set at $66.50, with the lower tail expanding to $59.50 as supply normalization
+      continues.
+    langfuse_trace_id: ab505a32d649960f94f2f66f6ea57544
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/ab505a32d649960f94f2f66f6ea57544
+- predictor_id: agent_predictor_wti_analyst_news_cached_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:02:41.545300'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-08-04T00:00:00'
+  payload:
+    point_forecast: 65.0
+    quantiles:
+      '0.05': 55.5
+      '0.1': 58.0
+      '0.2': 60.5
+      '0.3': 62.2
+      '0.4': 63.7
+      '0.5': 65.0
+      '0.6': 66.6
+      '0.7': 68.5
+      '0.8': 71.0
+      '0.9': 74.5
+      '0.95': 77.0
+  metadata:
+    rationale: This forecast models the transition of the WTI crude oil market from
+      a geopolitically tight regime to a fundamentals-driven oversupply following
+      the US-Iran ceasefire and the gradual reopening of the Strait of Hormuz. Bearish
+      pressures include weak global demand growth (downgraded by the IEA) and OPEC+
+      supply quota hikes. The model incorporates a wider distribution at Horizon 21
+      to reflect technical support-zone dynamics, where a successful defense could
+      trigger a short-covering bounce, while a failure would likely push prices down
+      to the $55 level.
+    horizon_rationale: By Horizon 21 (early August 2026), the 60-day US-Iran truce
+      will be approaching its final weeks and more physical supply is expected to
+      flow through the Strait of Hormuz. Combined with the cumulative OPEC+ quota
+      increases since April (nearly 600,000 bpd), the market faces a transition to
+      a fundamentals-driven oversupply. If support at $57-$65 holds, a technical bounce
+      toward $75-$80 is possible (represented by our upper quantiles up to $77.00).
+      However, if weak demand and rising supply trigger a breakdown, WTI could test
+      the $55.00 mark (5% quantile at $55.50), yielding a median forecast of $65.00.
+    langfuse_trace_id: ab505a32d649960f94f2f66f6ea57544
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/ab505a32d649960f94f2f66f6ea57544
+scores:
+- 5.880578512396693
+- 9.382479644018755
+- 10.499502134717199
+- 6.015041572003324
+- 7.287190082644626
+- 5.403141494624869
+- 3.6276859504132224
+- 3.7144603130245986
+- 9.86868134805979
+- 1.0483473848705451
+- 7.832561373119515
+- 8.020993483362123
+- 8.915619224359183
+- 14.110995092470786
+- 6.667187336062599
+metric: crps
+mean_score: 7.218297663076522
+ran_at: '2026-08-10T04:02:41.851231'
+skipped_origins: 0

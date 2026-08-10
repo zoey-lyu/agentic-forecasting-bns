@@ -375,7 +375,7 @@ async def _best_effort_fallback(
     A search-capable *independent* (non-Gemini) verifier would likely resolve
     these cases properly instead of working around them -- investigated and
     deferred, not implemented; see planning-docs/news-cache-rebuild-plan.md
-    section 4.7.
+    section 4.8.
     """
     user_content = query + f"\n\nOnly include and cite information published strictly before {cutoff.isoformat()}."
     for attempt in range(1, _MAX_FALLBACK_ATTEMPTS + 1):

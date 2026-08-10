@@ -1,0 +1,778 @@
+spec:
+  task:
+    task_id: wti_oil_price_forecast
+    target_series_id: wti_crude_oil_price
+    horizons:
+    - 5
+    - 10
+    - 21
+    frequency: B
+    description: 'WTI Crude Oil continuous front-month futures Close price (yfinance
+      symbol: CL=F), projected 5, 10, and 21 trading days ahead.'
+    payload_type: continuous
+    categories: null
+    resolution_fn: observed_value_at_resolution_timestamp
+  start: '2026-06-08T00:00:00'
+  end: '2026-07-06T00:00:00'
+  stride: 5
+  origin_dates: null
+  warmup: 250
+  description: Falling-shock counterpart to energy_oil_eval. Five weekly origins from
+    2026-06-08 to 2026-07-06 spanning the -25% June drawdown and the July rebound,
+    at the same extreme trailing volatility as the March-May rise. Exists so that
+    "direction" and "volatility" can be varied independently instead of moving together
+    as they do between the 2025 and 2026 windows.
+predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+predictions:
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:15.088398'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-06-15T00:00:00'
+  payload:
+    point_forecast: 89.85055638476233
+    quantiles:
+      '0.05': 82.28644238256088
+      '0.1': 84.01867258831582
+      '0.2': 85.87617920487179
+      '0.3': 87.45732830005326
+      '0.4': 88.7805722726339
+      '0.5': 89.85055638476233
+      '0.6': 91.07721010450733
+      '0.7': 92.18023571007124
+      '0.8': 94.04720085071087
+      '0.9': 95.74545840626998
+      '0.95': 97.64035889118877
+  metadata:
+    anchor_point: 90.49327847117
+    anchor_half_width: 7.141356515640879
+    signal_loc: -0.45
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 89.85055638476233
+    final_half_width: 7.676958254313945
+    rationale: The oil market is transitioning to a more bearish phase following the
+      OPEC+ June meeting, which outlined a schedule to phase out 2.2 million bpd of
+      voluntary cuts starting in October. This surprise supply addition, combined
+      with soft economic data from the US and China and a large unexpected US inventory
+      build (+4.1M barrels), has shifted price risks heavily to the downside. We adjust
+      the statistical anchors downward across all horizons and slightly expand the
+      uncertainty bands to reflect heightened market volatility.
+    horizon_rationale: WTI prices experienced a sharp drop from $96.02 to $90.54 between
+      June 3 and June 5, 2026. This correction is aligned with the bearish market
+      reaction to the OPEC+ decision to phase out 2.2 million bpd of voluntary cuts
+      starting later this year, as well as an unexpected build of 4.1 million barrels
+      in US crude inventories reported by API. We expect the bearish momentum to carry
+      forward over the next 5 days, pushing the price below the anchor point of $90.49.
+    key_signals:
+    - OPEC+ June 2024 decision to extend collective cuts but phase out 2.2 million
+      bpd voluntary cuts starting October
+    - API report of an unexpected 4.1 million barrel build in US crude inventories
+      for the week ending May 31
+    - Weak macroeconomic indicators including a contracting US ISM manufacturing PMI
+      and sluggish industrial activity in China and Europe
+    - Goldman Sachs revision of Brent price forecast risks to the downside ($75-$90
+      range)
+    langfuse_trace_id: 94fcc0f0ea88672c20514c282e43aaf3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/94fcc0f0ea88672c20514c282e43aaf3
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:15.088398'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-06-22T00:00:00'
+  payload:
+    point_forecast: 89.33908424766857
+    quantiles:
+      '0.05': 78.92445823781951
+      '0.1': 81.59224228520745
+      '0.2': 83.74646039587935
+      '0.3': 85.98659219060342
+      '0.4': 87.37299592701986
+      '0.5': 89.33908424766857
+      '0.6': 91.35053364904272
+      '0.7': 93.48272860263057
+      '0.8': 95.6649667866999
+      '0.9': 97.99750604651042
+      '0.95': 100.33038155153578
+  metadata:
+    anchor_point: 90.33470858784142
+    anchor_half_width: 9.9562434017285
+    signal_loc: -0.5
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 89.33908424766857
+    final_half_width: 10.702961656858138
+    rationale: The oil market is transitioning to a more bearish phase following the
+      OPEC+ June meeting, which outlined a schedule to phase out 2.2 million bpd of
+      voluntary cuts starting in October. This surprise supply addition, combined
+      with soft economic data from the US and China and a large unexpected US inventory
+      build (+4.1M barrels), has shifted price risks heavily to the downside. We adjust
+      the statistical anchors downward across all horizons and slightly expand the
+      uncertainty bands to reflect heightened market volatility.
+    horizon_rationale: Over a 10-day horizon, the market is expected to remain under
+      pressure as traders digest the supply return timeline from OPEC+ amid weak global
+      macroeconomic indicators (such as contracting US ISM manufacturing PMI). We
+      expect the price to stabilize at lower levels (around $85-$86), which is significantly
+      below the baseline point forecast of $90.33. Volatility remains elevated, justifying
+      a width increase.
+    key_signals:
+    - OPEC+ June 2024 decision to extend collective cuts but phase out 2.2 million
+      bpd voluntary cuts starting October
+    - API report of an unexpected 4.1 million barrel build in US crude inventories
+      for the week ending May 31
+    - Weak macroeconomic indicators including a contracting US ISM manufacturing PMI
+      and sluggish industrial activity in China and Europe
+    - Goldman Sachs revision of Brent price forecast risks to the downside ($75-$90
+      range)
+    langfuse_trace_id: 94fcc0f0ea88672c20514c282e43aaf3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/94fcc0f0ea88672c20514c282e43aaf3
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:15.088398'
+  as_of: '2026-06-08T00:00:00'
+  forecast_date: '2026-07-07T00:00:00'
+  payload:
+    point_forecast: 89.50018338824644
+    quantiles:
+      '0.05': 72.40833502669994
+      '0.1': 77.58594286356644
+      '0.2': 81.7418240430458
+      '0.3': 84.35553635105927
+      '0.4': 87.19692067559879
+      '0.5': 89.50018338824644
+      '0.6': 92.02581923503224
+      '0.7': 94.6430225346288
+      '0.8': 98.07380111803043
+      '0.9': 101.55526695126653
+      '0.95': 104.37057611809882
+  metadata:
+    anchor_point: 90.5655914246264
+    anchor_half_width: 15.22011480542804
+    signal_loc: -0.35
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 89.50018338824644
+    final_half_width: 15.981120545699442
+    rationale: The oil market is transitioning to a more bearish phase following the
+      OPEC+ June meeting, which outlined a schedule to phase out 2.2 million bpd of
+      voluntary cuts starting in October. This surprise supply addition, combined
+      with soft economic data from the US and China and a large unexpected US inventory
+      build (+4.1M barrels), has shifted price risks heavily to the downside. We adjust
+      the statistical anchors downward across all horizons and slightly expand the
+      uncertainty bands to reflect heightened market volatility.
+    horizon_rationale: Over 21 business days, the physical market balance is projected
+      to remain loose due to rising non-OPEC supply and the upcoming phase-out of
+      OPEC+ voluntary cuts. Although some short-term oversold conditions may consolidate,
+      the medium-term outlook remains skewed to the downside relative to the anchor's
+      statistical baseline of $90.57. We maintain a negative signal location of -0.35
+      with slightly increased uncertainty.
+    key_signals:
+    - OPEC+ June 2024 decision to extend collective cuts but phase out 2.2 million
+      bpd voluntary cuts starting October
+    - API report of an unexpected 4.1 million barrel build in US crude inventories
+      for the week ending May 31
+    - Weak macroeconomic indicators including a contracting US ISM manufacturing PMI
+      and sluggish industrial activity in China and Europe
+    - Goldman Sachs revision of Brent price forecast risks to the downside ($75-$90
+      range)
+    langfuse_trace_id: 94fcc0f0ea88672c20514c282e43aaf3
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/94fcc0f0ea88672c20514c282e43aaf3
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:36.654467'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-06-22T00:00:00'
+  payload:
+    point_forecast: 84.69041176202472
+    quantiles:
+      '0.05': 77.30080743691909
+      '0.1': 78.99307381693397
+      '0.2': 80.80772638875129
+      '0.3': 82.35239721060688
+      '0.4': 83.64511297085406
+      '0.5': 84.69041176202472
+      '0.6': 85.88876567765801
+      '0.7': 86.96634367069262
+      '0.8': 88.7902365514817
+      '0.9': 90.44931405534409
+      '0.95': 92.30049779145985
+  metadata:
+    anchor_point: 84.8332659558775
+    anchor_half_width: 7.142709692638462
+    signal_loc: -0.1
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 84.69041176202472
+    final_half_width: 7.499845177270386
+    horizon_rationale: WTI has experienced sharp downward momentum, falling from $96.02
+      on June 3 to $84.88 on June 12. While the medium-term outlook is exceptionally
+      tight due to the Strait of Hormuz closure, this short-term bearish momentum
+      is likely to persist or consolidate over the next 5 business days, justifying
+      a slight negative location signal relative to the flat anchor. Uncertainty is
+      elevated due to the large recent daily price swings.
+    key_signals:
+    - Ongoing Strait of Hormuz closure and the associated collapse of Gulf crude export
+      routes
+    - EIA Q3 global oil inventory draw projections of 7.6 million bpd and OECD inventories
+      at 2003 lows
+    - EIA June STEO Brent crude price projection averaging $105 per barrel in June
+      and July 2026
+    - Recent WTI downward price momentum dropping from $96.02 (June 3) to $84.88 (June
+      12)
+    langfuse_trace_id: bf11c815f6e4408d8c52237ee197c011
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/bf11c815f6e4408d8c52237ee197c011
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:36.654467'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-06-29T00:00:00'
+  payload:
+    point_forecast: 85.07299122425623
+    quantiles:
+      '0.05': 74.65639180328783
+      '0.1': 77.32468135463702
+      '0.2': 79.47930765644027
+      '0.3': 81.71986392161465
+      '0.4': 83.10653036017197
+      '0.5': 85.07299122425623
+      '0.6': 87.08482176429162
+      '0.7': 89.21742073596194
+      '0.8': 91.40007242053463
+      '0.9': 93.73305366058595
+      '0.95': 96.06637120956539
+  metadata:
+    anchor_point: 84.6746660259999
+    anchor_half_width: 9.958129956408165
+    signal_loc: 0.2
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 85.07299122425623
+    final_half_width: 10.704989703138777
+    horizon_rationale: Over a 10-day horizon, the physical reality of critically low
+      OECD inventories (at 2003 lows) and the approaching end-of-June 'tipping point'
+      for depletion should begin to override short-term technical selling. WTI is
+      expected to rebound toward the EIA's projected Brent average of $105/bbl for
+      June/July, leading to a positive location signal and higher width to reflect
+      increased geopolitical and inventory volatility.
+    key_signals:
+    - Ongoing Strait of Hormuz closure and the associated collapse of Gulf crude export
+      routes
+    - EIA Q3 global oil inventory draw projections of 7.6 million bpd and OECD inventories
+      at 2003 lows
+    - EIA June STEO Brent crude price projection averaging $105 per barrel in June
+      and July 2026
+    - Recent WTI downward price momentum dropping from $96.02 (June 3) to $84.88 (June
+      12)
+    langfuse_trace_id: bf11c815f6e4408d8c52237ee197c011
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/bf11c815f6e4408d8c52237ee197c011
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:36.654467'
+  as_of: '2026-06-15T00:00:00'
+  forecast_date: '2026-07-14T00:00:00'
+  payload:
+    point_forecast: 85.97120252630695
+    quantiles:
+      '0.05': 68.06206376084809
+      '0.1': 73.48725214668626
+      '0.2': 77.84185740421387
+      '0.3': 80.58055104500892
+      '0.4': 83.5578034215666
+      '0.5': 85.97120252630695
+      '0.6': 88.61760810482049
+      '0.7': 91.35995966788167
+      '0.8': 94.95478969585794
+      '0.9': 98.60273071403977
+      '0.95': 101.55266108259504
+  metadata:
+    anchor_point: 84.9055926115241
+    anchor_half_width: 15.222998782612244
+    signal_loc: 0.35
+    signal_width: 0.2
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 85.97120252630695
+    final_half_width: 16.74529866087347
+    horizon_rationale: By mid-July, the projected Q3 global inventory draws of 7.6
+      million bpd will be in full effect, and the absence of a concrete U.S.-Iran
+      agreement to reopen the Strait of Hormuz will keep a massive risk premium active.
+      This physical undersupply should pull WTI back into the low-to-mid $90s, well
+      above the flat baseline of $84.91, warranting a strong positive location signal
+      and significantly higher interval width to account for non-linear price spikes.
+    key_signals:
+    - Ongoing Strait of Hormuz closure and the associated collapse of Gulf crude export
+      routes
+    - EIA Q3 global oil inventory draw projections of 7.6 million bpd and OECD inventories
+      at 2003 lows
+    - EIA June STEO Brent crude price projection averaging $105 per barrel in June
+      and July 2026
+    - Recent WTI downward price momentum dropping from $96.02 (June 3) to $84.88 (June
+      12)
+    langfuse_trace_id: bf11c815f6e4408d8c52237ee197c011
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/bf11c815f6e4408d8c52237ee197c011
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:57.927007'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-06-29T00:00:00'
+  payload:
+    point_forecast: 76.05296151375694
+    quantiles:
+      '0.05': 68.48304162428937
+      '0.1': 70.21660141514717
+      '0.2': 72.07553377356909
+      '0.3': 73.65789649051709
+      '0.4': 74.9821561280293
+      '0.5': 76.05296151375694
+      '0.6': 77.28055675992651
+      '0.7': 78.38442900031318
+      '0.8': 80.2528271427734
+      '0.9': 81.95238820749613
+      '0.95': 83.84874313619943
+  metadata:
+    anchor_point: 76.55324016763308
+    anchor_half_width: 7.146837912516311
+    signal_loc: -0.35
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 76.05296151375694
+    final_half_width: 7.682850755955034
+    horizon_rationale: The rapid deflation of the geopolitical risk premium following
+      the U.S.-Iran interim agreement (signed June 17, MoU on June 18) and the subsequent
+      reopening of the Strait of Hormuz will continue to exert strong downward pressure
+      on WTI. Furthermore, major demand growth downgrades by the IEA and EIA for 2026
+      (both projecting a 1.1 million bpd contraction) highlight weak fundamentals.
+      Technically, WTI has broken below its triangle consolidation, testing its 200-day
+      moving average with bearish momentum.
+    key_signals:
+    - U.S.-Iran interim 14-point agreement signed on June 17, 2026, lifting the naval
+      blockade on Iranian ports and reopening the Strait of Hormuz.
+    - IEA and EIA downgrading 2026 demand outlooks to a global demand contraction
+      of 1.1 million bpd.
+    - Citi cutting Brent price forecasts to $75/bbl for Q3 2026 and $70/bbl for Q4
+      2026.
+    - WTI technical breakdown from its symmetrical triangle pattern, testing 200-day
+      moving average support.
+    langfuse_trace_id: 3a42fc456ec725a98aa54aa53f953310
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a42fc456ec725a98aa54aa53f953310
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:57.927007'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-07-06T00:00:00'
+  payload:
+    point_forecast: 75.4977988883296
+    quantiles:
+      '0.05': 65.31756556889682
+      '0.1': 67.92530818227405
+      '0.2': 70.03104322901007
+      '0.3': 72.22075837720683
+      '0.4': 73.57595956237712
+      '0.5': 75.4977988883296
+      '0.6': 77.46397839365773
+      '0.7': 79.548185938846
+      '0.8': 81.68131043620114
+      '0.9': 83.96135331716026
+      '0.95': 86.24172487576335
+  metadata:
+    anchor_point: 76.39454857290959
+    anchor_half_width: 9.963885384222152
+    signal_loc: -0.45
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 75.4977988883296
+    final_half_width: 10.46207965343326
+    horizon_rationale: Downward momentum is expected to persist as physical crude
+      flows through the Strait of Hormuz normalize. Citi's Brent downgrade to $75/bbl
+      for Q3 2026 acts as a near-term anchor, suggesting WTI will slide into the low
+      $70s, well below the statistical baseline. The wide divergence between OPEC's
+      demand views and the IEA/EIA's bearish outlooks maintains slightly elevated
+      uncertainty.
+    key_signals:
+    - U.S.-Iran interim 14-point agreement signed on June 17, 2026, lifting the naval
+      blockade on Iranian ports and reopening the Strait of Hormuz.
+    - IEA and EIA downgrading 2026 demand outlooks to a global demand contraction
+      of 1.1 million bpd.
+    - Citi cutting Brent price forecasts to $75/bbl for Q3 2026 and $70/bbl for Q4
+      2026.
+    - WTI technical breakdown from its symmetrical triangle pattern, testing 200-day
+      moving average support.
+    langfuse_trace_id: 3a42fc456ec725a98aa54aa53f953310
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a42fc456ec725a98aa54aa53f953310
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:00:57.927007'
+  as_of: '2026-06-22T00:00:00'
+  forecast_date: '2026-07-21T00:00:00'
+  payload:
+    point_forecast: 75.25474688564279
+    quantiles:
+      '0.05': 58.55704068618904
+      '0.1': 63.61525163255409
+      '0.2': 67.6752971856675
+      '0.3': 70.22873665493483
+      '0.4': 73.00459796889523
+      '0.5': 75.25474688564279
+      '0.6': 77.72214095820651
+      '0.7': 80.27899091594568
+      '0.8': 83.63065491443409
+      '0.9': 87.03183730250163
+      '0.95': 89.78222475820576
+  metadata:
+    anchor_point: 76.62560862538986
+    anchor_half_width: 15.231797108300835
+    signal_loc: -0.45
+    signal_width: 0.05
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 75.25474688564279
+    final_half_width: 15.612592036008355
+    horizon_rationale: Over a one-month horizon, the full return of transit through
+      the Strait of Hormuz and the realization of Q2 demand contraction will likely
+      keep prices depressed. Despite lingering demining risks, the market is pricing
+      in a transition to a surplus by late 2026. WTI is forecast to trade significantly
+      below the anchor's point prediction, aligning with a structurally weaker outlook.
+    key_signals:
+    - U.S.-Iran interim 14-point agreement signed on June 17, 2026, lifting the naval
+      blockade on Iranian ports and reopening the Strait of Hormuz.
+    - IEA and EIA downgrading 2026 demand outlooks to a global demand contraction
+      of 1.1 million bpd.
+    - Citi cutting Brent price forecasts to $75/bbl for Q3 2026 and $70/bbl for Q4
+      2026.
+    - WTI technical breakdown from its symmetrical triangle pattern, testing 200-day
+      moving average support.
+    langfuse_trace_id: 3a42fc456ec725a98aa54aa53f953310
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/3a42fc456ec725a98aa54aa53f953310
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:22.019342'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-06T00:00:00'
+  payload:
+    point_forecast: 68.75439852101198
+    quantiles:
+      '0.05': 61.183901543288684
+      '0.1': 62.91759349102668
+      '0.2': 64.77666756403049
+      '0.3': 66.35915091144138
+      '0.4': 67.68351150308463
+      '0.5': 68.75439852101198
+      '0.6': 69.98208735216129
+      '0.7': 71.08604374557929
+      '0.8': 72.95458432423973
+      '0.9': 74.65427495397034
+      '0.95': 76.55077445014253
+  metadata:
+    anchor_point: 69.18324148585441
+    anchor_half_width: 7.147382747373882
+    signal_loc: -0.3
+    signal_width: 0.15
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 68.75439852101198
+    final_half_width: 7.683436453426923
+    rationale: The oil market is transitioning from a period of severe supply disruption
+      due to the Hormuz closure to rapid normalization, marked by a preliminary U.S.-Iran
+      ceasefire MOU, a 60-day sanctions waiver, and ongoing OPEC+ quota hikes. This
+      structural shift, alongside major demand growth downgrades from the IEA and
+      EIA, warrants a consistent bearish deviation from the flat AutoARIMA anchor,
+      with elevated uncertainty due to the temporary nature of the truce and geopolitical
+      fragility.
+    horizon_rationale: WTI crude has dropped to $69.23 following the U.S.-Iran preliminary
+      MOU, 60-day ceasefire, and the reopening of the Strait of Hormuz. In the short
+      term (5 business days), we expect the downward momentum to persist as physical
+      flows resume and OPEC+ begins its 188,000 bpd July quota hike. However, potential
+      friction, such as VP Vance delaying his Switzerland trip and President Trump's
+      warning on shipping interference, will keep a floor under prices. We forecast
+      a moderate downward deviation from the anchor point of 69.18 to around $67.0,
+      with slightly elevated uncertainty (signal_width 0.15) due to the fluid diplomatic
+      situation.
+    key_signals:
+    - Signing of U.S.-Iran preliminary MOU, 60-day ceasefire, and reopening of the
+      Strait of Hormuz
+    - U.S. Treasury's temporary 60-day general license authorizing production and
+      sale of Iranian-origin oil
+    - OPEC+ July quota increase of approximately 188,000 bpd, bringing cumulative
+      hikes to 600,000 bpd since April
+    - IEA and EIA downgrading 2026 global demand growth to contractions of 1.1 million
+      bpd and 1.2 million bpd respectively
+    - Goldman Sachs, Morgan Stanley, and JPMorgan slashing Brent and WTI price forecasts
+    langfuse_trace_id: a43a5e9187ea9d90d8d195fa12d0cfea
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a43a5e9187ea9d90d8d195fa12d0cfea
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:22.019342'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-13T00:00:00'
+  payload:
+    point_forecast: 68.22736619537443
+    quantiles:
+      '0.05': 57.5615468204352
+      '0.1': 60.2936759198263
+      '0.2': 62.49985223772008
+      '0.3': 64.79401441656259
+      '0.4': 66.21385722410791
+      '0.5': 68.22736619537443
+      '0.6': 70.28733032434053
+      '0.7': 72.47095230227987
+      '0.8': 74.70582451779366
+      '0.9': 77.0946229639948
+      '0.95': 79.48376576540599
+  metadata:
+    anchor_point: 69.02453779337337
+    anchor_half_width: 9.964644974986719
+    signal_loc: -0.4
+    signal_width: 0.2
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 68.22736619537443
+    final_half_width: 10.961109472485392
+    rationale: The oil market is transitioning from a period of severe supply disruption
+      due to the Hormuz closure to rapid normalization, marked by a preliminary U.S.-Iran
+      ceasefire MOU, a 60-day sanctions waiver, and ongoing OPEC+ quota hikes. This
+      structural shift, alongside major demand growth downgrades from the IEA and
+      EIA, warrants a consistent bearish deviation from the flat AutoARIMA anchor,
+      with elevated uncertainty due to the temporary nature of the truce and geopolitical
+      fragility.
+    horizon_rationale: At the 10-day horizon, the physical resumption of Iranian oil
+      shipments under the temporary 60-day general license and the ongoing liquidation
+      of long positions by speculators are expected to keep pressure on prices, driving
+      them below the anchor point of 69.02 to around $65.0. Demand downgrades from
+      the IEA and EIA reinforce the bearish outlook. Uncertainty is elevated (signal_width
+      0.20) because of the massive 2.0 million bpd divergence in global demand forecasts
+      between OPEC and the IEA/EIA, as well as geopolitical friction regarding Lebanon
+      and Iran weapons inspections.
+    key_signals:
+    - Signing of U.S.-Iran preliminary MOU, 60-day ceasefire, and reopening of the
+      Strait of Hormuz
+    - U.S. Treasury's temporary 60-day general license authorizing production and
+      sale of Iranian-origin oil
+    - OPEC+ July quota increase of approximately 188,000 bpd, bringing cumulative
+      hikes to 600,000 bpd since April
+    - IEA and EIA downgrading 2026 global demand growth to contractions of 1.1 million
+      bpd and 1.2 million bpd respectively
+    - Goldman Sachs, Morgan Stanley, and JPMorgan slashing Brent and WTI price forecasts
+    langfuse_trace_id: a43a5e9187ea9d90d8d195fa12d0cfea
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a43a5e9187ea9d90d8d195fa12d0cfea
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:22.019342'
+  as_of: '2026-06-29T00:00:00'
+  forecast_date: '2026-07-28T00:00:00'
+  payload:
+    point_forecast: 67.8846492140156
+    quantiles:
+      '0.05': 49.55650137856318
+      '0.1': 55.10861954979529
+      '0.2': 59.565106819799375
+      '0.3': 62.367875985970336
+      '0.4': 65.414785299457
+      '0.5': 67.8846492140156
+      '0.6': 70.59297111105236
+      '0.7': 73.39948378163982
+      '0.8': 77.07841982981802
+      '0.9': 80.81170947327085
+      '0.95': 83.83065754259117
+  metadata:
+    anchor_point: 69.25561546057672
+    anchor_half_width: 15.232958295123552
+    signal_loc: -0.45
+    signal_width: 0.25
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 67.8846492140156
+    final_half_width: 17.137078082013996
+    rationale: The oil market is transitioning from a period of severe supply disruption
+      due to the Hormuz closure to rapid normalization, marked by a preliminary U.S.-Iran
+      ceasefire MOU, a 60-day sanctions waiver, and ongoing OPEC+ quota hikes. This
+      structural shift, alongside major demand growth downgrades from the IEA and
+      EIA, warrants a consistent bearish deviation from the flat AutoARIMA anchor,
+      with elevated uncertainty due to the temporary nature of the truce and geopolitical
+      fragility.
+    horizon_rationale: For the 21-day horizon (late July), WTI is projected to trade
+      lower than the anchor of 69.26, likely testing the $62.0-$63.0 range (signal_loc
+      -0.45). This is driven by the cumulative impact of OPEC+'s consecutive quota
+      hikes and rising Iranian exports. The wide divergence between OPEC's demand
+      growth forecast (+970k bpd) and the IEA's contraction forecast (-1.1m bpd),
+      combined with the temporary nature of the 60-day U.S. sanctions waiver, creates
+      substantial mid-term uncertainty, justifying a signal_width of 0.25.
+    key_signals:
+    - Signing of U.S.-Iran preliminary MOU, 60-day ceasefire, and reopening of the
+      Strait of Hormuz
+    - U.S. Treasury's temporary 60-day general license authorizing production and
+      sale of Iranian-origin oil
+    - OPEC+ July quota increase of approximately 188,000 bpd, bringing cumulative
+      hikes to 600,000 bpd since April
+    - IEA and EIA downgrading 2026 global demand growth to contractions of 1.1 million
+      bpd and 1.2 million bpd respectively
+    - Goldman Sachs, Morgan Stanley, and JPMorgan slashing Brent and WTI price forecasts
+    langfuse_trace_id: a43a5e9187ea9d90d8d195fa12d0cfea
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/a43a5e9187ea9d90d8d195fa12d0cfea
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:42.340091'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-07-13T00:00:00'
+  payload:
+    point_forecast: 68.21451317188888
+    quantiles:
+      '0.05': 60.82187102545662
+      '0.1': 62.51483308587244
+      '0.2': 64.33023165030865
+      '0.3': 65.87553747693023
+      '0.4': 67.16878466475225
+      '0.5': 68.21451317188888
+      '0.6': 69.4133597235175
+      '0.7': 70.49138070230133
+      '0.8': 72.31602337434401
+      '0.9': 73.97578291486249
+      '0.95': 75.82772766133625
+  metadata:
+    anchor_point: 68.64325193291401
+    anchor_half_width: 7.145646017085536
+    signal_loc: -0.3
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 68.21451317188888
+    final_half_width: 7.502928317939813
+    rationale: The oil market is experiencing a profound regime shift from a geopolitically
+      tight framework to a demand-capped, fundamentals-driven oversupply. The signing
+      of a 60-day US-Iran ceasefire has effectively removed the war premium, while
+      OPEC+ persists in unwinding production cuts. These structural changes warrant
+      a significant negative location signal across all horizons to reflect a price
+      target trend heading into the key $57-$65 support range.
+    horizon_rationale: WTI is on a clear downward trajectory as the geopolitical war
+      premium continues to unwind following the mid-June US-Iran ceasefire framework.
+      Over the next week, the gradual return of shipping through the Strait of Hormuz,
+      coupled with the latest July OPEC+ quota hike of 188,000 bpd, is expected to
+      pull prices down below the flat statistical anchor to around $66.50.
+    key_signals:
+    - US-Iran 60-day ceasefire framework and the reopening of the Strait of Hormuz.
+    - OPEC+ July quota increase of 188,000 bpd, bringing the cumulative increase since
+      April to 600,000 bpd.
+    - IEA's demand growth downgrade of 700,000 bpd to 1.1 million bpd for 2026.
+    - WTI testing the critical long-term support zone of $57 to $65 per barrel.
+    langfuse_trace_id: dd74aaa7d48691516a0c8e57655bdbfc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dd74aaa7d48691516a0c8e57655bdbfc
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:42.340091'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-07-20T00:00:00'
+  payload:
+    point_forecast: 67.68760890893317
+    quantiles:
+      '0.05': 57.50907337161414
+      '0.1': 60.11638108545345
+      '0.2': 62.22176495366671
+      '0.3': 64.41111491777622
+      '0.4': 65.76609009276967
+      '0.5': 67.68760890893317
+      '0.6': 69.65346050975343
+      '0.7': 71.73732046661239
+      '0.8': 73.87008921763989
+      '0.9': 76.14975185033748
+      '0.95': 78.42974310586465
+  metadata:
+    anchor_point: 68.48458680357129
+    anchor_half_width: 9.962223682976429
+    signal_loc: -0.4
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 67.68760890893317
+    final_half_width: 10.460334867125251
+    rationale: The oil market is experiencing a profound regime shift from a geopolitically
+      tight framework to a demand-capped, fundamentals-driven oversupply. The signing
+      of a 60-day US-Iran ceasefire has effectively removed the war premium, while
+      OPEC+ persists in unwinding production cuts. These structural changes warrant
+      a significant negative location signal across all horizons to reflect a price
+      target trend heading into the key $57-$65 support range.
+    horizon_rationale: Over a two-week horizon, the combination of rising physical
+      supplies (nearly 600,000 bpd added by OPEC+ since April) and the UAE's structural
+      departure from OPEC will exert heavier fundamental pressure. In tandem with
+      weak demand indicators like near-contractionary US manufacturing, WTI is expected
+      to drift lower to around $64.50.
+    key_signals:
+    - US-Iran 60-day ceasefire framework and the reopening of the Strait of Hormuz.
+    - OPEC+ July quota increase of 188,000 bpd, bringing the cumulative increase since
+      April to 600,000 bpd.
+    - IEA's demand growth downgrade of 700,000 bpd to 1.1 million bpd for 2026.
+    - WTI testing the critical long-term support zone of $57 to $65 per barrel.
+    langfuse_trace_id: dd74aaa7d48691516a0c8e57655bdbfc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dd74aaa7d48691516a0c8e57655bdbfc
+- predictor_id: agent_predictor_wti_analyst_anchored_cached_news_symloc_gemini-3.5-flash_continuous
+  task_id: wti_oil_price_forecast
+  issued_at: '2026-08-10T04:01:42.340091'
+  as_of: '2026-07-06T00:00:00'
+  forecast_date: '2026-08-04T00:00:00'
+  payload:
+    point_forecast: 67.19268263513963
+    quantiles:
+      '0.05': 50.09056794560932
+      '0.1': 55.27128574572264
+      '0.2': 59.42966318180035
+      '0.3': 62.044945432820654
+      '0.4': 64.88803645301923
+      '0.5': 67.19268263513963
+      '0.6': 69.71983552124277
+      '0.7': 72.33861086073262
+      '0.8': 75.77145016322277
+      '0.9': 79.25500716116808
+      '0.95': 82.07200736144924
+  metadata:
+    anchor_point: 68.7156083216082
+    anchor_half_width: 15.229256864685677
+    signal_loc: -0.5
+    signal_width: 0.1
+    w_loc: 0.2
+    w_width: 0.5
+    final_point: 67.19268263513963
+    final_half_width: 15.990719707919961
+    rationale: The oil market is experiencing a profound regime shift from a geopolitically
+      tight framework to a demand-capped, fundamentals-driven oversupply. The signing
+      of a 60-day US-Iran ceasefire has effectively removed the war premium, while
+      OPEC+ persists in unwinding production cuts. These structural changes warrant
+      a significant negative location signal across all horizons to reflect a price
+      target trend heading into the key $57-$65 support range.
+    horizon_rationale: By three weeks out, the market's transition to a fundamental
+      oversupply is projected to test the critical support zone of $57 to $65 per
+      barrel. With the IEA having slashed demand growth forecasts by 700,000 bpd and
+      OPEC projecting growth of only 970,000 bpd, WTI is expected to trade near $61.10,
+      representing a strong negative deviation from the anchor's flat forecast.
+    key_signals:
+    - US-Iran 60-day ceasefire framework and the reopening of the Strait of Hormuz.
+    - OPEC+ July quota increase of 188,000 bpd, bringing the cumulative increase since
+      April to 600,000 bpd.
+    - IEA's demand growth downgrade of 700,000 bpd to 1.1 million bpd for 2026.
+    - WTI testing the critical long-term support zone of $57 to $65 per barrel.
+    langfuse_trace_id: dd74aaa7d48691516a0c8e57655bdbfc
+    langfuse_trace_url: https://us.cloud.langfuse.com/project/cmqqnmc6l0ee6ad0cfqlp10t5/traces/dd74aaa7d48691516a0c8e57655bdbfc
+scores:
+- 6.511965944187128
+- 11.038805647838002
+- 13.509195107679421
+- 7.34154231324989
+- 10.842052860035214
+- 4.201843177367566
+- 3.2215399939544866
+- 4.247141253353906
+- 5.689505399570436
+- 1.2189279647866291
+- 6.0233189555457916
+- 6.739708240487133
+- 7.288231304349091
+- 11.59761033743474
+- 4.992792348407785
+metric: crps
+mean_score: 6.964278723216482
+ran_at: '2026-08-10T04:01:42.637561'
+skipped_origins: 0
