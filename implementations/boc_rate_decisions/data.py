@@ -35,6 +35,7 @@ from aieng.forecasting.data import DataService, SeriesMetadata
 from aieng.forecasting.data.adapters.base import BaseAdapter
 from aieng.forecasting.data.adapters.fred import FREDAdapter
 from aieng.forecasting.data.adapters.statcan import StatCanAdapter
+from aieng.forecasting.documents.store import DocumentStore
 from aieng.forecasting.evaluation.task import TaskCategory
 
 
@@ -339,6 +340,7 @@ def build_boc_service(
     fred_cache_dir: Path | None = None,
     schedule_path: Path | None = None,
     include_fred: bool = True,
+    reports_dir: Path | None = None,
 ) -> DataService:
     """Return a :class:`DataService` with all BoC rate-decision series registered.
 
@@ -369,6 +371,10 @@ def build_boc_service(
         When ``False``, skip the FRED unemployment covariate. Registration
         fetches eagerly, so this lets ``scripts/fetch_boc.py`` populate the
         StatCan cache before the FRED cache exists.
+    reports_dir : Path or None
+        Directory containing cached BoC press-release ``.json``/``.md``
+        artifacts. When provided, attach them to each forecast context under
+        the ``boc_press_releases`` source for cutoff-aware agent retrieval.
 
     Returns
     -------
@@ -379,7 +385,8 @@ def build_boc_service(
     fred_dir = fred_cache_dir if fred_cache_dir is not None else DEFAULT_FRED_CACHE_DIR
     meeting_dates = load_meeting_schedule(schedule_path)
 
-    svc = DataService()
+    doc_store = DocumentStore({"boc_press_releases": reports_dir}) if reports_dir is not None else None
+    svc = DataService(doc_store=doc_store)
 
     target_rate_adapter = StatCanAdapter(
         table_id=RATES_TABLE_ID,

@@ -24,6 +24,7 @@ wheels/
 **.ipynb_checkpoints
 
 .env
+.env.example
 .cursor/
 
 # Local data cache (populated by scripts/fetch_*.py; not committed)
@@ -56,3 +57,4 @@ implementations/**/data/
 data/yfinance/
 
 .claude/
+.env.example

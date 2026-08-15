@@ -270,7 +270,7 @@ def rationales_table(result: BacktestResult | EvalResult) -> pd.DataFrame:
     """Extract per-prediction metadata (reasoning traces etc.) into a DataFrame.
 
     For the agent predictor, ``metadata`` carries ``reasoning`` and
-    ``key_signals`` — the inputs for the planned reasoning-alignment
+    ``key_signals`` — the inputs for the reasoning-alignment
     evaluation against the Bank's own published rationale.
 
     Parameters

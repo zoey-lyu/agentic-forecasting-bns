@@ -9,23 +9,21 @@ factories for the primary BoC 3-way rate-direction prediction task
    snapshot supplied in the prompt payload. No tools.
 2. :func:`build_boc_news_config` — adds bounded Google Search via a
    :class:`~aieng.forecasting.methods.agentic.agent_factory.ContextRetrievalConfig`
-   sub-agent with strict temporal cutoffs. This is the explicit seam for the
-   deferred BoC-communication-grounded variant: once press releases and
-   Monetary Policy Reports are ingested (Ali's Track 2 work), the retrieval
-   instruction swaps web search for report retrieval without touching the
-   forecasting contract or the reasoning-alignment evaluator interface.
+   sub-agent with strict temporal cutoffs.
+3. :func:`build_boc_research_config` — deterministic document grounding from
+   cached, cutoff-visible Bank communications, with no live search.
 
 Also provides:
 
 - :class:`BoCDecisionPromptBuilder` — Pydantic ``BaseModel`` that serialises
   the task, meeting calendar position, rate path, per-meeting decision
-  history, and macro snapshot into a structured JSON payload.
+  history, macro snapshot, and optional research evidence into structured JSON.
 - :func:`build_boc_agent_predictor` — convenience factory wiring a config to
   an :class:`~aieng.forecasting.methods.agentic.predictor.AgentPredictor`
   with the
   :class:`~aieng.forecasting.methods.agentic.outputs.CategoricalAgentForecastOutput`
   schema. The agent's ``reasoning`` / ``key_signals`` output fields are the
-  hook for the planned LLM reasoning-alignment evaluation against the Bank's
+  hook for the LLM reasoning-alignment evaluation against the Bank's
   own published rationale.
 
 The agent is direction-native: the compact binary rate-cut reference uses the
@@ -63,6 +61,7 @@ from boc_rate_decisions.data import (
     UNEMPLOYMENT_SERIES_ID,
 )
 from boc_rate_decisions.predictors.logistic_baseline import build_feature_row
+from boc_rate_decisions.research import DEFAULT_RESEARCH_SOURCES, format_research_evidence
 from pydantic import BaseModel
 
 
@@ -100,7 +99,9 @@ def _build_boc_analyst_instruction() -> str:
         "with the realised base rates for each outcome\n"
         "- `macro_snapshot`: leak-safe indicators as of the origin (CPI inflation "
         "vs the 2% target, unemployment momentum, 2-year GoC yield vs the policy "
-        "rate)\n\n"
+        "rate)\n"
+        "- `research_evidence` (research-grounded variant only): dated, cutoff-filtered "
+        "Bank documents with stable ids and source provenance\n\n"
         "Rules:\n"
         "1. Assign one probability to each of `cut`, `hold`, and `hike` — a move "
         "of any size counts. The three probabilities must sum to 1.\n"
@@ -201,6 +202,10 @@ class BoCDecisionPromptBuilder(BaseModel):
     protocol (structural typing — no explicit inheritance required).
     """
 
+    document_sources: tuple[str, ...] = ()
+    max_documents: int = 3
+    max_chars_per_document: int = 6_000
+
     model_config = {"extra": "forbid"}
 
     def __call__(self, *, task: ForecastingTask, context: ForecastContext) -> str:
@@ -274,6 +279,13 @@ class BoCDecisionPromptBuilder(BaseModel):
             },
             "macro_snapshot": features if features is not None else "insufficient history at this origin",
         }
+        if self.document_sources:
+            payload["research_evidence"] = format_research_evidence(
+                context,
+                sources=self.document_sources,
+                max_documents=self.max_documents,
+                max_chars_per_document=self.max_chars_per_document,
+            )
         return json.dumps(payload, indent=2)
 
 
@@ -344,12 +356,33 @@ def build_boc_news_config(
     )
 
 
+def build_boc_research_config(model: str = LITE_MODEL) -> AgentConfig:
+    """Build the deterministic, cached-document-grounded BoC analyst.
+
+    Unlike :func:`build_boc_news_config`, this variant does not search the web.
+    Its evidence is injected by :class:`BoCDecisionPromptBuilder` from the
+    cutoff-filtered document store, making historical runs reproducible.
+    """
+    return AgentConfig(
+        name="boc_analyst_research_grounded",
+        model=model,
+        instruction=_BOC_ANALYST_INSTRUCTION
+        + "\n6. Treat `research_evidence` as the only documentary evidence supplied for this run. "
+        "Cite its document ids in `key_signals`, distinguish Bank statements from your inference, "
+        "and state explicitly when the list is empty.\n",
+    )
+
+
 # ---------------------------------------------------------------------------
 # Predictor convenience factory
 # ---------------------------------------------------------------------------
 
 
-def build_boc_agent_predictor(config: AgentConfig) -> AgentPredictor:
+def build_boc_agent_predictor(
+    config: AgentConfig,
+    *,
+    prompt_builder: BoCDecisionPromptBuilder | None = None,
+) -> AgentPredictor:
     """Wrap an :class:`AgentConfig` in an :class:`AgentPredictor`.
 
     Uses :class:`BoCDecisionPromptBuilder` and the
@@ -358,13 +391,17 @@ def build_boc_agent_predictor(config: AgentConfig) -> AgentPredictor:
     single
     :class:`~aieng.forecasting.evaluation.prediction.CategoricalForecast`
     prediction and preserves ``reasoning`` / ``key_signals`` in metadata for
-    the planned reasoning-alignment evaluation.
+    the reasoning-alignment evaluation.
 
     Parameters
     ----------
     config : AgentConfig
         Any config produced by :func:`build_boc_basic_config` or
         :func:`build_boc_news_config`.
+    prompt_builder : BoCDecisionPromptBuilder or None
+        Optional configured builder. The default preserves the quantitative-
+        only payload; the research-grounded factory supplies a document-aware
+        builder.
 
     Returns
     -------
@@ -372,9 +409,24 @@ def build_boc_agent_predictor(config: AgentConfig) -> AgentPredictor:
     """
     return AgentPredictor(
         agent_config=config,
-        prompt_builder=BoCDecisionPromptBuilder(),
+        prompt_builder=prompt_builder or BoCDecisionPromptBuilder(),
         output_schema=CategoricalAgentForecastOutput,
     )
+
+
+def build_boc_research_predictor(
+    model: str = LITE_MODEL,
+    *,
+    max_documents: int = 3,
+    max_chars_per_document: int = 6_000,
+) -> AgentPredictor:
+    """Return the cached-communications research-grounded predictor."""
+    builder = BoCDecisionPromptBuilder(
+        document_sources=DEFAULT_RESEARCH_SOURCES,
+        max_documents=max_documents,
+        max_chars_per_document=max_chars_per_document,
+    )
+    return build_boc_agent_predictor(build_boc_research_config(model), prompt_builder=builder)
 
 
 # ---------------------------------------------------------------------------

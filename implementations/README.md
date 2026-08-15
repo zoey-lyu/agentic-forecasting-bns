@@ -22,7 +22,7 @@ implementations/
 |   `-- specs/                #     backtest YAML
 |-- energy_oil_forecasting/   # 3 · Daily WTI oil price forecasting experiment
 |   `-- specs/                #     backtest and eval YAML
-|-- boc_rate_decisions/       # 4 · Discrete-event reference: BoC cut/hold/hike direction
+|-- boc_rate_decisions/       # 4 · BoC cut/hold/hike + cutoff-grounded research agent
 |   `-- specs/                #     direction + binary backtest / eval / smoke YAML
 |-- tests/                    # tests for implementation-specific helper modules
 `-- pyproject.toml            # local workspace packaging
@@ -31,6 +31,10 @@ implementations/
 YAML backtest and eval specs live under each use case in `specs/`. Each directory is independent; see its `README.md` for the walkthrough.
 
 Every domain use case (all except `getting_started`) also ships a `starter_agent/` module and a `99_starter_agent.ipynb` — a fresh, hackable **starter agent** that is the consistent "build your own" entry point for that use case (toggleable news search + code execution, two lightweight tool-usage skills, an interactive cell, and one scored forecast).
+
+The BoC use case additionally ships `04_research_grounded_forecast.ipynb` and
+`run_research_agent.py` for inspecting cutoff-visible evidence and the exact
+agent prompt before an optional live prediction.
 
 `getting_started/` additionally ships a **`concierge_agent/`** module and **`99_repo_concierge.ipynb`** — a repo onboarding helper (not a forecaster) that answers questions about how the codebase works using a committed public-`main` knowledge digest. From the repository root: `uv run adk run implementations/getting_started/concierge_agent`. See [`getting_started/README.md`](getting_started/README.md) and the notebook for full usage.
 

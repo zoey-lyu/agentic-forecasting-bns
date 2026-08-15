@@ -9,6 +9,8 @@ from boc_rate_decisions.analyst_agent.agent import (
     build_boc_agent_predictor,
     build_boc_basic_config,
     build_boc_news_config,
+    build_boc_research_config,
+    build_boc_research_predictor,
 )
 
 
@@ -17,4 +19,6 @@ __all__ = [
     "build_boc_agent_predictor",
     "build_boc_basic_config",
     "build_boc_news_config",
+    "build_boc_research_config",
+    "build_boc_research_predictor",
 ]

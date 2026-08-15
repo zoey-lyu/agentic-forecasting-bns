@@ -1,5 +1,11 @@
 # BoC Rate Decisions
 
+Developer guide: [`RESEARCH_AGENT.md`](RESEARCH_AGENT.md) documents the
+cutoff-aware research-agent architecture, API, examples, and testing workflow.
+For an executable walkthrough, open
+[`04_research_grounded_forecast.ipynb`](04_research_grounded_forecast.ipynb)
+or run `uv run python implementations/boc_rate_decisions/run_research_agent.py`.
+
 > **Reference implementation 4 of 4.** Recommended order: [getting_started](../getting_started/) → [S&P 500](../sp500_forecasting/) → [food CPI](../food_price_forecasting/) → [energy / WTI](../energy_oil_forecasting/) → **BoC rate decisions**. Each stands on its own.
 
 Predicts the **direction of the Bank of Canada's decision at the next fixed
@@ -88,7 +94,7 @@ validation, but no forecast origin targets them.
 | 2-year GoC benchmark yield | StatCan 10-10-0139-01 | Market-implied policy expectations — the strongest single covariate, and naturally directional |
 | CPI all-items | StatCan 18-10-0004-11 | The Bank targets 2% CPI inflation |
 | Unemployment rate | FRED `LRUNTTTTCAM156S` | Labour-market pressure |
-| BoC rate-announcement press releases | Bank of Canada announcement pages (`scripts/fetch_boc_press_releases.py`) | One release per scheduled meeting, cached to `data/reports/boc_press_releases/`; served cutoff-aware by `PressReleaseStore` (only releases published on or before the origin are visible). Currently the published-rationale source for the reasoning-alignment evaluator; available as a context seam for the LLMP/agent predictors |
+| BoC rate-announcement press releases | Bank of Canada announcement pages (`scripts/fetch_boc_press_releases.py`) | One release per scheduled meeting, cached to `data/reports/boc_press_releases/`; used by both the rationale evaluator and research-grounded agent. `DocumentStore`/`ForecastContext` ensure only releases published on or before the origin are visible. |
 
 Populate the cache once:
 
@@ -127,13 +133,32 @@ re-run `scripts/fetch_boc.py --refresh` to pick up new announcements.
 | Floor baseline | `CategoricalFrequencyPredictor` (core package) | Past outcomes only — the constant climatological distribution |
 | Conventional | `predictors/logistic_baseline.py` | Fit-at-origin multinomial logistic regression on four leak-safe macro features (yield spread, rate momentum, inflation gap, unemployment momentum); training features are rebuilt at each past meeting minus the task's own lead, so the train and predict feature distributions match; dispatches to plain logistic regression on binary tasks |
 | LLMP | `predictors/llmp_direction.py` → `CategoricalProbabilityLLMPredictor` | Labelled outcome history + BoC context block; one structured call, direct distribution elicitation. `predictors/llmp_binary.py` is the binary counterpart |
-| Agentic | `analyst_agent/` → `AgentPredictor` + `CategoricalAgentForecastOutput` | Rate path + decision history + **the same macro features as the logistic model** |
+| Agentic | `analyst_agent/` → `AgentPredictor` + `CategoricalAgentForecastOutput` | Basic variant: rate path + decision history + **the same macro features as the logistic model**. Research-grounded variant: the same payload plus the three latest cutoff-visible cached BoC releases. |
 
 The agent/logistic pairing is deliberate: identical indicators, so the
 comparison isolates *conventional fitting* vs *LLM reasoning*. The agent
 also emits `reasoning` and `key_signals` per meeting — the input for the
 reasoning-alignment evaluator in `rationale_eval.py`, demonstrated
 end-to-end in notebook 03.
+
+Construct the deterministic document-grounded variant with
+`build_boc_research_predictor()`. Attach cached artifacts when creating the
+service so the prompt builder retrieves them through the origin-scoped
+`ForecastContext` rather than reading the cache directly:
+
+```python
+from pathlib import Path
+
+from boc_rate_decisions.analyst_agent import build_boc_research_predictor
+from boc_rate_decisions.data import build_boc_service
+
+service = build_boc_service(reports_dir=Path("data/reports/boc_press_releases"))
+predictor = build_boc_research_predictor(max_documents=3)
+```
+
+`research.py` is the extension seam for MPRs, surveys, speeches, and other
+source keys. It merges already cutoff-filtered documents, selects the newest
+evidence, bounds prompt size, and preserves provenance in the JSON payload.
 
 > **Leakage note (cutoff posture).** Gemini's parametric knowledge cutoff is
 > ~January 2025, and for a discrete outcome a single recalled label is the whole
@@ -175,16 +200,19 @@ implementations/boc_rate_decisions/
 ├── meeting_schedule.yaml  # curated BoC announcement calendar (source-cited)
 ├── data.py                # build_boc_service(); direction/event derivation + validation
 ├── press_releases.py      # PressReleaseStore: cutoff-aware press-release store + HTML extraction/caching helpers
+├── research.py            # cutoff-safe multi-source selection + bounded prompt evidence
 ├── predictors/            # (multinomial) logistic baseline; direction + binary LLMP recipes
 ├── analyst_agent/         # AgentConfig factories + prompt builder + predictor factory
 ├── starter_agent/         # fresh, hackable agent template (toggleable search/code-exec + skills)
 ├── analysis.py            # score leaderboard, one-vs-rest frames, calibration bins, rationales
 ├── rationale_eval.py      # LLM-as-judge reasoning-alignment evaluator; reads Langfuse traces, pushes scores back
+├── run_research_agent.py  # CLI: evidence + generated prompt + opt-in live prediction
 ├── plots.py               # decision timeline, reliability curve, rate-path chart
 ├── specs/                 # direction + binary backtest / eval / smoke YAML
 ├── 01_boc_data_exploration.ipynb           # framing, direction derivation, cutoff walkthrough
 ├── 02_boc_rate_direction_experiment.ipynb  # binary warm-up + the 3-way experiment
 ├── 03_rationale_alignment.ipynb            # reasoning-alignment evaluation (LLM-as-judge over traces)
+├── 04_research_grounded_forecast.ipynb     # inspect evidence/prompt + opt-in live forecast
 └── 99_starter_agent.ipynb                  # ← start here to build your own agent
 ```
 
@@ -200,6 +228,7 @@ event derivation semantics; feature leak-safety).
 | `01_boc_data_exploration.ipynb` | Problem framing (ordered decision vs time series), policy-rate history with cut/hold/hike markers, direction derivation + schedule validation, class imbalance and the climatology RPS floor (with the cumulative-Brier decomposition), cutoff discipline at a real origin. |
 | `02_boc_rate_direction_experiment.ipynb` | **Main experiment.** Binary warm-up (the copy-paste reference + RPS(K=2) ≡ Brier check), smoke/full config switch, cached backtests for all four predictors at the canonical T−28 lead, RPS leaderboard with skill scores, the T−28 vs T−1 lead-time comparison ("anticipation gap"), decision timeline (P(cut) and P(hike)), one-vs-rest reliability curves, agent-reasoning inspection, budget-gated protected eval. |
 | `03_rationale_alignment.ipynb` | **Reasoning-alignment evaluation.** Runs traced LLMP/agent forecasts, then judges each trace's `reasoning`/`key_signals` against the Bank's published press release with an LLM-as-judge (`rationale_eval.py`), pushing `rationale_alignment` (0–1) and `right_for_right_reasons` scores back to Langfuse. A *process* metric that complements RPS — most valuable exactly where backtest scores are least trustworthy (see the leakage note above). |
+| `04_research_grounded_forecast.ipynb` | **Executable research-agent walkthrough.** Displays cutoff-visible cached releases and the exact generated prompt, then optionally makes and renders one live cut/hold/hike prediction (`RUN_LIVE = False` by default). |
 | `99_starter_agent.ipynb` | **Your starter agent.** A fresh, hackable cut/hold/hike agent — *not* part of the experiment above. Toggleable news search + code execution and two lightweight tool-usage skills, with an interactive (Track 2) cell, one scored prediction (Track 1), and a "make it yours" guide. The place to start building your own. |
 
 ---
@@ -218,6 +247,10 @@ event derivation semantics; feature leak-safety).
    against the Bank's published rationale and writes `rationale_alignment`
    and `right_for_right_reasons` scores back to the Langfuse trace. Notebook
    03 runs it end-to-end.
+3. **Press releases as predictor context.** `build_boc_service(reports_dir=...)`
+   attaches cached releases to each forecast context, and
+   `build_boc_research_predictor()` injects the latest cutoff-visible documents
+   into a deterministic, provenance-rich agent prompt.
 
 ### Remaining extensions — good participant projects
 
@@ -226,10 +259,9 @@ fresh, hackable agent and a hands-on "make it yours" guide for going further.
 Two substantive projects, each with an explicit seam in the code, are
 catalogued in [`planning-docs/roadmap.md`](../../planning-docs/roadmap.md):
 
-1. **Press releases as predictor context** — feed cutoff-filtered release
-   excerpts into the *forecast* (not just the evaluator) via
-   `CategoricalProbabilityLLMPredictorConfig.user_prompt_suffix` or the
-   `build_boc_news_config` retrieval seam, and measure the lift.
+1. **Broader research corpus and ablation** — add Monetary Policy Reports,
+   surveys, speeches, and deliberation summaries as distinct document sources,
+   then measure their incremental lift over the shipped release-grounded agent.
 2. **Live forecasting** — forecast each upcoming announcement the day before it
    happens: genuinely out-of-sample, and the honest test backtest leakage
    precludes.

@@ -41,7 +41,7 @@ The repository is a foundation. Each reference implementation's README ends with
 ### Deepen a reference implementation
 
 - **BoC live forecasting** — extend `meeting_schedule.yaml` with the Bank's published future dates and forecast each announcement the day before it happens: genuinely out-of-sample, and the honest test that backtest leakage precludes. Needs annual calendar maintenance.
-- **Reports as predictor context** — wire cutoff-filtered documents into the forecast prompt: BoC press releases / Monetary Policy Reports through the LLM-Process `user_prompt_suffix` or the `build_boc_news_config` retrieval seam, and the analogous food-CPI CFPR wiring (extraction already exists; mirror BoC's `PressReleaseStore`). Measure the lift over the quantitative-only baseline.
+- **Broader report context and ablations** — BoC press releases are now wired into `build_boc_research_predictor()` through the cutoff-scoped `DocumentStore`; extend the registry to Monetary Policy Reports, surveys, speeches, and deliberation summaries and measure each source's lift. The analogous food-CPI CFPR forecast wiring remains open (extraction already exists).
 - **Memory-augmented agent** — an agent that learns from its own resolved prediction errors over time; a generalization of the energy adaptive agent across use cases.
 
 ### Agent and analyst depth
