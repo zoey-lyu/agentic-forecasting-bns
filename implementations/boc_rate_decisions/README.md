@@ -5,6 +5,13 @@ cutoff-aware research-agent architecture, API, examples, and testing workflow.
 For an executable walkthrough, open
 [`04_research_grounded_forecast.ipynb`](04_research_grounded_forecast.ipynb)
 or run `uv run python implementations/boc_rate_decisions/run_research_agent.py`.
+The CLI accepts `--model`, `--live`, `--compare`, and `--include-agents`, so it
+exposes the same model choice and predicted-versus-actual smoke comparison as
+the notebook.
+
+Banking-industry extension: [`05_scotiabank_alco_scenario_brief.ipynb`](05_scotiabank_alco_scenario_brief.ipynb)
+turns a BoC probability distribution into an illustrative, human-reviewed
+Scotiabank ALCO scenario brief using only public disclosures.
 
 > **Reference implementation 4 of 4.** Recommended order: [getting_started](../getting_started/) → [S&P 500](../sp500_forecasting/) → [food CPI](../food_price_forecasting/) → [energy / WTI](../energy_oil_forecasting/) → **BoC rate decisions**. Each stands on its own.
 
@@ -207,12 +214,15 @@ implementations/boc_rate_decisions/
 ├── analysis.py            # score leaderboard, one-vs-rest frames, calibration bins, rationales
 ├── rationale_eval.py      # LLM-as-judge reasoning-alignment evaluator; reads Langfuse traces, pushes scores back
 ├── run_research_agent.py  # CLI: evidence + generated prompt + opt-in live prediction
+├── scotiabank_alco.py     # public sensitivity overlay + Markdown ALCO brief
+├── scotiabank_alco_manifest.json # official public-document inventory
 ├── plots.py               # decision timeline, reliability curve, rate-path chart
 ├── specs/                 # direction + binary backtest / eval / smoke YAML
 ├── 01_boc_data_exploration.ipynb           # framing, direction derivation, cutoff walkthrough
 ├── 02_boc_rate_direction_experiment.ipynb  # binary warm-up + the 3-way experiment
 ├── 03_rationale_alignment.ipynb            # reasoning-alignment evaluation (LLM-as-judge over traces)
 ├── 04_research_grounded_forecast.ipynb     # inspect evidence/prompt + opt-in live forecast
+├── 05_scotiabank_alco_scenario_brief.ipynb # public-data banking decision-support prototype
 └── 99_starter_agent.ipynb                  # ← start here to build your own agent
 ```
 
@@ -228,7 +238,8 @@ event derivation semantics; feature leak-safety).
 | `01_boc_data_exploration.ipynb` | Problem framing (ordered decision vs time series), policy-rate history with cut/hold/hike markers, direction derivation + schedule validation, class imbalance and the climatology RPS floor (with the cumulative-Brier decomposition), cutoff discipline at a real origin. |
 | `02_boc_rate_direction_experiment.ipynb` | **Main experiment.** Binary warm-up (the copy-paste reference + RPS(K=2) ≡ Brier check), smoke/full config switch, cached backtests for all four predictors at the canonical T−28 lead, RPS leaderboard with skill scores, the T−28 vs T−1 lead-time comparison ("anticipation gap"), decision timeline (P(cut) and P(hike)), one-vs-rest reliability curves, agent-reasoning inspection, budget-gated protected eval. |
 | `03_rationale_alignment.ipynb` | **Reasoning-alignment evaluation.** Runs traced LLMP/agent forecasts, then judges each trace's `reasoning`/`key_signals` against the Bank's published press release with an LLM-as-judge (`rationale_eval.py`), pushing `rationale_alignment` (0–1) and `right_for_right_reasons` scores back to Langfuse. A *process* metric that complements RPS — most valuable exactly where backtest scores are least trustworthy (see the leakage note above). |
-| `04_research_grounded_forecast.ipynb` | **Executable research-agent walkthrough.** Displays cutoff-visible cached releases and the exact generated prompt, then optionally makes and renders one live cut/hold/hike prediction (`RUN_LIVE = False` by default). |
+| `04_research_grounded_forecast.ipynb` | **Executable research-agent walkthrough and ablation.** Displays cutoff-visible cached releases and the exact generated prompt, optionally renders one live prediction, then compares historical frequencies, logistic regression, a two-year-yield market proxy, the quantitative-only agent, and the research-grounded agent across the three smoke origins. `AGENT_MODEL` explicitly selects the lite default or advanced model for all agent calls. Meeting tables place predicted and actual decisions side by side and report both point accuracy and RPS. Model-backed backtests are opt-in. |
+| `05_scotiabank_alco_scenario_brief.ipynb` | **Scotiabank ALCO decision-support POC and historical experiment.** Opens with a plain-language primer on ALCO, interest-rate risk, NII, EVE, and probabilistic scenario planning. Its primary resolved case forecasts the July 15, 2026 BoC decision from a June 17 cutoff, after the May 27 Scotiabank Q2 disclosure was public. It compares cutoff-aware logistic and optional research-LLM probabilities with the actual hold, then measures forecast-implied NII/EVE overlays against the standardized actual-outcome overlay. Separate opt-in LLM calls use the notebook's selected `AGENT_MODEL` to translate the resolved-case and multi-meeting comparison tables into evidence-bound explanations for non-banking readers; `complete_with_configured_model()` routes through the shell-configured gateway when present and otherwise uses direct provider authentication. The numerical tables remain the source of truth. Production workstreams cover broader evaluation, internal ALM integration, validation, monitoring, and controlled deployment. |
 | `99_starter_agent.ipynb` | **Your starter agent.** A fresh, hackable cut/hold/hike agent — *not* part of the experiment above. Toggleable news search + code execution and two lightweight tool-usage skills, with an interactive (Track 2) cell, one scored prediction (Track 1), and a "make it yours" guide. The place to start building your own. |
 
 ---
@@ -251,6 +262,16 @@ event derivation semantics; feature leak-safety).
    attaches cached releases to each forecast context, and
    `build_boc_research_predictor()` injects the latest cutoff-visible documents
    into a deterministic, provenance-rich agent prompt.
+4. **Banking decision-support extension.** The Scotiabank ALCO notebook and
+   `scotiabank_alco.py` connect forecast probabilities to public structural
+   interest-rate sensitivities, scenario management questions, provenance,
+   and explicit non-automation controls. Its default planning probabilities
+   come from the existing cutoff-aware logistic model; an optional LLM view is
+   treated as a challenger and a manual distribution requires an explicit
+   override. Its appended historical backtest compares both forecast methods
+   with actual decisions and their forecast-implied NII/EVE overlays with the
+   corresponding realized-direction scenario. Official PDFs are fetched once by
+   `scripts/fetch_scotiabank_alco_documents.py` into the gitignored cache.
 
 ### Remaining extensions — good participant projects
 

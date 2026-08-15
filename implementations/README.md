@@ -35,6 +35,14 @@ Every domain use case (all except `getting_started`) also ships a `starter_agent
 The BoC use case additionally ships `04_research_grounded_forecast.ipynb` and
 `run_research_agent.py` for inspecting cutoff-visible evidence and the exact
 agent prompt before an optional live prediction.
+It also includes `05_scotiabank_alco_scenario_brief.ipynb`, a bank POC that
+compares cutoff-aware quantitative probabilities with an optional research-LLM
+challenger, then translates the active planning distribution into standardized
+NII and EVE scenarios for a human-reviewed ALCO brief. Its primary resolved case
+compares June 17, 2026 cutoff forecasts with the actual July 15 BoC hold, and its
+multi-meeting experiment extends the same forecast-versus-outcome ALCO analysis,
+with separate evidence-bound LLM interpretations for non-banking readers,
+followed by explicit productionization workstreams and governance gates.
 
 `getting_started/` additionally ships a **`concierge_agent/`** module and **`99_repo_concierge.ipynb`** — a repo onboarding helper (not a forecaster) that answers questions about how the codebase works using a committed public-`main` knowledge digest. From the repository root: `uv run adk run implementations/getting_started/concierge_agent`. See [`getting_started/README.md`](getting_started/README.md) and the notebook for full usage.
 

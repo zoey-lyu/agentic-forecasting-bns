@@ -1,0 +1,23 @@
+{
+  "source": "scotiabank_public_alco",
+  "documents": [
+    {
+      "doc_id": "scotiabank_annual_report_2025",
+      "publication_date": "2025-12-02",
+      "title": "Scotiabank Annual Report 2025",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/2025/q4/Annual_Report_2025_EN.pdf"
+    },
+    {
+      "doc_id": "scotiabank_q2_2026_report",
+      "publication_date": "2026-05-27",
+      "title": "Scotiabank Q2 2026 Report to Shareholders",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/corporate/quarterly-reports/2026/q2/Q226_Shareholders_Report-EN.pdf"
+    },
+    {
+      "doc_id": "scotiabank_rates_outlook_2026_2027",
+      "publication_date": "2025-12-09",
+      "title": "A Canadian Rates Outlook for 2026–27",
+      "url": "https://www.scotiabank.com/content/dam/scotiabank/sub-brands/scotiabank-economics/english/documents/capital-markets-special/cmsr20251209.pdf"
+    }
+  ]
+}
