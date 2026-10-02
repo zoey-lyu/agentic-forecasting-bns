@@ -1,0 +1,10 @@
+{
+  "n_shuffles": 40,
+  "real_text_mean_rps": 0.1453,
+  "macro_only_mean_rps": 0.1624,
+  "null_mean": 0.1783,
+  "null_min": 0.0962,
+  "null_max": 0.2179,
+  "n_null_at_least_as_good": 1,
+  "p_value": 0.0488
+}
