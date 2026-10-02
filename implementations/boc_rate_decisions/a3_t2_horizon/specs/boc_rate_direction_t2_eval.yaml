@@ -1,0 +1,71 @@
+# BoC Rate Direction — t+2 horizon eval spec (A3)
+#
+# Same origins and the same 28-day task shape as the canonical protected eval,
+# but scored on the decision one meeting later: roughly ten weeks ahead instead
+# of four.
+#
+# The horizon is still 28 days because the *series* carries the shift. Rows of
+# `boc_rate_decision_direction_t2` are timestamped at the intervening meeting
+# and hold the following meeting's decision, with `released_at` set to that
+# later announcement (see a3_t2_horizon/data_t2.py). This keeps the irregular
+# 63-77 day origin-to-target gap out of the task definition, which can only
+# express one fixed horizon.
+#
+# 13 origins, not 14: the canonical eval's last origin (2026-08-05) targets the
+# 2026-09-02 meeting, whose successor on 2026-10-28 is unresolved as of
+# 2026-09-20 and therefore has no label yet.
+#
+# Outcomes in this window: 3 cuts, 10 holds, no hikes — so, like the canonical
+# eval, it cannot reward hike discrimination.
+#
+# This spec lives inside the A3 folder rather than in ../specs/ because it is an
+# exploratory target, not a protected participant leaderboard. Promote it if the
+# result justifies one.
+
+spec_id: boc_rate_direction_t2_eval_2025_2026
+
+description: >-
+  Exploratory eval across 13 origins from January 2025 through June 2026. At
+  each origin (next announcement date minus 28 days) predictors emit
+  probabilities over cut, hold and hike for the announcement AFTER the next
+  one, scored with RPS.
+
+task:
+  task_id: boc_rate_direction_meeting_after_next
+  target_series_id: boc_rate_decision_direction_t2
+  horizons: [28]
+  frequency: D
+  payload_type: categorical
+  categories:
+    - {label: cut, value: -1}
+    - {label: hold, value: 0}
+    - {label: hike, value: 1}
+  description: >-
+    At the Bank of Canada fixed announcement date following the one 28 days
+    after the forecast origin, will the Bank CUT, HOLD, or HIKE its target for
+    the overnight rate? Outcome is the direction of the target-rate change at
+    that later announcement (any size). The intervening decision has not been
+    made at forecast time, so the forecast must account for both.
+
+start: "2025-01-01"
+end: "2026-09-30"
+stride: 1
+warmup: 8
+max_runs: 5
+
+# One origin per meeting: next_announcement_date - 28 days. The target is the
+# announcement after that one (named in the comment).
+origin_dates:
+  - "2025-01-01"  # via 2025-01-29 -> target 2025-03-12 (cut)
+  - "2025-02-12"  # via 2025-03-12 -> target 2025-04-16
+  - "2025-03-19"  # via 2025-04-16 -> target 2025-06-04
+  - "2025-05-07"  # via 2025-06-04 -> target 2025-07-30
+  - "2025-07-02"  # via 2025-07-30 -> target 2025-09-17 (cut)
+  - "2025-08-20"  # via 2025-09-17 -> target 2025-10-29 (cut)
+  - "2025-10-01"  # via 2025-10-29 -> target 2025-12-10
+  - "2025-11-12"  # via 2025-12-10 -> target 2026-01-28
+  - "2025-12-31"  # via 2026-01-28 -> target 2026-03-18
+  - "2026-02-18"  # via 2026-03-18 -> target 2026-04-29
+  - "2026-04-01"  # via 2026-04-29 -> target 2026-06-10
+  - "2026-05-13"  # via 2026-06-10 -> target 2026-07-15
+  - "2026-06-17"  # via 2026-07-15 -> target 2026-09-02

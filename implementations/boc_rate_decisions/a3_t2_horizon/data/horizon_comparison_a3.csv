@@ -1,0 +1,5 @@
+predictor,n_meetings,mean_rps_t1,mean_rps_t2,skill_vs_market_t1,skill_vs_market_t2
+market_implied,13,0.1126,0.1552,0.0,0.0
+categorical_frequency,13,0.214,0.2182,-0.9015,-0.406
+boc_logistic_macro,13,0.1677,0.1838,-0.4894,-0.1844
+boc_logistic_macro_text,13,0.1466,0.1698,-0.3021,-0.0943
