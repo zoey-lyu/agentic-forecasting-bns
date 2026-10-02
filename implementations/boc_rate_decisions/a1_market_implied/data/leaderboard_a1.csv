@@ -1,0 +1,6 @@
+predictor_id,metric,mean_rps,n_meetings,n_meetings_available,skill_vs_climatology,skill_vs_market,delta_vs_reference,ci_lo,ci_hi,significant
+market_implied,rps,0.10798023616042858,14,14,0.5844,0.0,0.0,0.0,0.0,no
+boc_logistic_macro,rps,0.16237221055427858,14,14,0.3751,-0.5037,0.0544,-0.0487,0.1767,no
+agent_anonymised,rps,0.16973571428571424,14,14,0.3468,-0.5719,0.0618,-0.0065,0.1356,no
+agent_identified,rps,0.22384285714285707,14,14,0.1386,-1.073,0.1159,0.0061,0.2231,yes
+categorical_frequency,rps,0.2598475366370438,14,14,0.0,-1.4064,0.1519,-0.0059,0.3337,no

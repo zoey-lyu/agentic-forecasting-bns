@@ -1,8 +1,12 @@
 # BoC Rate Direction Eval Spec — 2025-2026 protected window, T-28
 #
-# Held-out, budget-controlled evaluation over the 12 BoC fixed announcement
-# dates from January 2025 through June 2026. All 12 are resolved as of
-# June 2026 (the June 10 announcement resolves the final origin).
+# Held-out, budget-controlled evaluation over the 14 BoC fixed announcement
+# dates from January 2025 through September 2026. All 14 are resolved as of
+# September 2026 (the September 2 announcement resolves the final origin).
+#
+# The window grows as meetings resolve: extend `end`, add the new origin, and
+# update the count in the description and in test_specs.py together. The next
+# meeting, 2026-10-28, is unresolved as of 2026-09-20 and is therefore absent.
 #
 # Origins sit 28 days before each announcement — the same lead as the
 # canonical backtest — so the eval measures anticipation, not eve-of-decision
@@ -21,8 +25,8 @@
 spec_id: boc_rate_direction_eval_2025_2026
 
 description: >-
-  Protected eval across the 12 BoC fixed announcement dates from January
-  2025 through June 2026. At each origin (announcement date minus 28 days)
+  Protected eval across the 14 BoC fixed announcement dates from January
+  2025 through September 2026. At each origin (announcement date minus 28 days)
   predictors emit probabilities over cut, hold, and hike, scored with RPS.
   Budget-limited to 5 runs per participant tracker.
 
@@ -45,7 +49,7 @@ task:
     the announcement, before markets have converged on the decision.
 
 start: "2025-01-01"
-end: "2026-06-30"
+end: "2026-09-30"
 stride: 1
 warmup: 8
 max_runs: 5
@@ -64,3 +68,5 @@ origin_dates:
   - "2026-02-18"  # meeting 2026-03-18
   - "2026-04-01"  # meeting 2026-04-29
   - "2026-05-13"  # meeting 2026-06-10
+  - "2026-06-17"  # meeting 2026-07-15
+  - "2026-08-05"  # meeting 2026-09-02

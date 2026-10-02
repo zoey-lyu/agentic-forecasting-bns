@@ -1,0 +1,28 @@
+{
+  "model": "gemini-3.1-flash-lite-preview",
+  "spec": "boc_rate_direction_eval.yaml",
+  "n": 14,
+  "comparisons": [
+    {
+      "comparison": "C - B  (value of knowing the date and the institution = RECALL)",
+      "delta": 0.02856428571428572,
+      "lo": -0.05983571428571431,
+      "hi": 0.11980732142857142,
+      "significant": "not significant"
+    },
+    {
+      "comparison": "B - A  (anonymised agent vs logistic floor)",
+      "delta": 0.01692064658857861,
+      "lo": -0.15396905657384244,
+      "hi": 0.16658686169100093,
+      "significant": "not significant"
+    },
+    {
+      "comparison": "C - A  (identified agent vs logistic floor)",
+      "delta": 0.045484932302864316,
+      "lo": -0.16302047327695865,
+      "hi": 0.22788371330144577,
+      "significant": "not significant"
+    }
+  ]
+}

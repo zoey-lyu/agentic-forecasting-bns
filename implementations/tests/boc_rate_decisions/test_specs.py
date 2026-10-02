@@ -84,12 +84,12 @@ class TestSpecScheduleConsistency:
         assert covered == expected
 
     def test_eval_window_covers_every_meeting(self) -> None:
-        """The protected eval targets all 12 meetings from Jan 2025 through Jun 2026."""
+        """The protected eval targets all 14 meetings from Jan 2025 through Sep 2026."""
         spec = _load_eval("boc_rate_direction_eval.yaml")
         lead = _lead(spec)
         covered = {pd.Timestamp(o) + lead for o in spec.origins()}
-        expected = {m for m in load_meeting_schedule() if pd.Timestamp("2025-01-01") <= m <= pd.Timestamp("2026-06-30")}
-        assert len(expected) == 12
+        expected = {m for m in load_meeting_schedule() if pd.Timestamp("2025-01-01") <= m <= pd.Timestamp("2026-09-30")}
+        assert len(expected) == 14
         assert covered == expected
 
     def test_canonical_lead_clears_previous_meeting(self) -> None:
