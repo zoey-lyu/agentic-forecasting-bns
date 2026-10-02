@@ -1,0 +1,5 @@
+predictor_id,n_meetings,brier,skill_vs_market,reliability,resolution,uncertainty,residual,mean_forecast,observed_rate,bias,delta_vs_market,ci_lo,ci_hi,significant
+agent_baseline,14,0.1054,0.0243,0.0526,0.1469,0.2041,-0.0044,0.3786,0.2857,0.0929,-0.0026,-0.0641,0.0597,no
+market_implied,14,0.108,0.0,0.0085,0.1088,0.2041,0.0042,0.3038,0.2857,0.0181,0.0,0.0,0.0,no
+agent_false_date,14,0.1725,-0.5975,0.0357,0.0612,0.2041,-0.0061,0.3,0.2857,0.0143,0.0645,-0.0197,0.1529,no
+agent_no_statement,14,0.2611,-1.4178,0.0948,0.0327,0.2041,-0.0051,0.5714,0.2857,0.2857,0.1531,0.0113,0.3044,yes

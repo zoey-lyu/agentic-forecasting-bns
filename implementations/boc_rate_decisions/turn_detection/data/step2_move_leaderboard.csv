@@ -1,0 +1,10 @@
+window,predictor_id,n_meetings,brier,skill_vs_market
+2023-2024,market_implied,14,0.1494,0.0
+2023-2024,boc_logistic_macro,14,0.2631,-0.7603
+2023-2024,historical_frequency,14,0.3367,-1.2529
+2025-2026,market_implied,14,0.108,0.0
+2025-2026,boc_logistic_macro,14,0.1587,-0.4695
+2025-2026,historical_frequency,14,0.2088,-0.9338
+pooled,market_implied,28,0.1287,0.0
+pooled,boc_logistic_macro,28,0.2109,-0.6383
+pooled,historical_frequency,28,0.2727,-1.119

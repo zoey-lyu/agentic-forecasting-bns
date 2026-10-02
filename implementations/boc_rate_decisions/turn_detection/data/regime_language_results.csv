@@ -1,0 +1,17 @@
+sample,language,n,r2_trailing_only,r2_with_language,gain,raw_corr_with_forward,corr_with_trailing
+all meetings (overlapping windows),stance_intensity,129,0.0372,0.1641,0.1269,0.3752,0.1097
+all meetings (overlapping windows),guidance_intensity,129,0.0372,0.1082,0.071,0.2886,0.1259
+all meetings (overlapping windows),signals_anything,129,0.0372,0.1082,0.071,0.2886,0.1259
+all meetings (overlapping windows),hawk_dove,129,0.0372,0.0843,0.047,0.25,0.1923
+all meetings (overlapping windows),guidance_score,129,0.0372,0.0379,0.0007,0.0001,0.1371
+all meetings (overlapping windows),lex_intensity,129,0.0372,0.0967,0.0594,0.3038,0.4399
+all meetings (overlapping windows),lex_tilt,129,0.0372,0.1366,0.0994,0.3685,0.4552
+all meetings (overlapping windows),lex_hedging,129,0.0372,0.0379,0.0007,0.0035,0.149
+non-overlapping,stance_intensity,33,0.0334,0.2243,0.1909,0.4696,0.263
+non-overlapping,guidance_intensity,33,0.0334,0.0604,0.027,0.2096,0.2858
+non-overlapping,signals_anything,33,0.0334,0.0604,0.027,0.2096,0.2858
+non-overlapping,hawk_dove,33,0.0334,0.1079,0.0744,0.3077,0.2308
+non-overlapping,guidance_score,33,0.0334,0.0344,0.001,0.0132,0.2399
+non-overlapping,lex_intensity,33,0.0334,0.0551,0.0216,0.2283,0.6136
+non-overlapping,lex_tilt,33,0.0334,0.1689,0.1355,0.411,0.4382
+non-overlapping,lex_hedging,33,0.0334,0.0521,0.0187,-0.0911,0.2299

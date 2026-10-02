@@ -1,0 +1,53 @@
+# BoC Rate Direction — 2023-2024 replication window at the t+2 horizon
+#
+# The same 14 origins as boc_rate_direction_2023_2024.yaml, scored on the
+# announcement AFTER the next one (roughly ten weeks out) instead of the next
+# one. Uses the shifted target series from a3_t2_horizon/data_t2.py, so the task
+# keeps its 28-day shape while resolving onto the later decision.
+#
+# Added so the t+2 horizon has two windows and an out-of-sample calibration test
+# becomes possible. Cutoff-safe arms only: an LLM has read this window.
+
+spec_id: boc_rate_direction_t2_2023_2024
+
+description: >-
+  Replication window at the t+2 horizon: 14 origins from March 2023 through
+  November 2024, each forecasting the announcement after the next one, scored
+  with RPS over cut, hold and hike.
+
+task:
+  task_id: boc_rate_direction_meeting_after_next
+  target_series_id: boc_rate_decision_direction_t2
+  horizons: [28]
+  frequency: D
+  payload_type: categorical
+  categories:
+    - {label: cut, value: -1}
+    - {label: hold, value: 0}
+    - {label: hike, value: 1}
+  description: >-
+    At the Bank of Canada fixed announcement date following the one 28 days
+    after the forecast origin, will the Bank CUT, HOLD, or HIKE its target for
+    the overnight rate? Outcome is the direction of the target-rate change at
+    that later announcement (any size).
+
+start: "2023-03-01"
+end: "2025-02-28"
+stride: 1
+warmup: 8
+
+origin_dates:
+  - "2023-03-15"  # via 2023-04-12 -> target 2023-06-07
+  - "2023-05-10"  # via 2023-06-07 -> target 2023-07-12
+  - "2023-06-14"  # via 2023-07-12 -> target 2023-09-06
+  - "2023-08-09"  # via 2023-09-06 -> target 2023-10-25
+  - "2023-09-27"  # via 2023-10-25 -> target 2023-12-06
+  - "2023-11-08"  # via 2023-12-06 -> target 2024-01-24
+  - "2023-12-27"  # via 2024-01-24 -> target 2024-03-06
+  - "2024-02-07"  # via 2024-03-06 -> target 2024-04-10
+  - "2024-03-13"  # via 2024-04-10 -> target 2024-06-05
+  - "2024-05-08"  # via 2024-06-05 -> target 2024-07-24
+  - "2024-06-26"  # via 2024-07-24 -> target 2024-09-04
+  - "2024-08-07"  # via 2024-09-04 -> target 2024-10-23
+  - "2024-09-25"  # via 2024-10-23 -> target 2024-12-11
+  - "2024-11-13"  # via 2024-12-11 -> target 2025-01-29

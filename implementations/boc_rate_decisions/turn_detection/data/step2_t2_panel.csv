@@ -1,0 +1,3 @@
+horizon,predictor_id,brier,reliability,resolution,uncertainty,residual,mean_forecast,observed_rate,bias
+t+2,market_implied,0.1552,0.0087,0.0456,0.1775,0.0146,0.2767,0.2308,0.046
+t+2,boc_logistic_macro,0.1794,0.0357,0.0544,0.1775,0.0207,0.2116,0.2308,-0.0192

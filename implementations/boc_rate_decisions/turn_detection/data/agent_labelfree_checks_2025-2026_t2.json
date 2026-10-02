@@ -1,0 +1,17 @@
+{
+  "window": "2025-2026",
+  "horizon": "t+2",
+  "n_meetings": 13,
+  "reported_cost_usd": 0.0,
+  "p_move_std_baseline": 0.1984,
+  "p_move_distinct_values": 5,
+  "regimes_used": [
+    "active_easing",
+    "on_hold"
+  ],
+  "quotes_total": 24,
+  "quotes_verbatim": 24,
+  "mean_abs_shift_without_statement": 0.1,
+  "mean_abs_shift_with_false_date": 0.1277,
+  "corr_baseline_vs_false_date": 0.7473
+}
